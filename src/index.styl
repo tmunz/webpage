@@ -1,0 +1,88 @@
+body {
+  font-family: sans-serif;
+  letter-spacing: 2px;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  background: unquote('rgb(var(--backgroundColor))');
+  color: var(--textColor);
+  transition: .4s ease-in-out all;
+}
+
+h1 {
+  letter-spacing: 14px;
+  text-transform: uppercase;
+  font-weight: 200;
+  font-size: 16px;
+}
+
+input[type="text"] {
+  font-size: 14px;
+}
+
+::selection {
+  color: var(--actionColor);
+  background-color: var(--accentColor);
+}
+
+script {
+  display: none;
+}
+
+a,
+button,
+input[type="button"],
+.action {
+  appearance: none;
+  font-weight: inherit;
+  font-family: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--actionColor);
+  text-decoration: none;
+  transition: color .4s ease-in-out;
+
+  &:hover {
+    text-shadow: 0 0 2px var(--accentColor);
+    color: var(--accentColor);
+  }
+}
+
+.error {
+  fill: var(--errorColor);
+  color: var(--errorColor);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--textColor) unquote('rgb(var(--backgroundColor))');
+
+  &::hover {
+    scrollbar-color: var(--accentColor) unquote('rgb(var(--backgroundColor))');
+  }
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: unquote('rgb(var(--backgroundColor))');
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--textColor);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--accentColor);
+}
