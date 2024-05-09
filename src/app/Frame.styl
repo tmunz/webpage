@@ -1,0 +1,41 @@
+.frame {
+  display: flex;
+  height: 100vh;
+}
+
+.component {
+  flex: 1 1 auto;
+  min-width: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease, flex 0.6s ease;
+  position: relative;
+  overflow-x: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  &:hover {
+    min-width: 60px;
+    background-position: 55% center;
+  }
+
+  .title {
+    position: absolute;
+    left: 0px;
+    top: 10px;
+    writing-mode: vertical-lr;
+    transition: opacity 1s ease;
+    color: black;
+    overflow: hidden;
+  }
+
+  &.active {
+    flex: 400;
+    
+    .title {
+      opacity: 0;
+    }
+  }
+
+
+}
