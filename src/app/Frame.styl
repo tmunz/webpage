@@ -1,41 +1,73 @@
 .frame {
-  display: flex;
-  height: 100vh;
-}
-
-.component {
   flex: 1 1 auto;
   min-width: 10px;
-  cursor: pointer;
   transition: all 0.3s ease, flex 0.6s ease;
   position: relative;
-  overflow-x: hidden;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  overflow: hidden;
 
   &:hover {
     min-width: 60px;
-    background-position: 55% center;
-  }
-
-  .title {
-    position: absolute;
-    left: 0px;
-    top: 10px;
-    writing-mode: vertical-lr;
-    transition: opacity 1s ease;
-    color: black;
-    overflow: hidden;
   }
 
   &.active {
     flex: 400;
-    
+  }
+
+  .title-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    rigth: 0;
+    overflow: hidden;
+
+    .parallax {
+      position: absolute;
+      transition: all 0.2s ease;
+    }
+
+    .background-image {
+      left: -10%;
+      top: -10%;
+      right: -10%;
+      bottom: -10%;
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      margin: auto;
+      text-align: center;
+    }
+
     .title {
-      opacity: 0;
+      left: 0px;
+      top: 40px;
+      padding: 15px 0;
+      font-size: 2em;
+      writing-mode: vertical-lr;
+      color: white;
+      mix-blend-mode: difference;
+      pointer-events: none;
     }
   }
 
+  .content-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100% 0fr;
+    transition: all 1s ease;
 
+    &.active {
+      grid-template-rows: 40px 1fr;
+    }
+
+    .content {
+      margin-left: 45px;
+      padding:  15px;
+    }
+  }
 }

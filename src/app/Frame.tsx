@@ -1,52 +1,71 @@
-import React, { ReactNode, useState } from 'react';
-import { About } from './content/about/About';
-import { Art } from './content/art/Art';
-import { Projects } from './content/projects/Projects';
-import { Lego } from './content/lego/Lego';
-import { Photo } from './content/photo/Photo';
+import React, { MouseEvent, ReactNode, RefObject, useRef } from 'react';
+import FrameControl from './FrameControl';
 
 import './Frame.styl';
 
 
-interface FrameComponent {
+export interface FrameProps {
   id: string;
   title: string;
   content: ReactNode;
   color: string;
-  img: string;
+  imgSrc: string;
+  onClick?: () => void;
+  active?: boolean;
 }
 
-function Frame() {
+export default function Frame(props: FrameProps) {
 
-  const [selectedComponent, setSelectedComponent] = useState<null | FrameComponent>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
 
-  const components: FrameComponent[] = [
-    { id: 'about', title: 'About', content: <About />, color: 'skyblue', img: './content/about/about_title.jpg' },
-    { id: 'art', title: 'Art', content: <Art />, color: '#fff', img: './content/art/art_title.png' },
-    { id: 'photo', title: 'Photography', content: <Photo />, color: 'green', img: './content/photo/photo_title.jpg' },
-    { id: 'projects', title: 'Coding, Concepts & Creations', content: <Projects />, color: 'grey', img: './content/projects/projects_title.png' },
-    { id: 'lego', title: 'Lego', content: <Lego />, color: 'red', img: './content/lego/lego_title.jpg' },
-  ];
+  const handleMouseMove = (event: MouseEvent<unknown>, ref: RefObject<HTMLElement>, multiplier: number = 1): void => {
+    const element = ref.current;
+    if (!element) return;
+    const elementRect = element.getBoundingClientRect();
+    const [offsetX, offsetY] = [
+      (event.clientX - elementRect.left) / elementRect.width,
+      (event.clientY - elementRect.top) / elementRect.height
+    ];
+    element.style.transform = `translate(${(multiplier * -0.5 + multiplier * offsetX) * 100}%, ${(multiplier * -0.5 + multiplier * offsetY) * 100}%)`;
+  };
 
-  const handleComponentClick = (component: FrameComponent) => {
-    setSelectedComponent(component.id === selectedComponent?.id ? null : component);
+  const handleMouseLeave = (ref: RefObject<HTMLElement>): void => {
+    const element = ref.current;
+    if (!element) return;
+    element.style.transform = 'translate(0, 0)';
   };
 
   return (
-    <div className="frame">
-      {components.map((component) => (
-        <div
-          key={component.id}
-          className={`component ${selectedComponent?.id === component.id ? 'active' : ''}`}
-          onClick={() => handleComponentClick(component)}
-          style={{ backgroundColor: component.color, backgroundImage: `url(${require('' + component.img)})` }}
-        >
-          <h2 className="title">{component.title}</h2>
-          <div className="content">{selectedComponent?.id === component.id && selectedComponent.content}</div>
+    <div
+      key={props.id}
+      className={`frame ${props.active ? 'active' : ''}`}
+      style={{ backgroundColor: props.color }}
+      onMouseMove={event => {
+        handleMouseMove(event, imgRef, -0.1);
+        // handleMouseMove(event, titleRef, 0.1);
+      }}
+      onMouseLeave={() => {
+        handleMouseLeave(imgRef);
+        // handleMouseLeave(titleRef);
+      }}
+    >
+      <div className="title-container">
+        <img className="background-image parallax"
+          ref={imgRef}
+          src={`${require('' + props.imgSrc)}`}
+          style={{ transform: 'translate(0, 0)' }}
+        />
+        <h1 className="title parallax" ref={titleRef}>
+          {props.title}
+        </h1>
+      </div>
+      <div className={`content-container ${props.active ? 'active' : ''}`}>
+        <FrameControl onClick={props.onClick} active={props.active} />
+        <div className="content">
+          {props.active && props.content}
         </div>
-      ))}
+      </div>
     </div>
   );
 }
-
-export default Frame;

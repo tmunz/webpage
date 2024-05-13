@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="100%"
+   height="100%"
+   fill="none"
+   viewBox="0 0 600 600"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="lego-ideas.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xml:space="preserve"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.99009147"
+     inkscape:cx="-12.120092"
+     inkscape:cy="259.06697"
+     inkscape:window-width="2496"
+     inkscape:window-height="1558"
+     inkscape:window-x="2869"
+     inkscape:window-y="352"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g42" />
+  <g
+     transform="translate(-292)"
+     id="g42">
+    <path
+       fill-rule="evenodd"
+       clip-rule="evenodd"
+       d="M 505.43165,68.376935 C 484.50826,58.07782 472.65594,44.098101 472.4848,29.491959 V 82.6502 c 0.1711,14.606157 12.02346,28.58588 32.94685,38.88498 20.92338,10.29867 49.2491,16.07977 78.77291,16.07977 29.52379,0 57.80674,-5.7811 78.73014,-16.07977 20.96616,-10.2991 32.77568,-24.278823 32.94685,-38.88498 V 29.491959 c -0.1711,14.606142 -11.98069,28.585861 -32.94685,38.884976 -20.9234,10.298678 -49.20635,16.07977 -78.73014,16.07977 -29.52381,0 -57.84953,-5.781092 -78.77291,-16.07977 z M 587.24253,244.97846 V 600 L 785.09476,453.1854 V 99.51342 Z" />
+  </g>
+</svg>

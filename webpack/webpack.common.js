@@ -11,10 +11,13 @@ module.exports = (env) => ({
   },
   module: {
     rules: [{
-      test: /\.(j|t)sx?$/,
+      test: /\.((j|t)sx?)$/,
       loader: 'babel-loader',
     }, {
-      test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    }, {
+      test: /\.(ttf|eot|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       type: 'asset/resource',
     }, {
       test: /\.jpe?g$|\.gif$|\.png$/i,
