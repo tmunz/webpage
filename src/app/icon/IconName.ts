@@ -12,6 +12,6 @@ export enum IconName {
 
 export function loadIcon(iconName: IconName) {
   return lazy(async () => {
-    return await import(`./asset/${iconName}.svg`);
+    return await import(`./assets/${iconName}.svg`);
   });
 }

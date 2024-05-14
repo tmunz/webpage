@@ -16,8 +16,8 @@ export function App() {
   const frames: FrameProps[] = [
     { id: 'about', title: 'About / Vita', content: <About />, color: 'skyblue', imgSrc: './content/about/about_title.jpg' },
     { id: 'photo', title: 'Photography', content: <Photo />, color: 'green', imgSrc: './content/photo/photo_title.jpg' },
-    { id: 'art', title: 'Art / Design', content: <Art />, color: '#fff', imgSrc: './content/art/art_title.png' },
-    { id: 'projects', title: 'Coding / Concepts / Creations', content: <Projects />, color: 'grey', imgSrc: './content/projects/diy_title.jpg' },
+    { id: 'art', title: 'Art / Design', content: <Art />, color: 'orange', imgSrc: './content/art/art_title.jpg' },
+    { id: 'projects', title: 'Coding / Concepts / Creations', content: <Projects />, color: 'lightgrey', imgSrc: './content/projects/diy_title.jpg' },
     { id: 'lego', title: 'Lego', content: <Lego />, color: 'red', imgSrc: './content/lego/lego_title.jpg' },
   ];
 

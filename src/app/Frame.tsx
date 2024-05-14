@@ -1,4 +1,4 @@
-import React, { MouseEvent, ReactNode, RefObject, useRef } from 'react';
+import React, { MouseEvent, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
 import FrameControl from './FrameControl';
 
 import './Frame.styl';
@@ -19,7 +19,16 @@ export default function Frame(props: FrameProps) {
   const imgRef = useRef<HTMLImageElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
 
-  const handleMouseMove = (event: MouseEvent<unknown>, ref: RefObject<HTMLElement>, multiplier: number = 1): void => {
+  const [parallaxBackground, setParallaxBackground] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (parallaxBackground === props.active) {
+      setParallaxBackground(!props.active ?? true);
+    }
+  }, [props, parallaxBackground]);
+
+
+  const setParallaxPosition = (event: MouseEvent<unknown>, ref: RefObject<HTMLElement>, multiplier: number = 1): void => {
     const element = ref.current;
     if (!element) return;
     const elementRect = element.getBoundingClientRect();
@@ -30,24 +39,28 @@ export default function Frame(props: FrameProps) {
     element.style.transform = `translate(${(multiplier * -0.5 + multiplier * offsetX) * 100}%, ${(multiplier * -0.5 + multiplier * offsetY) * 100}%)`;
   };
 
-  const handleMouseLeave = (ref: RefObject<HTMLElement>): void => {
+  const resetPosition = (ref: RefObject<HTMLElement>): void => {
     const element = ref.current;
     if (!element) return;
-    element.style.transform = 'translate(0, 0)';
+    element.style.transform = '';
   };
 
   return (
     <div
       key={props.id}
-      className={`frame ${props.active ? 'active' : ''}`}
+      className={`frame ${props.id}-frame ${props.active ? 'active' : ''}`}
       style={{ backgroundColor: props.color }}
       onMouseMove={event => {
-        handleMouseMove(event, imgRef, -0.1);
-        // handleMouseMove(event, titleRef, 0.1);
+        if (parallaxBackground) {
+          setParallaxPosition(event, imgRef, -0.1);
+          // setParallaxPosition(event, titleRef, 0.1);
+        }
       }}
       onMouseLeave={() => {
-        handleMouseLeave(imgRef);
-        // handleMouseLeave(titleRef);
+        if (parallaxBackground) {
+          resetPosition(imgRef);
+          // resetPosition(titleRef);
+        }
       }}
     >
       <div className="title-container">
@@ -61,7 +74,11 @@ export default function Frame(props: FrameProps) {
         </h1>
       </div>
       <div className={`content-container ${props.active ? 'active' : ''}`}>
-        <FrameControl onClick={props.onClick} active={props.active} />
+        <FrameControl onClick={() => {
+           props.onClick && props.onClick();
+           resetPosition(imgRef);
+           // resetPosition(titleRef);
+        }} active={props.active} />
         <div className="content">
           {props.active && props.content}
         </div>
