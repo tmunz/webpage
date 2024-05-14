@@ -68,21 +68,4 @@ module.exports = (env) => ({
   resolve: {
     extensions: ['.js', '.ts', '.tsx', '.styl']
   },
-  optimization: {
-    minimizer: [
-      "...",
-      new ImageMinimizerPlugin({
-        minimizer: {
-          implementation: ImageMinimizerPlugin.imageminMinify,
-          options: {
-            plugins: [
-              ["gifsicle", { interlaced: true }],
-              ["jpegtran", { progressive: true }],
-              ["optipng", { optimizationLevel: 5 }],
-            ],
-          },
-        },
-      }),
-    ],
-  },
 });
