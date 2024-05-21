@@ -8,6 +8,8 @@ export enum IconName {
   REBRICKABLE = 'rebrickable',
   LEGO_IDEAS = 'lego-ideas',
   THINGIVERSE = 'thingiverse',
+  LMU = 'lmu',
+  AARHUS = 'aarhus',
 }
 
 export function loadIcon(iconName: IconName) {

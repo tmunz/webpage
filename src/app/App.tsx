@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Frame, { FrameProps } from './Frame';
-import { About } from './content/about/About';
+import { Vita } from './content/vita/Vita';
 import { Art } from './content/art/Art';
 import { Projects } from './content/projects/Projects';
 import { Lego } from './content/lego/Lego';
@@ -14,7 +14,7 @@ export function App() {
   const [selectedFrame, setSelectedFrame] = useState<null | string>(null);
 
   const frames: FrameProps[] = [
-    { id: 'about', title: 'About / Vita', content: <About />, color: 'skyblue', imgSrc: './content/about/about_title.jpg' },
+    { id: 'about', title: 'Vita', content: <Vita />, color: 'skyblue', imgSrc: './content/vita/vita_title.jpg' },
     { id: 'photo', title: 'Photography', content: <Photo />, color: 'green', imgSrc: './content/photo/photo_title.jpg' },
     { id: 'art', title: 'Art / Design', content: <Art />, color: 'orange', imgSrc: './content/art/art_title.jpg' },
     { id: 'projects', title: 'Coding / Concepts / Creations', content: <Projects />, color: 'lightgrey', imgSrc: './content/projects/diy_title.jpg' },

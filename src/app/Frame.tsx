@@ -45,6 +45,8 @@ export default function Frame(props: FrameProps) {
     element.style.transform = '';
   };
 
+  const backgroundImage = require(`${props.imgSrc}?{sizes:[1680], format: "webp"}`);
+
   return (
     <div
       key={props.id}
@@ -64,20 +66,21 @@ export default function Frame(props: FrameProps) {
       }}
     >
       <div className="title-container">
-        <img className="background-image parallax"
-          ref={imgRef}
-          src={`${require('' + props.imgSrc)}`}
-          style={{ transform: 'translate(0, 0)' }}
-        />
+          <img
+            className="background-image parallax"
+            ref={imgRef}
+            src={backgroundImage.src}
+            srcSet={backgroundImage.srcSet}
+          />
         <h1 className="title parallax" ref={titleRef}>
           {props.title}
         </h1>
       </div>
       <div className={`content-container ${props.active ? 'active' : ''}`}>
         <FrameControl onClick={() => {
-           props.onClick && props.onClick();
-           resetPosition(imgRef);
-           // resetPosition(titleRef);
+          props.onClick && props.onClick();
+          resetPosition(imgRef);
+          // resetPosition(titleRef);
         }} active={props.active} />
         <div className="content">
           {props.active && props.content}

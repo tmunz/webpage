@@ -23,6 +23,15 @@ module.exports = (env) => ({
     }, {
       test: /\.jpe?g$|\.gif$|\.png$/i,
       type: 'asset/resource',
+      use: [
+        {
+          loader: 'responsive-loader',
+          options: {
+            // Set options for all transforms
+          },
+        },
+      ],
+      type: 'javascript/auto',
     }, {
       test: /\.css$|\.styl$/,
       use: [

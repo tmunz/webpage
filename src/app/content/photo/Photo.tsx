@@ -48,16 +48,21 @@ export function Photo() {
       width={size.width}
       height={size.height}
       backgroundColor="rgba(0,0,0,0)"
-      globeImageUrl={require('./earth_map.jpg')}
+      globeImageUrl={require('./earth_map.jpg').src}
       htmlElementsData={geoData}
       htmlElement={
         (d: any) => {
           const template = document.createElement('div');
+          const img = require(`./assets/${d.img}.jpg?{sizes:[120,380,800,1280], format: "webp"}`);
           const innerHTML = renderToString(<div
             className="map-label"
             onClick={() => console.info(d)}
           >
-            <img src={require(`./assets/${d.img}.jpg`)} alt={d.name} />
+            <img
+            src={img.src}
+            srcSet={img.srcSet}
+            alt={d.name}
+          />
             <div className="name">{d.name}</div>
             <div className="location">{d.location}</div>
           </div>
