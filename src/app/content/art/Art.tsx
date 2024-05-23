@@ -1,15 +1,16 @@
 import React from 'react';
+import { ImageGallery } from '../../visualization/ImageGallery';
 
 import './Art.styl';
 
 export function Art() {
 
-  const data = [
+  const images = [
     { id: '300sl', name: '300 SL' },
     { id: 'dog', name: 'Dog' },
   ];
 
   return <div className="art">
-    {data.map(d => <img key={d.id} src={require(`./assets/${d.id}.jpg`)} alt={d.name} />)}
+     <ImageGallery data={images.map(img => require(`./assets/${img.id}.jpg?{sizes:[200, 400, 720, 1200, 2000], format: "webp"}`))} />
   </div>;
 }
