@@ -4,6 +4,8 @@ import { StipplingService } from '../../visualization/StipplingService';
 
 export function Knowledge() {
 
+  const [active, setActive] = useState<boolean>(false);
+
   const size = 800;
 
   const nodeData = [
@@ -131,7 +133,7 @@ export function Knowledge() {
 
   useEffect(() => {
     StipplingService.get().generate({ imgPath: require('./vita_bw.png'), width: size, samples: nodeData.length, threshold: 0.5 }).then((points) => {
-      const positionedNodes = points.map((point, i) => ({ ...nodeData[i], x: point.x, y: point.y}));
+      const positionedNodes = points.map((point, i) => ({ ...nodeData[i], x: point.x, y: point.y }));
       setNodes(positionedNodes);
       setLinks(linkData);
     });
@@ -141,12 +143,17 @@ export function Knowledge() {
     <h2>Knowledge</h2>
     <p>Here is a list of technologies and tools I have worked with.</p>
 
-    <NetworkGraph
+    <button onClick={() => setActive(true)}>
+      Show Knowledge Graph
+    </button>
+
+    {active && <NetworkGraph
       width={size}
       height={size}
       nodes={nodes}
       links={links}
-    />
+      timeOffset={1000}
+    />}
 
   </div >
 }

@@ -1,7 +1,34 @@
 .image-entry {
   max-height: 90svh; /* TODO: improve this in the future */
-  transition: 0.3s max-height ease-in-out;
+  transition: max-height 0.3s ease-in-out, margin 1s ease-in-out;
   cursor: pointer;
+  position: relative;
+  margin: 0;
+
+  &.active {
+    margin: -10px;
+  }
+
+  &:not(.active) {
+    .control-bar {
+      height: 0;
+      overflow: hidden;
+    }
+  }
+
+  .control-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 100px;
+    transition: height 1s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }	
 
   img {
     width: 100%;

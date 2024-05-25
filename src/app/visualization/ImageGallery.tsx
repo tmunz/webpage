@@ -21,7 +21,7 @@ interface Grid {
   active: { row: number, column: number } | null;
 }
 
-export function ImageGallery({ data, desiredMinHeight = 200 }: ImageGalleryProps) {
+export function ImageGallery({ data, desiredMinHeight = 300 }: ImageGalleryProps) {
 
   const elementRef = useRef<HTMLDivElement>(null);
   const [gridData, setGridData] = useState<GridEntryData[]>([]);
