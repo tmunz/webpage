@@ -95,24 +95,23 @@ export function NetworkGraph({ nodes, links, width, height, timeOffset = 0 }: Gr
     };
   }, [nodes, links, width, height]);
 
-  return <div>
+  return <div className="network-graph">
     <svg ref={svgRef} width={width} height={height}>
-      <g>{simulationLinks.current.map((link, i) => (
-        <line key={i} stroke="#999" strokeOpacity="0.6" strokeWidth={1}
+      <g className="links">{simulationLinks.current.map((link, i) => (
+        <line className="link" key={i}
           x1={(link.source as NetworkNode)?.x ?? 0} y1={(link.source as NetworkNode)?.y ?? 0}
           x2={(link.target as NetworkNode)?.x ?? 0} y2={(link.target as NetworkNode)?.y ?? 0}
         />
       ))}</g>
-      <g>{simulationNodes.current.map((node, i) => (
-        <g key={node.id}>
+      <g className="nodes">{simulationNodes.current.map((node, i) => (
+        <g className="node" key={node.id}>
           <circle
             ref={el => nodeRefs.current[i] = el}
             cx={node.x} cy={node.y} r={6} fill={color(node.group ?? 'default')} />
-          <text x={node.x} y={node.y} fontSize="12" dx="10" dy="4">{node.name ?? node.id}</text>
+          <text x={node.x} y={node.y} dx="10" dy="4">{node.name ?? node.id}</text>
         </g>
       ))}
       </g>
     </svg>
-    {'' + frameRef.current + ' - ' + frame}
   </div>;
 };

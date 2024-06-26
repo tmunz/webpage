@@ -1,18 +1,91 @@
 .vita {
 
-  .life,
-  .header {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    align-content: center;
+  width: 100%;
+  columns: 350px;
+
+
+  .academic-life {
+    .academic-icons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 20px;
+      align-items: flex-start;
+      align-content: center;
+      .academic-icon {
+        mix-blend-mode: difference;
+        color: white;
+        fill: white;
+      
+        display: inline-block;
+        min-width: 50px;
+        max-width: 350px;
+        width: 50%;
+      }
+    }
   }
 
-  color: black;
+  .professional-life {
+    .professional-life-card {
+      display: inline-flex;
+      width: 100%;
+      box-sizing: border-box;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      flex-grow: 1;
+      flex-basis: 0;
+      align-items: flex-start;
+      align-content: center;
+      margin-bottom: 20px;
+      padding: 10px;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1); 
+      background-color:rgba(255, 255, 255, 0.1); 
+      backdrop-filter: blur(5px);
+      .company-logo {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+      }
+      .company-text {
+        margin-left: 20px;
+        .company-date, .company-role {
+          color: var(--textColorLight);
+        }
+        .company-description {
+          padding-inline-start: 10px;
+          >li {
+            list-style-type: circle;
+          }
+        }
+      }
+    }
+  }
 
-  .company-logo {
-    max-width: 100px;
+  .knowledge {
+    position: absolute;
+    left: -10%;
+    top: -10%;
+    right: -10%;
+    bottom: -10%;
+    width: 120%;
+    height: 120%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    pointer-events: none;
+
+    button {
+      pointer-events: all;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      .node {
+        pointer-events: all;
+      }
+    }
   }
 }
