@@ -8,6 +8,7 @@ export function Art() {
   const images = [
     { id: '300sl', name: '300 SL' },
     { id: 'dog', name: 'Dog' },
+    { id: 'citroen_ds_lamp', name: 'Citroen DS Lamp' },
   ];
 
   return <div className="art">

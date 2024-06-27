@@ -17,7 +17,10 @@ export function App() {
     { id: 'about', title: 'Vita', content: <Vita />, color: 'skyblue', imgSrc: './content/vita/vita_title.jpg' },
     { id: 'photo', title: 'Photography', content: <Photo />, color: 'green', imgSrc: './content/photo/photo_title.jpg' },
     { id: 'art', title: 'Art / Design', content: <Art />, color: 'orange', imgSrc: './content/art/art_title.jpg' },
-    { id: 'projects', title: 'Coding / Concepts / Creations', content: <Projects />, color: 'lightgrey', imgSrc: './content/projects/diy_title.jpg' },
+    {
+      id: 'projects', title: 'Projects / Coding' /* / Concepts / Creations */, content:
+        <Projects onClose={() => handleClick('projects')} />, color: 'lightgrey', imgSrc: './content/projects/projects_title.png'
+    },
     { id: 'lego', title: 'Lego', content: <Lego />, color: 'red', imgSrc: './content/lego/lego_title.jpg' },
   ];
 
