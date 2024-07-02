@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ImageEntry, ImageData } from './ImageEntry';
 
 import './ImageGallery.styl';
+import { Loading } from './Loading';
 
 
 interface ImageGalleryProps {
@@ -32,7 +33,6 @@ export function ImageGallery({ data, desiredMinHeight = 300 }: ImageGalleryProps
 
   useEffect(() => {
     (async () => {
-      console.log('loading images');
       const gd = await Promise.all(
         data.map((d) => {
           return new Promise<GridEntryData>((resolve) => {
@@ -48,8 +48,7 @@ export function ImageGallery({ data, desiredMinHeight = 300 }: ImageGalleryProps
           });
         })
       );
-      console.log('images loaded');
-      setTimeout(() => setLoaded(true), 800)
+      setTimeout(() => setLoaded(true), 1000) // TODO: improve the timeout
       setGridData(gd);
     })();
   }, [data]);
@@ -82,9 +81,16 @@ export function ImageGallery({ data, desiredMinHeight = 300 }: ImageGalleryProps
             key={i}
             style={{ gridTemplateColumns: row.map((image, j) => `${((grid.active ? (grid.active.row === i && grid.active.column === j ? 1 : 0) : image.spaceUsage) ?? 1)}fr`).join(' ') }}
           >
-            {row.map((d) => <ImageEntry key={d.src} data={d} active={d.active} onClick={() => setActive(active ? null : d.src)} />)}
+            {row.map((d) => <ImageEntry key={d.src} data={d} active={d.active} setActive={(e) => {
+              if (e === null) {
+                setActive(null);
+              } else {
+                const i = gridData.findIndex((gd) => gd.src === d.src);
+                setActive(gridData[(i + e + gridData.length) % gridData.length].src);
+              }
+            }} />)}
           </div>
-        )) : <div>loading</div>}
+        )) : <Loading />}
       </div>
     </div>
   );

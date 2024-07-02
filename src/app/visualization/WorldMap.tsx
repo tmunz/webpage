@@ -8,7 +8,7 @@ export interface WorldMapData {
   lng: number;
 }
 
-export function WorldMap({ data, width = 100, height = 100 }: { data: WorldMapData, width?: number, height?: number }) {
+export function WorldMap({ data, width = 200, height = 200 }: { data: WorldMapData, width?: number, height?: number }) {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -76,6 +76,6 @@ export function WorldMap({ data, width = 100, height = 100 }: { data: WorldMapDa
   }, [data, width, height]);
 
   return (
-    <svg ref={svgRef} width={width} height={height}></svg>
+    <svg className='world-map' ref={svgRef} width={width} height={height}></svg>
   );
 };

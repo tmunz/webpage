@@ -68,6 +68,24 @@ input[type="button"],
   }
 }
 
+button {
+  transition: all 0.4s ease-in-out;
+  fill: var(--actionColor);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    fill: var(--activeColor);
+  }
+
+  &.active {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  &>.icon>svg {
+    width: 30px;
+  }
+}
+
 .error {
   fill: var(--errorColor);
   color: var(--errorColor);

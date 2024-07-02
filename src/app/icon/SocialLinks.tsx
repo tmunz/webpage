@@ -16,6 +16,7 @@ export function SocialLinks() {
     { name: IconName.FLICKR, title: 'Flickr', link: 'https://www.flickr.com/photos/101562535@N03/' },
     // {id: 'thingiverse', title: 'Thingiverse', link: ''},
     // {id: 'buildamoc', title: 'Builda MOC', link: 'https://buildamoc.com/products/flower-selection'}, 
+    // linkedin
   ];
 
   return (
