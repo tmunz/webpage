@@ -19,7 +19,7 @@ export function App() {
     { id: 'art', title: 'Art / Design', content: <Art />, color: 'orange', imgSrc: './content/art/art_title.jpg' },
     {
       id: 'projects', title: 'Projects / Coding' /* / Concepts / Creations */, content:
-        <Projects onClose={() => handleClick('projects')} />, color: 'lightgrey', imgSrc: './content/projects/projects_title.png'
+        <Projects onClose={() => handleClick('projects')} />, color: 'lightgrey', imgSrc: './content/projects/projects_title.svg'
     },
     { id: 'lego', title: 'Lego', content: <Lego />, color: 'red', imgSrc: './content/lego/lego_title.jpg' },
   ];

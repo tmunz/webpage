@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ImageEntry, ImageData } from './ImageEntry';
 
 import './ImageGallery.styl';
@@ -24,9 +24,13 @@ interface Grid {
 export function ImageGallery({ data, desiredMinHeight = 300 }: ImageGalleryProps) {
 
   const elementRef = useRef<HTMLDivElement>(null);
-  const [gridData, setGridData] = useState<GridEntryData[]>([]);
+  const [gridData, setGridData] = useState<GridEntryData[] | null>(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [active, setActive] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const loadingTimeout = useRef<number | null>(null);
+  const grid = useMemo(() => loading ? { data: [], active: null } :
+    generateGrid(gridData!, desiredMinHeight, size.width, active), [loading, gridData, desiredMinHeight, size.width, active]);
 
   useEffect(() => {
     (async () => {
@@ -49,6 +53,19 @@ export function ImageGallery({ data, desiredMinHeight = 300 }: ImageGalleryProps
   }, [data]);
 
   useEffect(() => {
+    if (loading) {
+      if (loadingTimeout.current) {
+        window.clearTimeout(loadingTimeout.current);
+      }
+      loadingTimeout.current = window.setTimeout(() => {
+        if (gridData != null) {
+          setLoading(false);
+        }
+      }, 100);
+    }
+  }, [size.width, gridData]);
+
+  useEffect(() => {
     const resizeObserver = new ResizeObserver(entries => {
       for (let entry of entries) {
         const { width, height } = entry.contentRect;
@@ -67,26 +84,27 @@ export function ImageGallery({ data, desiredMinHeight = 300 }: ImageGalleryProps
     };
   }, []);
 
-  const grid = generateGrid(gridData, desiredMinHeight, size, active);
-
   return (
     <div className="image-gallery">
       <div className={`image-grid ${grid.active ? 'single-image-mode' : ''}`} ref={elementRef}>
-        {grid.data.map((row, i) => (
-          <div
-            className="image-row"
-            key={i}
-            style={{ gridTemplateColumns: row.map((image, j) => `${grid.active ? (grid.active.row === i && grid.active.column === j ? 1 : 0) : image.spaceUsage}fr`).join(' ') }}
-          >
-            {row.map((d) => <ImageEntry key={d.src} data={d} active={d.active} onClick={() => setActive(active ? null : d.src)} />)}
-          </div>
-        ))}
+        {
+          loading ? <div>loading</div> :
+            grid.data.map((row, i) => (
+              <div
+                className="image-row"
+                key={i}
+                style={{ gridTemplateColumns: row.map((image, j) => `${grid.active ? (grid.active.row === i && grid.active.column === j ? 1 : 0) : image.spaceUsage}fr`).join(' ') }}
+              >
+                {row.map((d) => <ImageEntry key={d.src} data={d} active={d.active} onClick={() => setActive(active ? null : d.src)} />)}
+              </div>
+            ))
+        }
       </div>
     </div>
   );
 };
 
-function generateGrid(data: GridEntryData[], desiredMinHeight: number, size: { width: number, height: number }, active: string | null): Grid {
+function generateGrid(data: GridEntryData[], desiredMinHeight: number, width: number, active: string | null): Grid {
   const grid: Grid = { data: [], active: null };
   let currentRow: GridEntryData[] = [];
   let currentRowWidth = 0;
@@ -106,7 +124,7 @@ function generateGrid(data: GridEntryData[], desiredMinHeight: number, size: { w
     currentRowWidth += desiredImageWidth;
     const isActive = active === d.src;
 
-    if (size.width < currentRowWidth) {
+    if (width < currentRowWidth) {
       addRowToGrid(currentRow);
       currentRowWidth = desiredImageWidth;
       currentRow = [];

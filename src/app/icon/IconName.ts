@@ -1,6 +1,9 @@
 import { lazy } from "react";
 
 export enum IconName {
+  CLI = 'cli',
+  LIST = 'list',
+  
   FLICKR = 'flickr',
   GITHUB = 'github',
   INSTAGRAM = 'instagram',

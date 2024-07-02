@@ -45,7 +45,10 @@ export default function Frame(props: FrameProps) {
     element.style.transform = '';
   };
 
-  const backgroundImage = require(`${props.imgSrc}?{sizes:[1680], format: "webp"}`);
+  const isBackgroundImageSvg = props.imgSrc.toLowerCase().endsWith('.svg')
+  const backgroundImage = isBackgroundImageSvg ?
+    require(`${props.imgSrc}`) :
+    require(`${props.imgSrc}?{sizes:[1680], format: "webp"}`);
 
   return (
     <div
@@ -66,12 +69,21 @@ export default function Frame(props: FrameProps) {
       }}
     >
       <div className="title-container">
+        {isBackgroundImageSvg ?
+          <div
+            className="background-image parallax"
+            ref={imgRef}
+          >
+            <backgroundImage.default style={{ width: '100%', height: '100%' }} />
+          </div>
+          :
           <img
             className="background-image parallax"
             ref={imgRef}
-            src={backgroundImage.src}
+            src={backgroundImage.default}
             srcSet={backgroundImage.srcSet}
           />
+        }
         <h1 className="title parallax" ref={titleRef}>
           {props.title}
         </h1>

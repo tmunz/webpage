@@ -12,6 +12,7 @@ export const Icon = ({ name, fill, ...args }: Props) => {
 
   return (
     SvgIcon && <div
+      className="icon"
       aria-label={name}
       role="img"
       {...args}

@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const package = require('../package.json');
 
 module.exports = (env) => ({
@@ -16,7 +15,25 @@ module.exports = (env) => ({
       loader: 'babel-loader',
     }, {
       test: /\.svg$/,
-      use: ['@svgr/webpack'],
+      use: [{
+        loader: '@svgr/webpack',
+        options: {
+          svgoConfig: {
+            plugins: [
+              {
+                name: 'preset-default',
+                params: {
+                  overrides: {
+                    convertPathData: false,
+                    minify: false,
+                    cleanupIDs: false,
+                  },
+                },
+              },
+            ]
+          }
+        }
+      }],
     }, {
       test: /\.(ttf|eot|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       type: 'asset/resource',
