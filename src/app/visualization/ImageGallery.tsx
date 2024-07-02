@@ -24,17 +24,16 @@ interface Grid {
 export function ImageGallery({ data, desiredMinHeight = 300 }: ImageGalleryProps) {
 
   const elementRef = useRef<HTMLDivElement>(null);
-  const [gridData, setGridData] = useState<GridEntryData[] | null>(null);
+  const [gridData, setGridData] = useState<GridEntryData[]>([]);
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [active, setActive] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const loadingTimeout = useRef<number | null>(null);
-  const grid = useMemo(() => loading ? { data: [], active: null } :
-    generateGrid(gridData!, desiredMinHeight, size.width, active), [loading, gridData, desiredMinHeight, size.width, active]);
+  const [loaded, setLoaded] = useState<boolean>(false);
+  const grid = useMemo(() => generateGrid(gridData, desiredMinHeight, size.width, active), [gridData, desiredMinHeight, size.width, active]);
 
   useEffect(() => {
     (async () => {
-      setGridData(await Promise.all(
+      console.log('loading images');
+      const gd = await Promise.all(
         data.map((d) => {
           return new Promise<GridEntryData>((resolve) => {
             const img = new Image();
@@ -48,22 +47,12 @@ export function ImageGallery({ data, desiredMinHeight = 300 }: ImageGalleryProps
             };
           });
         })
-      ));
+      );
+      console.log('images loaded');
+      setTimeout(() => setLoaded(true), 800)
+      setGridData(gd);
     })();
   }, [data]);
-
-  useEffect(() => {
-    if (loading) {
-      if (loadingTimeout.current) {
-        window.clearTimeout(loadingTimeout.current);
-      }
-      loadingTimeout.current = window.setTimeout(() => {
-        if (gridData != null) {
-          setLoading(false);
-        }
-      }, 100);
-    }
-  }, [size.width, gridData]);
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver(entries => {
@@ -87,18 +76,15 @@ export function ImageGallery({ data, desiredMinHeight = 300 }: ImageGalleryProps
   return (
     <div className="image-gallery">
       <div className={`image-grid ${grid.active ? 'single-image-mode' : ''}`} ref={elementRef}>
-        {
-          loading ? <div>loading</div> :
-            grid.data.map((row, i) => (
-              <div
-                className="image-row"
-                key={i}
-                style={{ gridTemplateColumns: row.map((image, j) => `${grid.active ? (grid.active.row === i && grid.active.column === j ? 1 : 0) : image.spaceUsage}fr`).join(' ') }}
-              >
-                {row.map((d) => <ImageEntry key={d.src} data={d} active={d.active} onClick={() => setActive(active ? null : d.src)} />)}
-              </div>
-            ))
-        }
+        {loaded ? grid.data.map((row, i) => (
+          <div
+            className="image-row"
+            key={i}
+            style={{ gridTemplateColumns: row.map((image, j) => `${((grid.active ? (grid.active.row === i && grid.active.column === j ? 1 : 0) : image.spaceUsage) ?? 1)}fr`).join(' ') }}
+          >
+            {row.map((d) => <ImageEntry key={d.src} data={d} active={d.active} onClick={() => setActive(active ? null : d.src)} />)}
+          </div>
+        )) : <div>loading</div>}
       </div>
     </div>
   );
