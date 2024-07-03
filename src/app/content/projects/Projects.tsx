@@ -1,9 +1,10 @@
 import React from 'react';
 import { Cli } from '../../visualization/Cli';
-
-import './Projects.styl';
 import { Icon } from '../../icon/Icon';
 import { IconName } from '../../icon/IconName';
+import { AlphaBinaryClock } from '../../visualization/AlphaBinaryClock';
+
+import './Projects.styl';
 
 
 enum SelectionType { CLI, LIST }
@@ -14,12 +15,46 @@ export function Projects(props: { onClose: () => void }) {
   const [selectedProject, setSelectedProject] = React.useState<string | null>(null);
 
   const projects = [
-    { name: 'Golden Seeds', id: 'gs', link: '...' },
-    { name: 'Pebble Alpha Binary', id: 'alpha', link: '...' },
-    { name: 'Magic Anagram', id: 'magic', link: '...' },
-    { name: 'Glassbox', id: 'glassbox', link: '(Volley)' },
-    { name: 'Concepts', id: 'concepts', link: ' (Canvacity)' },
-    { name: 'inlinegraph', id: 'ig', link: '...' },
+    {
+      name: 'Golden Seeds',
+      id: 'gs',
+      description: 'Web Application to generate SVGs based on mathematical rules.',
+      githubLink: 'https://github.com/tmunz/GoldenSeeds',
+      component: <iframe width='100%' height='100%' src='https://tmunz.github.io/GoldenSeeds/?name=golden+seeds' />,
+    },
+    {
+      name: 'Magic Anagram',
+      id: 'magic',
+      description: 'Animate from a word to an anagram of it.',
+      githubLink: 'https://github.com/tmunz/MagicAnagram',
+      component: <iframe width='100%' height='100%' src='https://tmunz.github.io/MagicAnagram/' />,
+    },
+    {
+      name: 'Pebble Alpha Binary',
+      id: 'alpha',
+      description: 'Binary Watchface for Pebble.',
+      githubLink: 'https://github.com/tmunz/PebbleAlphaBinary',
+      component: <AlphaBinaryClock />,
+    },
+    {
+      name: 'Volley',
+      id: 'volley',
+      description: 'XBox Live Indie Game "Volley" by Glassbox Games (released in 2011)',
+      component: <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/8l27WBWPRrU?si=RXYUEHcWNAUhGPYg" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
+    },
+    {
+      name: 'Canvacity',
+      id: 'canvacity',
+      description: 'Concept for the "Tomorrow Talks" contest',
+      component: <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/DGJMyKJZBu8?si=3Ufo-i-X1Vk_o36w" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
+    },
+    {
+      name: 'Inlinegraph',
+      id: 'ig',
+      description: 'jQuery-Library for inline graphs like heatmap, pie, and boolean representation',
+      githubLink: 'https://github.com/tmunz/inlinegraph',
+      component: <img src="https://raw.githubusercontent.com/tmunz/inlinegraph/master/img/inlinegraph_detail.png" width="100%" />,
+    },
   ];
 
   const cmds: { cmd: string, description: string, exec: (arg?: string) => string }[] = [
@@ -86,8 +121,23 @@ export function Projects(props: { onClose: () => void }) {
       </div>
     </div>
     <div className='project-content'>
-      <h2>{project?.name}</h2>
-      <p>coming soon</p>
+      {
+        project && <>
+          <h2>{project.name}</h2>
+          <p className='info'>{project.description}</p>
+          {project.component}
+          {
+            project.githubLink &&
+            <div className="github-link">
+              <a href={project.githubLink} target='_blank' rel='noopener noreferrer'>
+                <Icon name={IconName.GITHUB} />
+                <label className='tooltip'>Github</label>
+              </a>
+            </div>
+          }
+
+        </>
+      }
     </div>
   </div>;
 }
