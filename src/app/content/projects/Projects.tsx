@@ -61,6 +61,18 @@ export function Projects(props: { onClose: () => void }) {
     { cmd: 'help', exec: () => cmds.map(c => `- ${c.cmd}:\n    ${c.description}`).join('\n'), description: 'lists all commands with descriptions' },
     { cmd: 'ls', exec: () => projects.map(p => `- ${p.name} (${p.id})`).join('\n'), description: 'lists all projects with name and id' },
     {
+      cmd: 'describe', exec: (arg?: string) => {
+        if (!arg) {
+          return 'Please provide a project name';
+        }
+        const project = projects.find(p => p.id === arg || p.name === arg);
+        if (!project) {
+          return 'Project not found';
+        }
+        return project?.description;
+      }, description: 'describes the selected project (name or id)'
+    },
+    {
       cmd: 'open', exec: (arg?: string) => {
         if (!arg) {
           return 'Please provide a project name';
@@ -76,7 +88,7 @@ export function Projects(props: { onClose: () => void }) {
     {
       cmd: 'close', exec: () => {
         if (!selectedProject) {
-          return 'No project selected';
+          return 'No open project to close';
         } else {
           setSelectedProject(null);
           return `Close project ...`;
