@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { WorldMap } from '../visualization/WorldMap';
 
 import './ImageEntry.styl';
@@ -25,13 +25,43 @@ export interface ImageData {
 }
 
 export function ImageEntry({ data, active, setActive }: ImageEntryProps) {
+
+  const [userAction, setUserAction] = useState(false);
+  const timeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const handleUserAction = () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      setUserAction(true);
+      timeoutRef.current = window.setTimeout(() => {
+        setUserAction(false);
+      }, 5000);
+    };
+
+    document.addEventListener('mousemove', handleUserAction);
+    document.addEventListener('keydown', handleUserAction);
+    document.addEventListener('touchstart', handleUserAction);
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      document.removeEventListener('mousemove', handleUserAction);
+      document.removeEventListener('keydown', handleUserAction);
+      document.removeEventListener('touchstart', handleUserAction);
+    };
+  }, []);
+
+
   return (
     <div
       className={`image-entry ${active ? 'active' : ''}`}
       key={data.src}
       style={{ width: data.width, height: data.height }}
     >
-      <div className='image-entry-overlay'>
+      <div className={`image-entry-overlay ${userAction ? 'user-action' : ''}`}>
         <div className="control-bar">
           {data.lat && data.lng && <WorldMap data={{ lat: data.lat, lng: data.lng, name: data.location }} />}
           <div className='header'>
@@ -43,7 +73,7 @@ export function ImageEntry({ data, active, setActive }: ImageEntryProps) {
             <button onClick={() => setActive(+1)}><Icon name={IconName.NEXT} /></button>
           </div>
         </div>
-        <CloseButton onClick={() => setActive(active ? null : 0)} active={ active } />
+        <CloseButton onClick={() => setActive(active ? null : 0)} active={active} />
       </div>
       <img
         srcSet={data.srcSet}

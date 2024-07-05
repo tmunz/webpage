@@ -3,6 +3,20 @@
   max-height: 100%;
   display: inline-block;
 
+
+  &.active .image-entry-overlay.user-action {
+
+    .control-bar {
+      height: 80px;
+      transition: height 0.3s ease 0.2s;
+    }
+
+
+    .close-button.active {
+      clip-path: circle(60px at 50% 100%);
+    }
+  }
+
   img {
     width: 100%;
     height: 100%;
@@ -16,20 +30,30 @@
     right: 0;
     bottom: 0;
     left: 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 80px 1fr;
-    transition: all 1s ease, grid-template-rows 0.2s ease 0.2s;
 
     .close-button {
-      clip-path: circle(70.8% at 50% 50%); /* 1/sqrt(2) */
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      clip-path: circle(70.8% at 50% 50%);
+      align-items: end;
+      /* 1/sqrt(2) */
 
       &.active {
-        clip-path: circle(40px at 50% 50%);
+        clip-path: circle(0 at 50% 100%);
       }
     }
 
     .control-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      height: 0;
+      transition: height 0.2s ease 0.2s;
       position: relative;
       background-color: rgba(0, 0, 0, 0.5);
       display: flex;
@@ -62,6 +86,10 @@
         right: 0;
         bottom: 0;
         display: flex;
+
+        button {
+          min-width: 50px;
+        }
       }
     }
   }
@@ -69,12 +97,5 @@
   .selection-overlay {
     pointer-events: all;
     cursor: pointer;
-  }
-
-  &:not(.active) {
-    .image-entry-overlay {
-      grid-template-rows: 0 100%;
-      transition: all 1s ease, grid-template-rows 0.3s ease 0.2s;
-    }
   }
 }
