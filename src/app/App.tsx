@@ -35,9 +35,14 @@ export function App() {
           key={frame.id}
           active={selectedFrame === frame.id}
           onClick={() => handleClick(frame.id)}
-          {...frame}
+          id={frame.id}
+          title={frame.title}
+          content={frame.content}
+          color={frame.color}
+          imgSrc={frame.imgSrc}
         />
       ))}
     </div>
   );
 }
+''

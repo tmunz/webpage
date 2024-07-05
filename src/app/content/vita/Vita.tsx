@@ -1,7 +1,7 @@
 import React from 'react';
-import { SocialLinks } from '../../icon/SocialLinks';
-import { Icon } from '../../icon/Icon';
-import { IconName } from '../../icon/IconName';
+import { SocialLinks } from '../../ui/icon/SocialLinks';
+import { Icon } from '../../ui/icon/Icon';
+import { IconName } from '../../ui/icon/IconName';
 import { Knowledge } from './Knowledge';
 import { professionalLifeData } from './ProfessionalLifeData';
 

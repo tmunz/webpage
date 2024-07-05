@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageGallery } from '../../visualization/ImageGallery';
+import { ImageGallery } from '../../ui/ImageGallery';
 
 import './Art.styl';
 
@@ -12,6 +12,6 @@ export function Art() {
   ];
 
   return <div className="art">
-     <ImageGallery data={images.map(img => require(`./assets/${img.id}.jpg?{sizes:[200, 400, 720, 1200, 2000], format: "webp"}`))} />
+    <ImageGallery data={images.map(img => require(`./assets/${img.id}.jpg?{sizes:[200, 400, 720, 1200, 2000], format: "webp"}`))} />
   </div>;
 }

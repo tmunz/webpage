@@ -1,5 +1,5 @@
 import React, { MouseEvent, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
-import FrameControl from './FrameControl';
+import CloseButton from './ui/CloseButton';
 
 import './Frame.styl';
 
@@ -89,7 +89,7 @@ export default function Frame(props: FrameProps) {
         </h1>
       </div>
       <div className={`content-container ${props.active ? 'active' : ''}`}>
-        <FrameControl onClick={() => {
+        <CloseButton onClick={() => {
           props.onClick && props.onClick();
           resetPosition(imgRef);
           // resetPosition(titleRef);

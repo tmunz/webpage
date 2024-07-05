@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { ImageGallery } from '../../visualization/ImageGallery';
+import { ImageGallery } from '../../ui/ImageGallery';
 
 import './Photo.styl';
 

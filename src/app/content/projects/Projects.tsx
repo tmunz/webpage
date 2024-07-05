@@ -1,7 +1,7 @@
 import React from 'react';
-import { Cli } from '../../visualization/Cli';
-import { Icon } from '../../icon/Icon';
-import { IconName } from '../../icon/IconName';
+import { Cli } from '../../ui/Cli';
+import { Icon } from '../../ui/icon/Icon';
+import { IconName } from '../../ui/icon/IconName';
 import { AlphaBinaryClock } from '../../visualization/AlphaBinaryClock';
 
 import './Projects.styl';
@@ -41,6 +41,12 @@ export function Projects(props: { onClose: () => void }) {
       id: 'volley',
       description: 'XBox Live Indie Game "Volley" by Glassbox Games (released in 2011)',
       component: <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/8l27WBWPRrU?si=RXYUEHcWNAUhGPYg" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
+    },
+    {
+      name: 'Youmigo',
+      id: 'youmigo',
+      description: 'Award winning Windows Phone App by Glassbox Games - Penpal 2.0',
+      component: <div>TODO</div>,
     },
     {
       name: 'Canvacity',

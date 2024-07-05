@@ -1,0 +1,35 @@
+.image-gallery {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  height: 100%;
+  overflow: auto;
+
+  &.single-image-mode {
+    /* overflow: hidden; /* TODO */
+
+    .image-grid {
+      .image-grid-entry {
+        transition: opacity 0.4s ease, transform 0.4s ease, z-index 0s linear;
+
+        &:not(.active) {
+          opacity: 0;
+          z-index: 0;
+        }
+      }
+    }
+  }
+
+  .image-grid {
+    position: relative;
+
+    .image-grid-entry {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: top left;
+      transition: opacity 0.4s ease, transform 0.4s ease, z-index 0s linear 0.4s;
+      opacity: 1;
+      z-index: 1;
+    }
+  }
+}
