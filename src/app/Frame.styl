@@ -60,6 +60,10 @@
     grid-template-rows: 100% 0fr;
     transition: all 1s ease;
 
+    &>.close-button {
+      border-bottom: 1px solid white;
+    }
+
     &.active {
       grid-template-rows: 40px 1fr;
     }
@@ -68,6 +72,7 @@
       margin-left: 45px;
       padding:  15px;
       overflow: auto;
+      transition: overflow 0s linear 1s;
     }
   }
 }

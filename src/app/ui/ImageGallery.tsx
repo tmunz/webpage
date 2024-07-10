@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ImageEntry, ImageData } from './ImageEntry';
-import { Loading } from './Loading';
 import { GridEntryData, generateGrid } from './ImageGalleryGridGenerator';
 
 import './ImageGallery.styl';
@@ -48,8 +47,9 @@ export function ImageGallery({ data, desiredMinHeight = 250, gap = 20 }: ImageGa
   useEffect(() => {
     const resizeObserver = new ResizeObserver(entries => {
       for (let entry of entries) {
-        const { width, height } = entry.contentRect;
-        setSize({ width, height });
+        if (entry.target instanceof HTMLDivElement) {
+          setSize({ width: Math.floor(entry.target.offsetWidth), height: Math.floor(entry.target.offsetHeight) });
+        }
       }
     });
 
@@ -66,13 +66,15 @@ export function ImageGallery({ data, desiredMinHeight = 250, gap = 20 }: ImageGa
 
   const singleImageMode = activeImageId !== null;
 
+  console.log(size);
+
   return (
     <div className={`image-gallery ${singleImageMode ? 'single-image-mode' : ''}`} ref={elementRef}>
       <div
         className='image-grid'
         style={{ height: grid.height }}
       >
-        {loaded ? grid.data.map((d) => {
+        {grid.data.map((d) => {
           const inactiveTargetScale = 0.9;
           const gridScale = Math.max(d.width / size.width, d.height / size.height);
           const isActive = activeImageId === d.src;
@@ -85,9 +87,12 @@ export function ImageGallery({ data, desiredMinHeight = 250, gap = 20 }: ImageGa
           return <div
             className={`image-grid-entry ${isActive ? 'active' : ''}`}
             key={d.src}
-            style={{ transform: `translate3d(${translate.x}px, ${translate.y}px, ${translate.z}px) scale(${scale})` }}
+            style={{
+              transform: `translate3d(${translate.x}px, ${translate.y}px, ${translate.z}px) scale(${scale})`,
+              minWidth: `${d.width / gridScale}px`, minHeight: `${d.height / gridScale}px`
+            }}
           >
-            <ImageEntry
+            {loaded && <ImageEntry
               data={{ ...d, width: d.width / gridScale, height: d.height / gridScale }}
               active={d.active}
               setActive={(e) => {
@@ -97,10 +102,9 @@ export function ImageGallery({ data, desiredMinHeight = 250, gap = 20 }: ImageGa
                   const i = gridData.findIndex((gd) => gd.src === d.src);
                   setActiveImageId(gridData[(i + e + gridData.length) % gridData.length].src);
                 }
-              }} />
+              }} />}
           </div>
-        })
-          : <Loading />}
+        })}
       </div>
     </div>
   );

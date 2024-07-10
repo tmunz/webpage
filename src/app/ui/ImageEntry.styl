@@ -3,17 +3,28 @@
   max-height: 100%;
   display: inline-block;
 
+  &.active {
+    .control-button {
+      background-color: rgba(255, 255, 255, 0.1);
 
-  &.active .image-entry-overlay.user-action {
-
-    .control-bar {
-      height: 80px;
-      transition: height 0.3s ease 0.2s;
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
     }
 
+    .image-entry-overlay.user-action {
+      .info-bar {
+        height: 80px;
+      }
 
-    .close-button.active {
-      clip-path: circle(60px at 50% 100%);
+      .control-button {
+        backdrop-filter: blur(5px);
+        clip-path: circle(30px at 50% calc(100% - 20px));
+
+        &.close-button.active {
+          clip-path: circle(60px at 50% 100%);
+        }
+      }
     }
   }
 
@@ -31,30 +42,58 @@
     bottom: 0;
     left: 0;
 
-    .close-button {
+    .control-button {
       position: absolute;
+      left: 0;
       top: 0;
       right: 0;
       bottom: 0;
-      left: 0;
-      clip-path: circle(70.8% at 50% 50%);
+      fill: white;
+      mix-blend-mode: difference;
+      backdrop-filter: blur(0);
+      display: flex;
       align-items: end;
-      /* 1/sqrt(2) */
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.0);
+      transition: background-color 0.4s ease, clip-path 0.4s ease;
 
-      &.active {
-        clip-path: circle(0 at 50% 100%);
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      &.close-button {
+        clip-path: circle(70.8% at 50% 50%);
+
+        &.active {
+          clip-path: circle(0% at 50% 100%);
+        }
+      }
+
+      &.prev-button,
+      &.next-button {
+        clip-path: circle(0% at 50% 100%);
+        width: 160px;
+
+        &.prev-button {
+          left: auto;
+          right: 50%;
+        }
+
+        &.next-button {
+          left: 50%;
+          right: auto;
+        }
       }
     }
 
-    .control-bar {
+    .info-bar {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      height: 0px;
       z-index: 2;
-      height: 0;
-      transition: height 0.2s ease 0.2s;
-      position: relative;
+      transition: height 0.6s ease;
       background-color: rgba(0, 0, 0, 0.5);
       display: flex;
       justify-content: space-between;
@@ -68,27 +107,12 @@
       }
 
       .header {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
+        width: 100%;
         text-align: center;
         color: #fff;
 
         .location {
           color: #aaa;
-        }
-      }
-
-      .controls {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        display: flex;
-
-        button {
-          min-width: 50px;
         }
       }
     }
