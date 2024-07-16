@@ -9,6 +9,9 @@ module.exports = (env) => ({
   entry: {
     app: path.resolve(__dirname, '..', './src/index.tsx'),
   },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.json', '.styl'],
+  },
   module: {
     rules: [{
       test: /\.((j|t)sx?)$/,
@@ -91,7 +94,4 @@ module.exports = (env) => ({
       }
     }),
   ],
-  resolve: {
-    extensions: ['.js', '.ts', '.tsx', '.styl']
-  },
 });

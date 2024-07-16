@@ -2,9 +2,10 @@ import React from 'react';
 import { Cli } from '../../ui/Cli';
 import { Icon } from '../../ui/icon/Icon';
 import { IconName } from '../../ui/icon/IconName';
-import { AlphaBinaryClock } from '../../visualization/AlphaBinaryClock';
+import { PebbleAlphaBinary } from './PebbleAlphaBinary';
 
 import './Projects.styl';
+
 
 
 enum SelectionType { CLI, LIST }
@@ -34,13 +35,13 @@ export function Projects(props: { onClose: () => void }) {
       id: 'alpha',
       description: 'Binary Watchface for Pebble.',
       githubLink: 'https://github.com/tmunz/PebbleAlphaBinary',
-      component: <AlphaBinaryClock />,
+      component: <PebbleAlphaBinary />,
     },
     {
       name: 'Volley',
       id: 'volley',
       description: 'XBox Live Indie Game "Volley" by Glassbox Games (released in 2011)',
-      component: <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/8l27WBWPRrU?si=RXYUEHcWNAUhGPYg" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
+      component: <iframe width="100%" height="315" src="https://www.youtube-nocookie.com/embed/8l27WBWPRrU?si=RXYUEHcWNAUhGPYg" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
     },
     {
       name: 'Youmigo',
@@ -52,7 +53,7 @@ export function Projects(props: { onClose: () => void }) {
       name: 'Canvacity',
       id: 'canvacity',
       description: 'Concept for the "Tomorrow Talks" contest',
-      component: <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/DGJMyKJZBu8?si=3Ufo-i-X1Vk_o36w" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
+      component: <iframe width="100%" height="315" src="https://www.youtube-nocookie.com/embed/DGJMyKJZBu8?si=3Ufo-i-X1Vk_o36w" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
     },
     {
       name: 'Inlinegraph',

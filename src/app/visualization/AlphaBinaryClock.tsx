@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-interface AlphaBinaryClockProps {
+export interface AlphaBinaryClockProps {
+  windowWidth?: number;
+  windowHeight?: number;
   backgroundDark?: boolean;
   fillColor?: string;
   borderColor?: string;
@@ -14,26 +16,29 @@ interface AlphaBinaryClockProps {
   is24hStyle?: boolean;
 }
 
-const WINDOW_WIDTH = 144;
-const WINDOW_HEIGHT = 168;
-
-const DATE_TYPE = 0;
-const TIME_TYPE = 1;
+enum DatePart {
+  DATE,
+  TIME,
+}
 
 const MAX_ROWS = [6, 4, 6, 5, 6, 6];
 
 const COLS = 3;
-const YEAR_COL = 2;
-const MONTH_COL = 1;
+
 const DAY_COL = 0;
+const MONTH_COL = 1;
+const YEAR_COL = 2;
+
 const HOURS_COL = 0;
 const MINUTES_COL = 1;
 const SECONDS_COL = 2;
 
 export function AlphaBinaryClock({
+  windowWidth = 144,
+  windowHeight = 168,
   backgroundDark = true,
-  fillColor = '#FFA500',
-  borderColor = '#D3D3D3',
+  fillColor = '#ff7403',
+  borderColor = '#d3d3d3',
   relativeCornerRadius = 0.5,
   borderWidth = 2,
   borderPadding = 1,
@@ -44,9 +49,9 @@ export function AlphaBinaryClock({
   is24hStyle = true,
 }: AlphaBinaryClockProps) {
   
-  const DATE_CELL_SIZE = (WINDOW_HEIGHT - ((Math.max(...MAX_ROWS) - 1) * verticalSpace)) / Math.max(...MAX_ROWS);
+  const DATE_CELL_SIZE = (windowWidth - ((Math.max(...MAX_ROWS) - 1) * verticalSpace)) / Math.max(...MAX_ROWS);
   const TIME_CELL_SIZE = DATE_CELL_SIZE - (2 * (borderWidth + borderPadding));
-  const HORIZONTAL_SIDE_PADDING = (WINDOW_WIDTH - (COLS * DATE_CELL_SIZE + (COLS - 1) * horizontalSpace)) / 2;
+  const HORIZONTAL_SIDE_PADDING = (windowWidth - (COLS * DATE_CELL_SIZE + (COLS - 1) * horizontalSpace)) / 2;
 
   const [time, setTime] = useState(new Date());
 
@@ -58,7 +63,7 @@ export function AlphaBinaryClock({
 
   const getCenterPointFromCellLocation = (i: number, j: number) => {
     const x = HORIZONTAL_SIDE_PADDING + i * (DATE_CELL_SIZE + horizontalSpace) + DATE_CELL_SIZE / 2;
-    const y = WINDOW_HEIGHT - ((j + 0.5) * (DATE_CELL_SIZE + verticalSpace));
+    const y = windowHeight - ((j + 0.5) * (DATE_CELL_SIZE + verticalSpace));
     return { x, y };
   };
 
@@ -116,13 +121,13 @@ export function AlphaBinaryClock({
     );
   };
 
-  const drawCol = (digit: number, type: number, col: number) => {
+  const drawCol = (digit: number, type: DatePart, col: number) => {
     const cells = [];
     for (let row = 0; row < MAX_ROWS[isBorderDate ? col : (col + 3)]; row++) {
       const center = getCenterPointFromCellLocation(col, row);
       const filled = (digit >> row) & 0x1 ? true : false;
       cells.push(
-        type === DATE_TYPE
+        type === DatePart.DATE
           ? drawDateCell(center, (isBorderDate && filled) || (!isBorderDate && hasBorder))
           : drawTimeCell(center, filled)
       );
@@ -131,13 +136,13 @@ export function AlphaBinaryClock({
   };
 
   return (
-    <svg width={WINDOW_WIDTH} height={WINDOW_HEIGHT} style={{ backgroundColor: backgroundDark ? 'black' : 'white' }}>
-      {drawCol(time.getFullYear() % 100, DATE_TYPE, YEAR_COL)}
-      {drawCol(time.getMonth() + 1, DATE_TYPE, MONTH_COL)}
-      {drawCol(time.getDate(), DATE_TYPE, DAY_COL)}
-      {drawCol(getDisplayHour(time.getHours()), TIME_TYPE, HOURS_COL)}
-      {drawCol(time.getMinutes(), TIME_TYPE, MINUTES_COL)}
-      {drawCol(time.getSeconds(), TIME_TYPE, SECONDS_COL)}
+    <svg width={windowWidth} height={windowHeight} style={{ backgroundColor: backgroundDark ? 'black' : 'white' }}>
+      {drawCol(time.getFullYear() % 100, DatePart.DATE, YEAR_COL)}
+      {drawCol(time.getMonth() + 1, DatePart.DATE, MONTH_COL)}
+      {drawCol(time.getDate(), DatePart.DATE, DAY_COL)}
+      {drawCol(getDisplayHour(time.getHours()), DatePart.TIME, HOURS_COL)}
+      {drawCol(time.getMinutes(), DatePart.TIME, MINUTES_COL)}
+      {drawCol(time.getSeconds(), DatePart.TIME, SECONDS_COL)}
     </svg>
   );
 };
