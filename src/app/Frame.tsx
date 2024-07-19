@@ -8,7 +8,6 @@ export interface FrameProps {
   id: string;
   title: string;
   content: ReactNode;
-  color: string;
   imgSrc: string;
   onClick?: () => void;
   active?: boolean;
@@ -54,7 +53,6 @@ export default function Frame(props: FrameProps) {
     <div
       key={props.id}
       className={`frame ${props.id}-frame ${props.active ? 'active' : ''}`}
-      style={{ backgroundColor: props.color }}
       onMouseMove={event => {
         if (parallaxBackground) {
           setParallaxPosition(event, imgRef, -0.1);

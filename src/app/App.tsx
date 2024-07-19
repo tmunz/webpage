@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Frame, { FrameProps } from './Frame';
 import { Vita } from './content/vita/Vita';
 import { Art } from './content/art/Art';
@@ -11,22 +12,33 @@ import './App.styl';
 
 export function App() {
 
+  const navigate = useNavigate();
+  const location = useLocation();
   const [selectedFrame, setSelectedFrame] = useState<null | string>(null);
 
   const frames: FrameProps[] = [
-    { id: 'about', title: 'Vita', content: <Vita />, color: 'skyblue', imgSrc: './content/vita/vita_title.jpg' },
-    { id: 'photo', title: 'Photography', content: <Photo />, color: 'green', imgSrc: './content/photo/photo_title.jpg' },
-    { id: 'art', title: 'Art / Design', content: <Art />, color: 'orange', imgSrc: './content/art/art_title.jpg' },
-    {
-      id: 'projects', title: 'Projects / Coding' /* / Concepts / Creations */, content:
-        <Projects onClose={() => handleClick('projects')} />, color: 'lightgrey', imgSrc: './content/projects/projects_title.svg'
-    },
-    { id: 'lego', title: 'Lego', content: <Lego />, color: 'red', imgSrc: './content/lego/lego_title.jpg' },
+    { id: 'about', title: 'Vita', content: <Vita />, imgSrc: './content/vita/vita_title.jpg' },
+    { id: 'photo', title: 'Photography', content: <Photo />, imgSrc: './content/photo/photo_title.jpg' },
+    { id: 'art', title: 'Art / Design', content: <Art />, imgSrc: './content/art/art_title.jpg' },
+    /* / Concepts / Creations */
+    { id: 'projects', title: 'Projects / Coding', content: <Projects onClose={() => handleClick('projects')} />, imgSrc: './content/projects/projects_title.svg' },
+    { id: 'lego', title: 'Lego', content: <Lego />, imgSrc: './content/lego/lego_title.jpg' },
   ];
 
   const handleClick = (id: string) => {
-    setSelectedFrame(id === selectedFrame ? null : id);
+    const selectedId = id === selectedFrame ? null : id;
+    setSelectedFrame(selectedId);
+    navigate(`/${selectedId || ''}`);
   };
+
+  useEffect(() => {
+    const path = location.pathname.slice(1); // Remove the leading slash
+    if (frames.some(frame => frame.id === path)) {
+      setSelectedFrame(path);
+    } else {
+      setSelectedFrame(null);
+    }
+  }, [location.pathname]);
 
   return (
     <div className="app">
@@ -38,11 +50,9 @@ export function App() {
           id={frame.id}
           title={frame.title}
           content={frame.content}
-          color={frame.color}
           imgSrc={frame.imgSrc}
         />
       ))}
     </div>
   );
 }
-''

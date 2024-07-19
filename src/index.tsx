@@ -1,5 +1,6 @@
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { App } from './app/App';
 
 import './variables.styl';
@@ -10,7 +11,10 @@ if (appElement) {
   createRoot(appElement).render(
     <StrictMode>
       <script>{`var version = "${process.env.APP_VERSION}"`}</script>
-      <App />
+      <Router>
+        <App /> 
+      </Router>
     </StrictMode>
   );
 }
+

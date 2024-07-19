@@ -13,9 +13,13 @@
       top: 0;
       left: 0;
       transform-origin: top left;
-      transition: opacity 0.4s ease, transform 0.4s ease, z-index 0s linear 0.4s;
-      opacity: 1;
+      transition: opacity 1s ease, transform 0.4s ease, z-index 0s linear 0.4s;
+      opacity: 0;
       z-index: 1;
+
+      &.show {
+        opacity: 1;
+      }
 
       .image-entry {
         width: 100%;

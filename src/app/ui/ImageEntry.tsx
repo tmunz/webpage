@@ -23,7 +23,7 @@ export interface ImageData {
   height?: number;
 }
 
-export function ImageEntry({ data, active, onLoaded, hideInfo, delay }: ImageEntryProps) {
+export function ImageEntry({ data, active, onLoaded, hideInfo, delay = 0 }: ImageEntryProps) {
 
   const [loaded, setLoaded] = useState(false);
 
@@ -38,7 +38,7 @@ export function ImageEntry({ data, active, onLoaded, hideInfo, delay }: ImageEnt
 
   return (
     <div
-      className={`image-entry ${active ? 'active' : ''}`}
+      className={`image-entry ${active ? 'active' : ''} ${!loaded ? 'loading' : ''}`}
       style={{ width: data.width, height: data.height }}
     >
       <div className='image-entry-overlay'>
@@ -51,7 +51,7 @@ export function ImageEntry({ data, active, onLoaded, hideInfo, delay }: ImageEnt
         </div>
       </div>
       <img
-        className={`image-entry-img ${loaded ? '' : 'loading'}`}
+        className={`image-entry-img`}
         srcSet={data.srcSet}
         src={data.src}
       />

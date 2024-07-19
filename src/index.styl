@@ -6,7 +6,6 @@ body {
   padding: 0;
   background: unquote('rgb(var(--backgroundColor))');
   color: var(--textColor);
-  /* transition: .4s ease-in-out all; */
 }
 
 h1 {
@@ -95,30 +94,22 @@ button {
   color: var(--textColorLight);
 }
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--textColor) unquote('rgb(var(--backgroundColor))');
-
-  &::hover {
-    scrollbar-color: var(--actionColor) unquote('rgb(var(--backgroundColor))');
+*::-webkit-scrollbar-thumb {
+  background: var(--scrollbarThumb);
+  border: 4px solid transparent;
+  border-radius: 8px;
+  background-clip: padding-box;  
+  &:hover {
+    background: var(--scrollbarThumbHover);
+    background-clip: padding-box;  
   }
 }
 
 *::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 16px;
+  height: 16px;
 }
 
 *::-webkit-scrollbar-track {
-  background: unquote('rgb(var(--backgroundColor))');
-  border-radius: 5px;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: var(--textColor);
-  border-radius: 5px;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: var(--actionColor);
+  background: var(--scrollbarColor);
 }
