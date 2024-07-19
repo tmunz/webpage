@@ -2,26 +2,8 @@
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(5px);
   height: 100%;
-  overflow: auto;
-
-  &.single-image-mode {
-    overflow: hidden;
-
-    .image-grid {
-      .image-grid-entry {
-        transition: opacity 0.4s ease, transform 0.4s ease, z-index 0s linear;
-
-        &:not(.active) {
-          opacity: 0;
-          z-index: 0;
-
-          button {
-            pointer-events: none;
-          }
-        }
-      }
-    }
-  }
+  overflow-x: hidden;
+  overflow-y: auto;
 
   .image-grid {
     position: relative;
@@ -34,15 +16,70 @@
       transition: opacity 0.4s ease, transform 0.4s ease, z-index 0s linear 0.4s;
       opacity: 1;
       z-index: 1;
-      background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
-      background-size: 200% 100%;
-      animation: 1.5s shine linear infinite;
+
+      .image-entry {
+        width: 100%;
+        height: 100%;
+      }
+
+      .open-button {
+        position: absolute;
+        display: block;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0;
+        background-color: rgba(255, 255, 255, 0.2);
+        transition: opacity 0.6s ease;
+
+        &:hover {
+          opacity: 1;          
+        }
+      }
     }
   }
-}
 
-@keyframes shine {
-  to {
-    background-position-x: -200%;
+  .control-buttons {
+    position: sticky;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+    grid-template-rows: 1fr;
+    background-color: rgba(0, 0, 0, 0.5);
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 80px;
+    overflow: hidden;
+    opacity: 1;
+    transition: height 0s linear, opacity 0.6s ease;
+
+    &.hide-controls {
+      opacity: 0;
+      height: 0;
+      transition: height 0s linear 0.6s, opacity 0.6s ease;
+    }
+  }
+
+  &.single-image-mode {
+    overflow: hidden;
+
+    .image-grid {
+      .image-grid-entry {
+        transition: opacity 0.4s ease, transform 0.4s ease, z-index 0s linear;
+
+        .open-button {
+          pointer-events: none;
+          transition: background-color 0.8s ease 0.4s;
+          background-color: rgba(255, 255, 255, 0.0);
+        }
+
+        &:not(.active) {
+          opacity: 0;
+          z-index: 0;
+        }
+      }
+    }
   }
 }

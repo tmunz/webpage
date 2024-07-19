@@ -3,8 +3,8 @@ import { ImageData } from './ImageEntry';
 export interface GridEntryData extends ImageData {
   width: number;
   height: number;
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
   active?: boolean;
 }
 

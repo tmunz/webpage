@@ -46,8 +46,6 @@ export function Knowledge() {
     setActivationState(ActivationState.ACTIVE);
   }
 
-  console.log(nodes, size)
-
   return <div className="knowledge" ref={elementRef}>
     {activationState == ActivationState.INACTIVE && <button onClick={() => setActive()}>
       Show Knowledge Graph
