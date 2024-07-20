@@ -17,13 +17,13 @@ export function App() {
   const [selectedFrame, setSelectedFrame] = useState<null | string>(null);
 
   const frames: FrameProps[] = [
-    { id: 'about', title: 'Vita', content: <Vita />, imgSrc: './content/vita/vita_title.jpg' },
+    { id: 'projects', title: 'Projects / Coding', content: <Projects onClose={() => handleClick('projects')} />, imgSrc: './content/projects/projects_title.svg' },
     { id: 'photo', title: 'Photography', content: <Photo />, imgSrc: './content/photo/photo_title.jpg' },
+    { id: 'vita', title: 'Vita', content: <Vita />, imgSrc: './content/vita/vita_title.jpg' },
+    { id: 'lego', title: 'Lego', content: <Lego />, imgSrc: './content/lego/lego_title.jpg' },
     { id: 'art', title: 'Art / Design', content: <Art />, imgSrc: './content/art/art_title.jpg' },
     /* / Concepts / Creations */
-    { id: 'projects', title: 'Projects / Coding', content: <Projects onClose={() => handleClick('projects')} />, imgSrc: './content/projects/projects_title.svg' },
-    { id: 'lego', title: 'Lego', content: <Lego />, imgSrc: './content/lego/lego_title.jpg' },
-  ];
+      ];
 
   const handleClick = (id: string) => {
     const selectedId = id === selectedFrame ? null : id;

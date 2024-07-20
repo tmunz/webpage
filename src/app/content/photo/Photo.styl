@@ -11,35 +11,5 @@
 }
 
 .photo {
-  object-fit: none;
   height: 100%;
-
-  .map-label {
-    color: white;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    pointer-events: auto;
-    cursor: pointer;
-    white-space: nowrap;
-    text-align: center;
-
-    img {
-      clip-path: circle();
-      max-width: 100px;
-      max-height: 100px;
-      transition: all 0.6s ease;
-    }
-
-    &:hover {
-      img {
-        max-width: 120px;
-        max-height: 120px;
-      }
-    }
-
-    .location {
-      font-size: 0.8em;
-      color: grey;
-    }
-  }
 }

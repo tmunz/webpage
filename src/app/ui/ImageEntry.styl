@@ -1,11 +1,11 @@
 .image-entry {
-
-  background: linear-gradient(110deg, rgba(200, 200, 200, 0.2) 20%, rgba(230, 230, 230, 0.3) 30%, rgba(200, 200, 200, 0.2) 45%);
-  background-size: 200% 100%;
-  animation: 1.5s loading linear infinite;
-  transform: width 0.4s ease, height 0.4s ease, opacity 1s ease;
+  transform: width 0.4s linear, height 0.4s linear;
 
   &.loading {
+    animation: 1.5s loading linear infinite;
+    background: linear-gradient(110deg, rgba(200, 200, 200, 0.2) 20%, rgba(230, 230, 230, 0.3) 30%, rgba(200, 200, 200, 0.2) 45%);
+    background-size: 200% 100%;
+
     .image-entry-img {
       opacity: 0;
     }
@@ -62,11 +62,6 @@
         }
       }
     }
-  }
-
-  .selection-overlay {
-    pointer-events: all;
-    cursor: pointer;
   }
 }
 
