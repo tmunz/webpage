@@ -41,7 +41,7 @@ module.exports = (env) => ({
       test: /\.(ttf|eot|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       type: 'asset/resource',
     }, {
-      test: /\.glb$/,
+      test: /\.glb$|\.hdr$/,
       type: 'asset/resource',
     }, {
       test: /\.jpe?g$|\.gif$|\.png$/i,

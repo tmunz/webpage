@@ -1,10 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { Object3D, AnimationMixer, AnimationClip, AnimationAction, LoopOnce } from 'three';
-// @ts-ignore
-import * as ThreeFiber from '@react-three/fiber/dist/declarations/src/index';
-// @ts-ignore
-import { Canvas, Group, useFrame, useLoader, invalidate } from '@react-three/fiber';
+import { Object3D, AnimationMixer, AnimationClip, AnimationAction, LoopOnce, Group } from 'three';
+import { Canvas, useFrame, useLoader, invalidate } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
 interface ModelProps {
@@ -30,7 +27,7 @@ export const ProjectBrickstorm = () => {
 };
 
 const Model = ({ onLoad }: ModelProps) => {
-  const file = useLoader(GLTFLoader, require('./models/eiffel_tower_4_3.glb'));
+  const file = useLoader(GLTFLoader, require('./models/eiffel_tower_4_3.glb')) as unknown as { scene: Object3D, animations: AnimationClip[] };
   const mixer = useRef<AnimationMixer | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const sceneRef = useRef<Group>(null!);

@@ -2,8 +2,8 @@ import React from 'react';
 import { SocialLinks } from '../../ui/icon/SocialLinks';
 import { Icon } from '../../ui/icon/Icon';
 import { IconName } from '../../ui/icon/IconName';
-import { Knowledge } from './Knowledge';
 import { professionalLifeData } from './ProfessionalLifeData';
+import { Knowledge } from './Knowledge';
 
 import './Vita.styl';
 
@@ -55,6 +55,6 @@ export function Vita() {
         </div>
       </div>
     </div>
-    {false && <Knowledge /> /* TODO */}
+    {false && <Knowledge />}
   </div >;
 }

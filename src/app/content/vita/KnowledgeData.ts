@@ -44,7 +44,7 @@ export const nodeData: KnowledeNodeData[] = [
   { id: 'scrum', name: 'Scrum' },
   { id: 'agile', name: 'Agile' },
   { id: 'kanban', name: 'Kanban' },
-  { id: 'cloud' },
+  { id: 'cloud', name: 'Cloud' },
   { id: 'aws', name: 'AWS' },
   { id: 'azure', name: 'Azure' },
   { id: 'k8s', name: 'Kubernetes' },
@@ -66,7 +66,7 @@ export const nodeData: KnowledeNodeData[] = [
   { id: 'webgl', name: 'WebGL / OpenGL' },
 ];
 
-export const linkData:  KnowledeLinkData[] = [
+export const linkData: KnowledeLinkData[] = [
   { source: 'root', target: 'java' },
   { source: 'java', target: 'spring' },
   { source: 'java', target: 'ee' },
