@@ -55,6 +55,6 @@ export function Vita() {
         </div>
       </div>
     </div>
-    {false && <Knowledge />}
+    { false && <Knowledge /> }
   </div >;
 }

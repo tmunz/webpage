@@ -1,5 +1,5 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
-import { MathUtils, Quaternion, Vector3 } from 'three';
+import React, { forwardRef } from 'react';
+import { Quaternion, Vector3 } from 'three';
 import { useThree } from '@react-three/fiber';
 import { a, useSpring } from '@react-spring/three';
 import { useGesture, FullGestureState } from '@use-gesture/react'; // Import FullGestureState

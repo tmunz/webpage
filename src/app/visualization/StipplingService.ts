@@ -4,6 +4,17 @@ interface ImgData {
   height: number;
 }
 
+interface Point {
+  x: number;
+  y: number;
+}
+
+interface Stippling {
+  points: Point[];
+  width: number;
+  height: number;
+}
+
 export class StipplingService {
 
   private static instance: StipplingService | null = null;
@@ -17,19 +28,15 @@ export class StipplingService {
     return StipplingService.instance;
   };
 
-  generate = async (params: { imgPath: string, width: number, height: number, samples: number, threshold: number }): Promise<{ x: number, y: number }[]> => {
-    if (params.width <= 0) {
-      return [];
-    }
-    const imgData: ImgData = { ...(await this.getImgData(params.imgPath, params.width, params.height)) };
-    
-    const points = this.sample(imgData, params.samples, params.threshold);
-    return points;
+  generate = async (params: { imgPath: string, samples: number, threshold: number }):
+    Promise<Stippling> => {
+    const imgData: ImgData = { ...(await this.getImgData(params.imgPath)) };
+    return { points: this.sample(imgData, params.samples, params.threshold), width: imgData.width, height: imgData.height };
   }
 
-  sample = (imgData: ImgData, samples: number, threshold: number): { x: number, y: number }[] => {
+  sample = (imgData: ImgData, samples: number, threshold: number): Point[] => {
+    const samplePoints = [];
     const possiblePoints = [];
-    const sampledPoints = []
     for (let i = 0; i < imgData.data.length; i++) {
       if (threshold <= imgData.data[i]) {
         possiblePoints.push({ x: i % imgData.width, y: Math.floor(i / imgData.width) });
@@ -39,10 +46,11 @@ export class StipplingService {
       console.warn('no possible points for samples');
     } else {
       for (let i = 0; i < samples; i++) {
-        sampledPoints.push(possiblePoints[Math.floor((Math.random() * possiblePoints.length))]);
+        const point = possiblePoints[Math.floor((Math.random() * possiblePoints.length))];
+        samplePoints.push(point);
       }
     }
-    return sampledPoints;
+    return samplePoints;
   }
 
   // lightness part of rgb to hsl algorithm 
@@ -53,12 +61,12 @@ export class StipplingService {
     return (Math.min(r, g, b) + Math.max(r, g, b)) / 2;
   }
 
-  private getImgData = async (imgPath: string, width: number, height: number): Promise<ImgData> => {
+  private getImgData = async (imgPath: string): Promise<ImgData> => {
     const img = await (await fetch(imgPath)).blob();
     const imageBitmap = await createImageBitmap(img);
     const canvas = document.createElement('canvas');
-    const w = Math.floor(width);
-    const h = Math.floor(height);
+    const w = Math.floor(imageBitmap.width);
+    const h = Math.floor(imageBitmap.height);
     canvas.width = w
     canvas.height = h;
     let context = canvas.getContext('2d');

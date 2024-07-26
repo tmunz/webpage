@@ -1,34 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Vector3, Matrix4, Color } from 'three';
-import { NetworkLink as LayoutNetworkLink, NetworkNode as LayoutNetworkNode, NetworkNode3d, usePositions } from './NetworkGraphLayoutService';
-import { useFrame } from '@react-three/fiber';
-import { DragControls, Line, Sphere, Stats, Text, useMatcapTexture, MeshTransmissionMaterial } from '@react-three/drei';
-import { NetworkGraphControls } from './NetworkGraphControls';
-
-const nodeMaterialProps = {
-  background: new Color('#839681'),
-  backside: false,
-  samples: 1,
-  resolution: 1028,
-  transmission: 1,
-  roughness: 0,
-  thickness: 3.5,
-  ior: 1.5,
-  chromaticAberration: 0.06,
-  anisotropy: 0.1,
-  distortion: 0.1,
-  distortionScale: 0.3,
-  temporalDistortion: 0.5,
-  clearcoat: 1,
-  attenuationDistance: 0.5,
-  attenuationColor: '#ffffff',
-  color: 0x0077ff,
-  opacity: 0.2,
-};
-
-const NODE_MATERIAL = <MeshTransmissionMaterial {...nodeMaterialProps} />;
-const NODE_MATERIAL_TOUCHED = <MeshTransmissionMaterial {... { ...nodeMaterialProps, color: 0xff0000 }} />
-const NODE_MATERIAL_FOCUS = <MeshTransmissionMaterial {... { ...nodeMaterialProps, color: 0x00ff00 }} />
+import React, { useState, useRef, useEffect } from 'react';
+import { Vector3, Matrix4, Quaternion } from 'three';
+import { NetworkLink as LayoutNetworkLink, NetworkNode as LayoutNetworkNode, NetworkNode3d, convertTo3d, updateNodePositions } from './NetworkGraphLayoutService';
+import { invalidate, useFrame } from '@react-three/fiber';
+import { DragControls, Stats } from '@react-three/drei';
+import { NetworkGraphControls, } from './NetworkGraphControls';
+import { NetworkGraphNode } from './NetworkGraphNode';
+import { NetworkGraphPath } from './NetworkGraphPath';
+import { calculateTransformationMatrix } from './NetworkGraphCalculator';
 
 export interface NetworkLink extends LayoutNetworkLink { };
 export interface NetworkNode extends LayoutNetworkNode { };
@@ -39,98 +17,87 @@ export interface Props {
 
 export function NetworkGraph(props: Props) {
 
-  let { current: requestAnimation } = useRef<boolean>(false);
+  const { current: transformationVector } = useRef(new Vector3());
 
-  const [objectInFocus, setObjectInFocus] = useState<string | null>(null);
-  const [dragNode, setDragNode] = useState<{ node: NetworkNode3d, origin: Vector3 } | null>(null);
-  const dataRef = useRef({ ...props.data });
-  const [time, setTime] = useState({ elapsed: 0, delta: 0 });
-  const textMatcap = useMatcapTexture("C7C7D7_4C4E5A_818393_6C6C74");
-  const objectOrientationRef = useRef<any>();
+  const orientationRef = useRef<{ quaternion: Quaternion }>({ quaternion: new Quaternion() });
 
   const nodeObjectMap = useRef(new Map<string, any>());
+  const linkObjectMap = useRef(new Map<string, any>());
 
-  let renderData = usePositions(dataRef.current, time.delta);
+  const dataRef = useRef(convertTo3d(props.data.nodes, props.data.links));
+
+  const [objectInFocus, setObjectInFocus] = useState<string | null>(null);
+  const [dragNode, setDragNode] = useState<NetworkNode3d | null>(null);
 
   useEffect(() => {
-    dataRef.current = { nodes: props.data.nodes, links: props.data.links };
+    dataRef.current = convertTo3d(props.data.nodes, props.data.links);
+    invalidate();
   }, [props.data]);
 
   useFrame((state, delta) => {
-    const groupQuaternion = objectOrientationRef.current.quaternion.clone().invert();
+    const groupQuaternion = orientationRef.current.quaternion.clone().invert();
     const cameraQuaterion = state.camera.quaternion;
-    nodeObjectMap.current?.forEach((v, k) => v.quaternion.multiplyQuaternions(groupQuaternion, cameraQuaterion));
-
-    if (requestAnimation || !renderData.animationCompleted) { // TODO handel !renderData.animationCompleted differently
-      requestAnimation = false;
-      setTime({ elapsed: state.clock.getElapsedTime(), delta });
-    }
+    updateNodePositions(dataRef.current.nodes, dataRef.current.linkMap, delta);
+    nodeObjectMap.current?.forEach((v, k) => {
+      const updatedNodePositions = dataRef.current.nodeMap.get(k);
+      if (updatedNodePositions) {
+        v.quaternion.multiplyQuaternions(groupQuaternion, cameraQuaterion);
+        v.position.set(updatedNodePositions.x, updatedNodePositions.y, updatedNodePositions.z);
+      }
+    });
+    linkObjectMap.current?.forEach((v, k) => {
+      const { sourceId, targetId } = v.userData;
+      const source = dataRef.current.nodeMap.get(sourceId);
+      const target = dataRef.current.nodeMap.get(targetId);
+      if (source && target) {
+        const matrix = calculateTransformationMatrix(new Vector3(source.x, source.y, source.z), new Vector3(target.x, target.y, target.z));
+        // matrix.makeRotationFromQuaternion(groupQuaternion).makeRotationFromQuaternion(cameraQuaterion);
+        v.matrix.copy(matrix);
+        console.log(v.matrix, matrix);
+      }
+    });
   });
-
-  const setNodeTouched = (node: NetworkNode3d) => {
-    node.userData.touched = true;
-  };
 
   return (
     <>
-      <NetworkGraphControls
-        ref={objectOrientationRef}
-        enabled={dragNode === null}
-      >
-        {renderData.nodes.map(node => (
-          <DragControls
-            key={node.id}
-            autoTransform={false}
-            onDrag={(localMatrix, deltaLocalMatrix, worldMatrix, deltaWorldMatrix: Matrix4) => {
-              node.x = (dragNode?.origin.x ?? 0) + deltaWorldMatrix.elements[12];
-              node.y = (dragNode?.origin.y ?? 0) + deltaWorldMatrix.elements[13];
-              node.z = (dragNode?.origin.z ?? 0) + deltaWorldMatrix.elements[14];
-              requestAnimation = true;
-            }}
-            onDragEnd={() => {
-              setDragNode(null);
-              requestAnimation = true;
-            }}
-          >
-            <group
-              ref={e => e && nodeObjectMap.current.set(node.id, e)}
-              position={[node.x, node.y, node.z]}
-            >
-              <Text
-                fontSize={10 / node.userData.name.length}
-                anchorX="center"
-                anchorY="middle"
-              >
-                {node.userData.name}
-                <meshMatcapMaterial color="white" matcap={textMatcap[0]} />
-              </Text>
-              <Sphere
-                scale={node.id === objectInFocus ? [1.2, 1.2, 1.2] : [1, 1, 1]}
-                args={[10, 3, 3]}
-                userData={node}
-                onPointerDown={(e) => {
-                  setNodeTouched(node);
-                  setDragNode({ node, origin: new Vector3(node.x, node.y, node.z) });
-                }}
-                onPointerOver={() => setObjectInFocus(node.id)}
-                onPointerLeave={() => node.id === objectInFocus && setObjectInFocus(null)}
-              >
-                {node.userData.touched ? NODE_MATERIAL_TOUCHED : node.id === objectInFocus ? NODE_MATERIAL_FOCUS : NODE_MATERIAL}
-              </Sphere>
-            </group>
-          </DragControls>
-        ))}
-        {renderData.links.map(link => {
-          return (
-            <Line
-              key={`${link.source.id}-${link.target.id}`}
-              lineWidth={1}
-              points={[new Vector3(link.source.x, link.source.y, link.source.z), new Vector3(link.target.x, link.target.y, link.target.z)]}
-              color={0x000000}
+      <NetworkGraphControls ref={orientationRef} enabled={dragNode === null}>
+        <DragControls
+          autoTransform={false}
+          onDrag={(_, deltaLocalMatrix: Matrix4) => {
+            if (!dragNode) { return; }
+            const m = deltaLocalMatrix.elements;
+            const transformation = transformationVector.set(m[12], m[13], m[14]).applyQuaternion(orientationRef.current.quaternion.clone().invert());
+            const speed = 0.02;
+            dragNode.x += transformation.x * speed;
+            dragNode.y += transformation.y * speed;
+            dragNode.z += transformation.z * speed;
+          }}
+          onDragEnd={() => {
+            setDragNode(null);
+          }}
+        >
+          {dataRef.current.nodes.map(node =>
+            <NetworkGraphNode
+              key={node.id}
+              node={node}
+              objectInFocus={objectInFocus}
+              setObjectInFocus={setObjectInFocus}
+              setDragNode={setDragNode}
+              ref={e => nodeObjectMap.current.set(node.id, e)}
             />
-          );
-        })}
-        <axesHelper args={[10]} />
+          )}
+          {
+            dataRef.current.links.map((link) => (
+              <NetworkGraphPath
+                key={`${link.source.id}---${link.target.id}`}
+                points={[new Vector3(link.source.x, link.source.y, link.source.z), new Vector3(link.target.x, link.target.y, link.target.z)]}
+                userData={{ sourceId: link.source.id, targetId: link.target.id }}
+                ref={e => linkObjectMap.current.set(`${link.source.id}---${link.target.id}`, e)}
+              />
+            ))
+          }
+          < axesHelper args={[10]} />
+        </DragControls>
       </NetworkGraphControls >
       <Stats />
     </>

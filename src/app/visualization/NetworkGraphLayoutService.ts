@@ -1,6 +1,3 @@
-import { useMemo } from "react";
-
-
 export interface NetworkNode {
   id: string;
   name?: string;
@@ -35,53 +32,53 @@ const REPULSION_FORCE = 1000;
 const ATTRACTION_FORCE = 0.1;
 const ANIMATION_THRESHOLD = 0.001;
 
-export const usePositions = ({ nodes, links }: { nodes: NetworkNode[], links: NetworkLink[] }, deltaTime: number, speed = 1): { nodes: NetworkNode3d[], links: NetworkLink3d[], animationCompleted: boolean } => {
 
-  const { nodes3d, nodeMap }: { nodes3d: NetworkNode3d[], nodeMap: Map<string, NetworkNode3d> } = useMemo(() => {
-    return nodes.reduce((result, node) => {
-      const node3d = {
-        id: node.id,
-        userData: { name: node.name },
-        x: Math.random() * 100 - 50,
-        y: Math.random() * 100 - 50,
-        z: Math.random() * 100 - 50,
-        // x: node.x !== undefined ? node.x : Math.random() * 100 - 50,
-        // y: node.y !== undefined ? node.y : Math.random() * 100 - 50,
-        // z: node.z !== undefined ? node.z : Math.random() * 100 - 50,
-        vx: 0,
-        vy: 0,
-        vz: 0,
-      };
-      result.nodes3d.push(node3d);
-      result.nodeMap.set(node3d.id, node3d);
-      return result;
-    }, { nodes3d: [] as NetworkNode3d[], nodeMap: new Map<string, NetworkNode3d>() });
-  }, [nodes]);
+export const convertTo3d = (nodes: NetworkNode[], links: NetworkLink[]) => {
+  const { nodes3d, nodeMap }: { nodes3d: NetworkNode3d[], nodeMap: Map<string, NetworkNode3d> } = nodes.reduce((result, node) => {
+    const node3d = {
+      id: node.id,
+      userData: { name: node.name },
+      x: node.x !== undefined ? node.x : Math.random() * 1 - 0.5,
+      y: node.y !== undefined ? node.y : Math.random() * 1 - 0.5,
+      z: node.z !== undefined ? node.z : Math.random() * 1 - 0.5,
+      vx: 0,
+      vy: 0,
+      vz: 0,
+    };
 
-  const { links3d, linkMap }: { links3d: NetworkLink3d[], linkMap: Map<string, NetworkNode3d[]> } = useMemo(() => {
-    return links.reduce((result, link) => {
-      const source = nodes3d.find(n => n.id === link.source);
-      const target = nodes3d.find(n => n.id === link.target);
-      if (source && target) {
-        result.links3d.push({ source, target });
+    result.nodes3d.push(node3d);
+    result.nodeMap.set(node3d.id, node3d);
+    return result;
+  }, { nodes3d: [] as NetworkNode3d[], nodeMap: new Map<string, NetworkNode3d>() });
 
-        if (!result.linkMap.has(source.id)) { result.linkMap.set(source.id, []); }
-        result.linkMap.get(source.id)?.push(target);
+  const { links3d, linkMap }: { links3d: NetworkLink3d[], linkMap: Map<string, NetworkNode3d[]> } = links.reduce((result, link) => {
+    const source = nodes3d.find(n => n.id === link.source);
+    const target = nodes3d.find(n => n.id === link.target);
+    if (source && target) {
+      result.links3d.push({ source, target });
 
-        if (!result.linkMap.has(target.id)) { result.linkMap.set(target.id, []); }
-        result.linkMap.get(target.id)?.push(source);
-      }
-      return result;
-    }, { links3d: [] as NetworkLink3d[], linkMap: new Map<string, NetworkNode3d[]>() });
-  }, [nodes3d, links]);
+      if (!result.linkMap.has(source.id)) { result.linkMap.set(source.id, []); }
+      result.linkMap.get(source.id)?.push(target);
 
+      if (!result.linkMap.has(target.id)) { result.linkMap.set(target.id, []); }
+      result.linkMap.get(target.id)?.push(source);
+    }
+    return result;
+  }, { links3d: [] as NetworkLink3d[], linkMap: new Map<string, NetworkNode3d[]>() });
+
+  return { nodes: nodes3d, links: links3d, nodeMap, linkMap };
+}
+
+
+
+export const updateNodePositions = (nodes: NetworkNode3d[], linkMap: Map<string, NetworkNode3d[]>, deltaTime: number, speed = 1): { nodes: NetworkNode3d[], animationCompleted: boolean } => {
   let graphActivity = 0;
 
-  for (let node of nodes3d) {
+  for (let node of nodes) {
     let vx = node.vx;
     let vy = node.vy;
     let vz = node.vz;
-    for (let otherNode of nodes3d) {
+    for (let otherNode of nodes) {
       if (node !== otherNode) {
         const dx = node.x - otherNode.x;
         const dy = node.y - otherNode.y;
@@ -93,7 +90,6 @@ export const usePositions = ({ nodes, links }: { nodes: NetworkNode[], links: Ne
         vz += force * dz / distance;
       }
     }
-
     for (let otherNode of linkMap.get(node.id) || []) {
       const dx = otherNode.x - node.x;
       const dy = otherNode.y - node.y;
@@ -121,6 +117,6 @@ export const usePositions = ({ nodes, links }: { nodes: NetworkNode[], links: Ne
     graphActivity += Math.abs(vx) + Math.abs(vy) + Math.abs(vz);
   }
 
-  const animationCompleted = nodes3d.length !== 0 ? graphActivity / nodes3d.length ** 2 < ANIMATION_THRESHOLD : true;
-  return { nodes: nodes3d, links: links3d, animationCompleted };
+  const animationCompleted = nodes.length !== 0 ? graphActivity / nodes.length ** 2 < ANIMATION_THRESHOLD : true;
+  return { nodes, animationCompleted };
 };
