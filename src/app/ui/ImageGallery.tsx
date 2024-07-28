@@ -132,14 +132,16 @@ export function ImageGallery({ sections, desiredMinHeight = 250, gap = 20 }: Ima
       setActiveImage(null);
     } else {
       setActiveImage(state => {
+        const sectionsLength = sections.length;
         const currentSectionIndex = state !== null ? state[0] : 0;
         const currentSectionLength = sections[currentSectionIndex].data.length;
         const currentImageIndex = state !== null ? state[1] : 0;
         const imageIndex = currentImageIndex + e;
         if (imageIndex < 0) {
-          return [currentSectionIndex - 1, sections[currentSectionIndex - 1].data.length - 1];
+          const sectionIndex = currentSectionIndex - 1 + sectionsLength % sectionsLength;
+          return [sectionIndex, sections[sectionIndex].data.length - 1];
         } else if (currentSectionLength <= imageIndex) {
-          return [currentSectionIndex + 1, 0];
+          return [(currentSectionIndex + 1) % sectionsLength, 0];
         } else {
           return [currentSectionIndex, imageIndex];
         }
