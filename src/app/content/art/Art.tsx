@@ -5,13 +5,20 @@ import './Art.styl';
 
 export function Art() {
 
-  const images = [
-    { id: '300sl', name: '300 SL' },
-    { id: 'dog', name: 'Dog' },
-    { id: 'citroen_ds_lamp', name: 'Citroen DS Lamp' },
-  ];
+  const sections = [
+    {
+      title: 'Art', data: [
+        { src: '300sl', title: '300 SL' },
+        { src: 'dog', title: 'Dog' },
+      ]
+    }, {
+      title: 'Design', data: [
+        { src: 'citroen_ds_lamp', title: 'Citroen DS Lamp' },
+      ]
+    }
+  ].map(section => ({ ...section, data: section.data.map(d => ({ ...d, ...require(`./assets/${d.src}.jpg?{sizes:[200, 400, 720, 1200, 2000], format: "webp"}`) })) }));
 
   return <div className="art">
-    <ImageGallery data={images.map(img => require(`./assets/${img.id}.jpg?{sizes:[200, 400, 720, 1200, 2000], format: "webp"}`))} />
+    <ImageGallery sections={sections} />
   </div>;
 }

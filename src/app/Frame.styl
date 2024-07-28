@@ -21,6 +21,39 @@
     right: 0;
     overflow: hidden;
 
+    /* .background-image-cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      animation: init 0.4s normal forwards ease-in-out;
+      background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 100%);
+      background-size: 100% 200%;
+      background-position-y: 100%;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-right: 0.5px white solid;
+        mix-blend-mode: difference;
+      }
+    }
+
+    @keyframes init {
+      from {
+        background-position-y: 100%;
+      }
+    
+      to {
+        background-position-y: 0%;
+      }
+    } */
+
     .parallax {
       position: absolute;
       transition: all 0.2s ease;
@@ -42,6 +75,7 @@
       left: 0px;
       top: 40px;
       padding: 15px 0;
+      z-index: 1;
       writing-mode: vertical-lr;
       color: white;
       mix-blend-mode: difference;
@@ -70,9 +104,18 @@
 
     .content {
       margin-left: 45px;
-      padding:  15px;
+      padding: 15px;
       overflow: auto;
       transition: overflow 0s linear 1s;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .frame {
+    &:not(.active) {
+      width: 0px;
+      min-width: 0px;
     }
   }
 }

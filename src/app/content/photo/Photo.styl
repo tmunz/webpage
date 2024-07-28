@@ -10,6 +10,29 @@
   }
 }
 
+/* animate opacity much more performant than filter blur */
+/* .title-container::after {
+  content: '';
+  background-image: url('./photo_title_blurred.jpg');
+  background-size: cover;
+  opacity: 0;
+  display: block;
+  position: absolute;
+  transition: opacity 0.6s ease 0.4s;
+  left: -10%;
+  top: -10%;
+  right: -10%;
+  bottom: -10%;
+  background-position: center;
+  text-align: center;
+}
+
+&.active {
+  .title-container::after {
+    opacity: 1;
+  }
+} */
+
 .photo {
   height: 100%;
 }

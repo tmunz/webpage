@@ -82,6 +82,7 @@ export default function Frame(props: FrameProps) {
             srcSet={backgroundImage.srcSet}
           />
         }
+        {/* <div className="background-image-cover" style={{ animationDelay: `${Math.random() * 1 + 1}s` }} /> */}
         <h1 className="title parallax" ref={titleRef}>
           {props.title}
         </h1>

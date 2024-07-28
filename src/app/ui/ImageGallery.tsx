@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ImageEntry, ImageData } from './ImageEntry';
-import { GridEntryData, generateGrid } from './ImageGalleryGridGenerator';
+import { GridEntryImage, generateGrid } from './ImageGalleryGridGenerator';
 import { Icon } from './icon/Icon';
 import { IconName } from './icon/IconName';
 
@@ -8,7 +8,10 @@ import './ImageGallery.styl';
 
 
 interface ImageGalleryProps {
-  data: ImageData[];
+  sections: {
+    title: string;
+    data: ImageData[];
+  }[];
   desiredMinHeight?: number;
   gap?: number;
   delay?: number;
@@ -16,24 +19,30 @@ interface ImageGalleryProps {
 
 const SCROLLBAR_WIDTH = 16;
 
-export function ImageGallery({ data, desiredMinHeight = 250, gap = 20 }: ImageGalleryProps) {
+export function ImageGallery({ sections, desiredMinHeight = 250, gap = 20 }: ImageGalleryProps) {
 
   const elementRef = useRef<HTMLDivElement>(null);
 
-  const [loadedData, setLoadedData] = useState<GridEntryData[]>(data.map((d) => ({ ...d, width: 2 + Math.random(), height: 2 })));
+  const [loadedSections, setLoadedSections] = useState<{ title: string, data: GridEntryImage[] }[]>(
+    sections.map((section, sectionIndex) => ({
+      ...section, data: section.data.map((d, i) =>
+        ({ ...d, id: d.src, width: 2 + Math.random(), height: 2, index: [sectionIndex, i], type: 'image', active: false }))
+    }))
+  );
+
   const [size, setSize] = useState<{ width: number, height: number } | null>(null);
   const [showImages, setShowImages] = useState(false);
-  const [activeImageId, setActiveImageId] = useState<string | null>(null);
+  const [activeImage, setActiveImage] = useState<[number, number] | null>(null);
   const [userAction, setUserAction] = useState(false);
 
   const userActionTimeoutRef = useRef<number | null>(null);
   const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const grid = useMemo(() => size && generateGrid(loadedData, desiredMinHeight, size.width - SCROLLBAR_WIDTH, gap, activeImageId), [loadedData, desiredMinHeight, size?.width, gap, activeImageId]);
+  const grid = useMemo(() => size && generateGrid(loadedSections, desiredMinHeight, size.width - SCROLLBAR_WIDTH, gap, activeImage), [loadedSections, desiredMinHeight, size?.width, gap, activeImage]);
 
 
   const isSingleImageMode = () => {
-    return activeImageId !== null;
+    return activeImage !== null;
   }
 
   const handleUserAction = (e: MouseEvent | KeyboardEvent | TouchEvent) => {
@@ -77,7 +86,7 @@ export function ImageGallery({ data, desiredMinHeight = 250, gap = 20 }: ImageGa
         document.removeEventListener('touchstart', handleUserAction);
       };
     }
-  }, [activeImageId]);
+  }, [activeImage]);
 
   useEffect(() => {
     if (size !== null) {
@@ -118,14 +127,23 @@ export function ImageGallery({ data, desiredMinHeight = 250, gap = 20 }: ImageGa
     };
   }, []);
 
-  const setActive = (e: number | null) => {
+  const setActive = (e: -1 | 0 | 1 | null) => {
     if (e === null) {
-      setActiveImageId(null);
+      setActiveImage(null);
     } else {
-      const i = loadedData.findIndex((gd) => gd.src === activeImageId);
-      if (0 <= i) {
-        setActiveImageId(loadedData[(i + e + loadedData.length) % loadedData.length].src);
-      }
+      setActiveImage(state => {
+        const currentSectionIndex = state !== null ? state[0] : 0;
+        const currentSectionLength = sections[currentSectionIndex].data.length;
+        const currentImageIndex = state !== null ? state[1] : 0;
+        const imageIndex = currentImageIndex + e;
+        if (imageIndex < 0) {
+          return [currentSectionIndex - 1, sections[currentSectionIndex - 1].data.length - 1];
+        } else if (currentSectionLength <= imageIndex) {
+          return [currentSectionIndex + 1, 0];
+        } else {
+          return [currentSectionIndex, imageIndex];
+        }
+      });
     }
   }
 
@@ -137,39 +155,53 @@ export function ImageGallery({ data, desiredMinHeight = 250, gap = 20 }: ImageGa
           style={{ height: grid.height }}
         >
           {grid.data.map((d, i) => {
-            const inactiveTargetScale = 0.9;
-            const gridScale = Math.max(d.width / size.width, d.height / size.height);
-            const isActive = activeImageId === d.src;
-            const scale = isSingleImageMode() ?
-              (isActive ? 1 : inactiveTargetScale * gridScale) :
-              gridScale;
-            const translate = isSingleImageMode() ?
-              (isActive ? { x: (size.width - d.width / gridScale) * 0.5, y: elementRef.current?.scrollTop ?? 0, z: 0 } :
-                { x: d.x ?? 0 + d.width * 0.5 * (1 - inactiveTargetScale), y: d.y ?? 0 + d.height * 0.5 * (1 - inactiveTargetScale), z: -1 }) :
-              { x: d.x, y: d.y, z: 0 };
-            return <div
-              className={`image-grid-entry ${isActive ? 'active' : ''} ${showImages ? 'show' : ''}`}
-              key={d.src}
-              style={{
-                transform: `translate3d(${translate.x}px, ${translate.y}px, ${translate.z}px) scale(${scale})`,
-                minWidth: `${d.width / gridScale}px`, minHeight: `${d.height / gridScale}px`
-              }}
-            >
-              <ImageEntry
-                data={{ ...d, width: d.width / gridScale, height: d.height / gridScale }}
-                active={d.active}
-                delay={500 + Math.random() * 1500}
-                onLoaded={(width, height) => {
-                  setLoadedData(arr => {
-                    const nextArr = [...arr];
-                    nextArr[i] = { ...nextArr[i], width, height };
-                    return nextArr;
-                  });
+            if (d.type === 'title') {
+              const translate = { x: d.x, y: d.y, z: 0 };
+              return <div
+                key={`section-${i}`}
+                className='image-grid-title'
+                style={{
+                  transform: `translate3d(${translate.x}px, ${translate.y}px, ${translate.z}px)`
                 }}
-                hideInfo={!isActive || !userAction}
-              />
-              <button className='open-button' disabled={isSingleImageMode()} onClick={() => setActiveImageId(d.src)}></button>
-            </div>
+              >
+                <h2>{d.title}</h2>
+              </div>
+            } else {
+              const inactiveTargetScale = 0.9;
+              const gridScale = Math.max(d.width / size.width, d.height / size.height);
+              const scale = isSingleImageMode() ?
+                (d.active ? 1 : inactiveTargetScale * gridScale) :
+                gridScale;
+              const translate = isSingleImageMode() ?
+                (d.active ? { x: (size.width - d.width / gridScale) * 0.5, y: elementRef.current?.scrollTop ?? 0, z: 0 } :
+                  { x: d.x ?? 0 + d.width * 0.5 * (1 - inactiveTargetScale), y: d.y ?? 0 + d.height * 0.5 * (1 - inactiveTargetScale), z: -1 }) :
+                { x: d.x, y: d.y, z: 0 };
+              return <div
+                className={`image-grid-entry ${d.active ? 'active' : ''} ${showImages ? 'show' : ''}`}
+                key={d.id}
+                style={{
+                  transform: `translate3d(${translate.x}px, ${translate.y}px, ${translate.z}px) scale(${scale})`,
+                  minWidth: `${d.width / gridScale}px`, minHeight: `${d.height / gridScale}px`
+                }}
+              >
+                <ImageEntry
+                  data={{ ...d, width: d.width / gridScale, height: d.height / gridScale }}
+                  active={d.active}
+                  delay={500 + Math.random() * 1500}
+                  onLoaded={(width, height) => {
+                    setLoadedSections(loadedSections => {
+                      const nextSections = [...loadedSections];
+                      const nextSection = [...nextSections[d.index[0]].data];
+                      nextSection[d.index[1]] = { ...nextSection[d.index[1]], width, height };
+                      nextSections[d.index[0]] = { ...nextSections[d.index[0]], data: nextSection };
+                      return nextSections;
+                    });
+                  }}
+                  hideInfo={!d.active || !userAction}
+                />
+                <button className='open-button' disabled={isSingleImageMode()} onClick={() => setActiveImage(d.index)}></button>
+              </div>
+            }
           })}
         </div>
           <div className={`control-buttons ${(!isSingleImageMode() || !userAction) ? 'hide-controls' : ''}`}>
@@ -179,6 +211,6 @@ export function ImageGallery({ data, desiredMinHeight = 250, gap = 20 }: ImageGa
           </div>
         </>
       }
-    </div>
+    </div >
   );
 };
