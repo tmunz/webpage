@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'kristi';
+    src: url('kristi.woff2') format('woff2'),
+         url('kristi.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

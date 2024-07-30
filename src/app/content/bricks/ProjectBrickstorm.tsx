@@ -17,7 +17,7 @@ export const ProjectBrickstorm = () => {
       <ambientLight intensity={0.25} />
       <pointLight intensity={5} decay={0.3} position={[5, 30, 3]} />
       <Model onLoad={setModel} />
-      <OrbitControls />
+      <OrbitControls enabled={false} />
     </Canvas>
   );
 };
