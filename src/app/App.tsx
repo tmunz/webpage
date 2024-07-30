@@ -4,7 +4,7 @@ import Frame, { FrameProps } from './Frame';
 import { Vita } from './content/vita/Vita';
 import { Art } from './content/art/Art';
 import { Projects } from './content/projects/Projects';
-import { Lego } from './content/lego/Lego';
+import { Bricks } from './content/bricks/Bricks';
 import { Photo } from './content/photo/Photo';
 
 import './App.styl';
@@ -21,7 +21,7 @@ export function App() {
     { id: 'photo', title: 'Photography', content: <Photo />, imgSrc: './content/photo/photo_title.jpg' },
     { id: 'art', title: 'Art / Design', content: <Art />, imgSrc: './content/art/art_title.jpg' },
     { id: 'projects', title: 'Projects / Coding', content: <Projects onClose={() => handleClick('projects')} />, imgSrc: './content/projects/projects_title.svg' },
-    { id: 'lego', title: 'Lego', content: <Lego />, imgSrc: './content/lego/lego_title.jpg' },
+    { id: 'bricks', title: 'Bricks', content: <Bricks />, imgSrc: './content/bricks/bricks_title.jpg' },
     /* / Concepts / Creations */
   ];
 

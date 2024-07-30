@@ -30,7 +30,9 @@
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 100% 0%;
+  grid-template-columns: minmax(0, 1fr) 0;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
   background-color: rgba(22, 22, 22, 0.8);
   backdrop-filter: blur(5px);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
@@ -38,11 +40,11 @@
 
   &.project-selected {
     grid-template-columns: 50% 50%;
-  }  
+  }
 
   @media(max-width: 800px) {
     &.project-selected .project-content:hover {
-      margin-left: -100% ;
+      margin-left: -100%;
     }
   }
 
@@ -61,47 +63,61 @@
       border-bottom: 1px solid white;
     }
 
-    .cli {
-      width: 100%;
-      height: 100%;
+    .project-selection {
+      position: relative;
+
+      .cli {
+        position: absolute;
+        resize: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
     }
   }
 
-  .project-content {
+  .content-wrapper {
     background: white;
-    padding: var(--gapSize);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    transition: all 0.4s ease-in-out;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    .project-content {
+      padding: var(--gapSize);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 0.4s ease-in-out;
 
-    .github-link {
-      position: absolute;
-      top: var(--gapSize);
-      right: var(--gapSize);
-
-      .icon {
-        width: 30px;
-        text-align: center;
-      }
-
-      .tooltip {
+      .github-link {
         position: absolute;
-        top: -14px;
-        font-size: 0.8em;
-        margin-left: auto;
-        margin-right: auto;
-        left: 50%;
-        transform: translate(-50%, 0);
-        text-align: center;
-        opacity: 0;
-        white-space: nowrap;
-        transition: all 0.3s ease;
-      }
+        top: var(--gapSize);
+        right: var(--gapSize);
 
-      &:hover {
+        .icon {
+          width: 30px;
+          text-align: center;
+        }
+
         .tooltip {
-          opacity: 1;
+          position: absolute;
+          top: -14px;
+          font-size: 0.8em;
+          margin-left: auto;
+          margin-right: auto;
+          left: 50%;
+          transform: translate(-50%, 0);
+          text-align: center;
+          opacity: 0;
+          white-space: nowrap;
+          transition: all 0.3s ease;
+        }
+
+        &:hover {
+          .tooltip {
+            opacity: 1;
+          }
         }
       }
     }

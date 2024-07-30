@@ -139,9 +139,9 @@ export function Projects(props: { onClose: () => void }) {
         }
       </div>
     </div>
-    <div className='project-content'>
+    <div className='content-wrapper'>
       {
-        project && <>
+        project && <div className='project-content'>
           <h2>{project.name}</h2>
           <p className='info'>{project.description}</p>
           {project.component}
@@ -154,8 +154,7 @@ export function Projects(props: { onClose: () => void }) {
               </a>
             </div>
           }
-
-        </>
+        </div>
       }
     </div>
   </div>;

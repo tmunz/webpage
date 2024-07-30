@@ -4,18 +4,14 @@ import { Object3D, AnimationMixer, AnimationClip, AnimationAction, LoopOnce, Gro
 import { Canvas, useFrame, useLoader, invalidate } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
-interface ModelProps {
-  onLoad: (model: Object3D) => void;
-}
-
 export const ProjectBrickstorm = () => {
   const [model, setModel] = useState<Object3D | null>(null);
 
   return (
     <Canvas
-      style={{ width: '100%', height: '100%', position: 'absolute', top: 0, right: 0 }}
+      style={{ width: '100%', height: '100%' }}
       shadows
-      camera={{ position: [400, 30, 80], fov: 10 }}
+      camera={{ position: [40, 30, 200], fov: 10 }}
       frameloop="demand"
     >
       <ambientLight intensity={0.25} />
@@ -26,8 +22,8 @@ export const ProjectBrickstorm = () => {
   );
 };
 
-const Model = ({ onLoad }: ModelProps) => {
-  const file = useLoader(GLTFLoader, require('./models/eiffel_tower_4_3.glb')) as unknown as { scene: Object3D, animations: AnimationClip[] };
+const Model = ({ onLoad }: { onLoad: (model: Object3D) => void }) => {
+  const file = useLoader(GLTFLoader, require('./assets/eiffel_tower_4_3.glb')) as unknown as { scene: Object3D, animations: AnimationClip[] };
   const mixer = useRef<AnimationMixer | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const sceneRef = useRef<Group>(null!);
@@ -83,7 +79,7 @@ const Model = ({ onLoad }: ModelProps) => {
   return (
     <group ref={sceneRef}>
       {file.scene && (
-        <mesh>
+        <mesh position={[0, -10, 0]}>
           <primitive object={file.scene} />
         </mesh>
       )}
