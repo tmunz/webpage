@@ -98,7 +98,7 @@
        y2="1369.2188" /></defs>
        
     <rect
-     style="opacity:1;fill:url(#radialGradient1981);fill-opacity:1;stroke:none;stroke-width:10.5833;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+     style="opacity:0;fill:url(#radialGradient1981);fill-opacity:1;stroke:none;stroke-width:10.5833;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
      width="3000"
      height="2000"
      x="0"
@@ -110,7 +110,7 @@
        
        <path
        id="base_1"
-       style="opacity:1;fill:#1e1e1e;fill-opacity:1;stroke:url(#linearGradient4);stroke-width:9.31025;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:url(#linearGradient4);stroke-width:9.31025;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        d="M 933.01271,1400 L 1679.4229,1200 L 2192.5799,1337.5 L 1446.1697,1537.5 Z">
         <animate
           xlink:href="#base_1"

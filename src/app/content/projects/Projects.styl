@@ -24,6 +24,19 @@
       d: path("M 2625,1775 L 375,1775 L 375,1775 L 2625,1775 L 2625,1775 L 375,1775 L 375,1775 L 2625,1775 L 2625,1775 L 375,1775 L 375,1775 L 1125,1775 L 1125,1775 L 1875,1775 L 1875,1775 L 2625,1775");
     }
   }
+
+  .background-image {
+    background-image:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 80%),
+      linear-gradient(#222 2px, transparent 2px),
+      linear-gradient(90deg,
+        rgba(255, 0, 0, 0.5) 4px, transparent 4px, transparent 5px,
+        rgba(0, 255, 0, 0.5) 5px, rgba(0, 255, 0, 0.5) 9px, transparent 9px, transparent 10px,
+        rgba(0, 0, 255, 0.5) 10px, rgba(0, 0, 255, 0.5) 14px, transparent 14px),
+      linear-gradient(-45deg, purple 0%, green 100%);
+    background-size: 100% 100%, 15px 30px, 15px 30px, 100% 100%;
+    animation: 15s lcdscreen linear infinite;
+  }
 }
 
 .projects {
@@ -83,6 +96,7 @@
     height: 100%;
     width: 100%;
     overflow: auto;
+
     .project-content {
       padding: var(--gapSize);
       display: flex;
