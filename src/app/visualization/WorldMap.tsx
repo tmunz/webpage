@@ -61,7 +61,7 @@ export function WorldMap({ data, width = 200, height = 200 }: { data: WorldMapDa
         .attr('cx', coordinates[0])
         .attr('cy', coordinates[1])
         .attr('r', Math.min(5, Math.min(width, height) / 25))
-        .attr('fill', 'rgba(255,0,0,0.7)');
+        .attr('fill', 'var(--accentColor)');
     }
 
     const graticule = d3.geoGraticule();
