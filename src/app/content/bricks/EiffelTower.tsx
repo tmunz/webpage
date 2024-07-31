@@ -4,18 +4,18 @@ import { Object3D, AnimationMixer, AnimationClip, AnimationAction, LoopOnce, Gro
 import { Canvas, useFrame, useLoader, invalidate } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
-export const ProjectBrickstorm = () => {
+export const EiffelTower = () => {
   const [model, setModel] = useState<Object3D | null>(null);
 
   return (
     <Canvas
       style={{ width: '100%', height: '100%' }}
       shadows
-      camera={{ position: [40, 30, 200], fov: 10 }}
+      camera={{ position: [-40, 0, 50], fov: 24 }}
       frameloop="demand"
     >
-      <ambientLight intensity={0.25} />
-      <pointLight intensity={5} decay={0.3} position={[5, 30, 3]} />
+      <ambientLight intensity={0.1} />
+      <pointLight intensity={5} decay={0.3} position={[10, 10, -5]} />
       <Model onLoad={setModel} />
       <OrbitControls enabled={false} />
     </Canvas>
@@ -39,26 +39,18 @@ const Model = ({ onLoad }: { onLoad: (model: Object3D) => void }) => {
       });
 
       actions.forEach((action: AnimationAction) => {
+        setIsAnimating(true);
         action.getMixer().addEventListener('finished', () => {
           setIsAnimating(false);
         });
-      });
-
-      actions.forEach((action: AnimationAction) => {
-        setIsAnimating(true);
         action.play();
-        invalidate();
       });
     }
   }, [file]);
 
   useEffect(() => {
-    if (mixer.current) {
-      mixer.current.update(0);
-      setIsAnimating(true);
-      invalidate();
-    }
-  });
+    invalidate();
+  }, [mixer.current]);
 
 
   useFrame((_: any, delta: number) => {
@@ -79,7 +71,7 @@ const Model = ({ onLoad }: { onLoad: (model: Object3D) => void }) => {
   return (
     <group ref={sceneRef}>
       {file.scene && (
-        <mesh position={[0, -10, 0]}>
+        <mesh position={[0, -9, 0]}>
           <primitive object={file.scene} />
         </mesh>
       )}

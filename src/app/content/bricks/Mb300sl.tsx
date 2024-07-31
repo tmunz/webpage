@@ -23,7 +23,7 @@ export const Mb300sl = () => {
 };
 
 const Model = ({ onLoad }: { onLoad: (model: Object3D) => void }) => {
-  const file = useLoader(GLTFLoader, require('./assets/mb-300sl.glb')) as unknown as { scene: Object3D, animations: AnimationClip[] };
+  const file = useLoader(GLTFLoader, require('./assets/mb_300sl.glb')) as unknown as { scene: Object3D, animations: AnimationClip[] };
   const sceneRef = useRef<Group>(null!);
 
   useEffect(() => {

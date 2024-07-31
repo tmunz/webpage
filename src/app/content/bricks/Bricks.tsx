@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ProjectBrickstorm } from './ProjectBrickstorm';
+import { EiffelTower } from './EiffelTower';
 import { Polaroid } from '../../ui/Polaroid';
 
 import './Bricks.styl';
@@ -43,7 +43,7 @@ export function Bricks() {
       const aircraftSection = aircraftRef.current;
       const element = elementRef.current;
       if (aircraftSection && element) {
-        setScrollRatio(element.scrollTop / aircraftSection.offsetTop * 2);
+        setScrollRatio(element.scrollTop / aircraftSection.offsetTop);
       }
     };
 
@@ -57,15 +57,16 @@ export function Bricks() {
     const brickMultiplier = 1.2;
     const brickX = size.width * brickMultiplier;
     const brickY = brickX * 0.3;
-    const brickZ = brickX * 0.5;
+    const brickZ = brickX * 0.5; 
+    const scroll = scrollRatio * 1.8;
 
     return <section className='aircraft' ref={aircraftRef} style={{ marginTop: size.width / 3 }}>
       <div className='divider-brick' style={{
         width: brickX, height: brickY, transform: `
           translate3d(${50 - (brickMultiplier - 1) / 2 * 100}%, 0, 0) 
-          rotateX(${-10 * Math.max(0, 1 - scrollRatio)}deg) 
-          rotateY(${45 * Math.max(0, 1 - scrollRatio)}deg)
-          rotateZ(${0 * scrollRatio}deg)
+          rotateX(${-10 * Math.max(0, 1 - scroll)}deg) 
+          rotateY(${45 * Math.max(0, 1 - scroll)}deg)
+          rotateZ(${0 * scroll}deg)
         `
       }}>
         <div
@@ -102,7 +103,7 @@ export function Bricks() {
             <div className='brick-stud-top' />
             {t === 'brick-studs' && <div className='brick-stud-side'
               style={{
-                transform: `translate3d(-50%, -50%, ${-brickY * 0.1 / 2}px) rotateX(90deg) rotateY(${45 * Math.max(0, 1 - scrollRatio)}deg)`,
+                transform: `translate3d(-50%, -50%, ${-brickY * 0.1 / 2}px) rotateX(90deg) rotateY(${45 * Math.max(0, 1 - scroll)}deg)`,
                 height: `${brickY * 0.1}px`
               }} />}
           </div>
@@ -126,12 +127,15 @@ export function Bricks() {
         <div>Get instuctions for free on Rebrickable</div>
       </Polaroid>
       <Polaroid className='eiffel-polaroid' caption='Paris'>
-        <ProjectBrickstorm />
+        <div className='eiffel-polaroid-content'>
+          <img src={require('./assets/eiffel_tower_scene.jpg')} />
+          <EiffelTower />
+        </div>
         <div>My first LEGO Ideas Project</div>
       </Polaroid>
     </section>
     {getAircraftSection()}
-    <section className='mb-300sl' style={{ width: size.width, height: size.height / 2, visibility: scrollRatio < 1 ? 'hidden' : 'visible' }}>
+    <section className='mb-300sl' style={{ width: size.width, height: size.height, visibility: scrollRatio < 1 ? 'hidden' : 'visible' }}>
       <Mb300sl />
     </section>
     <section className='placeholder' style={{ background: 'black', height: '2000px' }}></section>

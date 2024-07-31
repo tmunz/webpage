@@ -152,7 +152,7 @@ export function ImageGallery({ sections, desiredMinHeight = 250, gap = 20 }: Ima
   return (
     <div className={`image-gallery ${isSingleImageMode() ? 'single-image-mode' : ''}`} ref={elementRef}>
       {size !== null && grid !== null &&
-        <><div
+        <div
           className='image-grid'
           style={{ height: grid.height }}
         >
@@ -175,7 +175,11 @@ export function ImageGallery({ sections, desiredMinHeight = 250, gap = 20 }: Ima
                 (d.active ? 1 : inactiveTargetScale * gridScale) :
                 gridScale;
               const translate = isSingleImageMode() ?
-                (d.active ? { x: (size.width - d.width / gridScale) * 0.5, y: elementRef.current?.scrollTop ?? 0, z: 0 } :
+                (d.active ? {
+                  x: 0 + (size.width - d.width / gridScale) * 0.5,
+                  y: (elementRef.current?.scrollTop ?? 0) + (size.height - d.height / gridScale) * 0.5,
+                  z: 0
+                } :
                   { x: d.x ?? 0 + d.width * 0.5 * (1 - inactiveTargetScale), y: d.y ?? 0 + d.height * 0.5 * (1 - inactiveTargetScale), z: -1 }) :
                 { x: d.x, y: d.y, z: 0 };
               return <div
@@ -201,17 +205,22 @@ export function ImageGallery({ sections, desiredMinHeight = 250, gap = 20 }: Ima
                   }}
                   hideInfo={!d.active || !userAction}
                 />
-                <button className='open-button' disabled={isSingleImageMode()} onClick={() => setActiveImage(d.index)}></button>
+                <div className={`control-buttons ${isSingleImageMode() ? 'control-active' : ''} ${(!isSingleImageMode() || !userAction) ? 'hide-controls' : ''}`}>
+                  <div className='control-navigation-wrapper'>
+                    <button className='prev-button control-button' onClick={() => setActive(-1)}><Icon name={IconName.PREV} /></button>
+                    <button className='next-button control-button' onClick={() => setActive(+1)}><Icon name={IconName.NEXT} /></button>
+                  </div>
+                  <button className='img-button' onClick={() => setActiveImage(isSingleImageMode() ? null : d.index)}>
+                    <div>
+                      <Icon name={IconName.PREV} />
+                      <Icon name={IconName.NEXT} />
+                    </div>
+                  </button>
+                </div>
               </div>
             }
           })}
         </div>
-          <div className={`control-buttons ${(!isSingleImageMode() || !userAction) ? 'hide-controls' : ''}`}>
-            <button className="prev-button control-button" onClick={() => setActive(-1)}><Icon name={IconName.PREV} /></button>
-            <button className="next-button control-button" onClick={() => setActive(null)}><Icon name={IconName.GRID} /></button>
-            <button className="next-button control-button" onClick={() => setActive(+1)}><Icon name={IconName.NEXT} /></button>
-          </div>
-        </>
       }
     </div >
   );

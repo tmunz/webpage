@@ -45,43 +45,95 @@
         overflow: hidden;
       }
 
-      .open-button {
+      .control-buttons {
         position: absolute;
-        display: block;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        opacity: 0;
-        background-color: rgba(255, 255, 255, 0.2);
-        transition: opacity 0.6s ease;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%) scale(1);
 
-        &:hover {
-          opacity: 1;
+        &.control-active {
+          .control-navigation-wrapper {
+            transform: translate(-50%, -50%) scale(1);
+          }
+
+          .img-button {
+            opacity: 1;
+            clip-path: circle(60px at 50% 50%);
+
+            .icon:nth-child(1) {
+              transform: translateX(21px);
+            }
+
+            .icon:nth-child(2) {
+              transform: translateX(-21px);
+            }
+          }
+
+          &.hide-controls {
+            .control-navigation-wrapper {
+              transform: translate(-50%, -50%) scale(0);
+            }
+
+            .img-button {
+              clip-path: circle(0px at 50% 50%);
+            }
+          }
+        }
+
+        button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: rgba(255, 255, 255, 0.2);
+
+          .icon {
+            height: 30px;
+            width: 30px;
+            display: inline-block;
+          }
+        }
+
+        &>* {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transition: transform 0.6s ease 0.2s, opacity 0.6s ease, clip-path 0.6s ease;
+
+          &.control-navigation-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            transform: translate(-50%, -50%) scale(0);
+
+            .prev-button,
+            .next-button {
+              height: 60px;
+              width: 60px;
+              border-radius: 100%;
+              margin: 30px;
+            }
+          }
+
+          &.img-button {
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            clip-path: circle(88% at 50% 50%);
+
+            .icon {
+              transition: transform 0.6s ease;
+            }
+
+            &:hover {
+              opacity: 1;
+            }
+          }
         }
       }
-    }
-  }
-
-  .control-buttons {
-    position: sticky;
-    z-index: 2;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
-    grid-template-rows: 1fr;
-    background-color: rgba(0, 0, 0, 0.5);
-    left: 0;
-    bottom: 0;
-    right: 0;
-    height: 80px;
-    overflow: hidden;
-    opacity: 1;
-    transition: height 0s linear, opacity 0.6s ease;
-
-    &.hide-controls {
-      opacity: 0;
-      height: 0;
-      transition: height 0s linear 0.6s, opacity 0.6s ease;
     }
   }
 
@@ -89,22 +141,16 @@
     overflow: hidden;
 
     .image-grid {
-
       .image-grid-title {
         opacity: 0;
+
         h2 {
           transform: translateX(100%);
         }
       }
 
       .image-grid-entry {
-        transition: opacity 0.4s ease, transform 0.4s ease, z-index 0s linear;                                                  
-
-        .open-button {
-          pointer-events: none;
-          transition: background-color 0.8s ease 0.4s;
-          background-color: rgba(255, 255, 255, 0.0);
-        }
+        transition: opacity 0.4s ease, transform 0.4s ease, z-index 0s linear;
 
         &:not(.active) {
           opacity: 0;
