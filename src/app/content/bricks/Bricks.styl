@@ -18,7 +18,7 @@
     position: relative;
   }
 
-  .polaroids {
+  .polaroid-section {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -52,95 +52,14 @@
     text-align: center;
   }
 
-  .aircraft {
-    z-index: 2;
-
-    .divider-brick {
-      position: absolute;
-      top: 0;
-      left: 0;
-      transform-style: preserve-3d;
-    }
-
-    .brick-face {
-      position: absolute;
-      transform-style: preserve-3d;
-      transform: translate(-50%, -50%);
-
-      &.brick-face-top {
-        background-color: rgba(255, 0, 0, 1);
-
-        .brick-stud-top {
-          background: rgba(150, 0, 0, 1);
-        }
-      }
-
-      &.brick-face-left {
-        background-color: rgba(200, 0, 0, 1);
-      }
-
-      &.brick-face-front {
-        background-color: rgba(150, 0, 0, 1);
-        color: white;
-        box-sizing: border-box;
-      }
-
-      &.brick-studs {
-        .brick-stud-top {
-          background-color: rgba(255, 0, 0, 1);
-        }
-      }
-
-      .brick-stud {
-        position: absolute;
-        transition: all 0.4s ease;
-        transform: translate(-50%, -50%);
-        transform-style: preserve-3d;
-
-        .brick-stud-top {
-          clip-path: circle(35.36% at 50% 50%);
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-        }
-
-        .brick-stud-side {
-          background-color: rgba(150, 0, 0, 1);
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 70.72%;
-
-        }
-      }
-    }
-
-    .aircraft-content {
-      min-height: 1000px;
-      background-color: rgba(150, 0, 0, 1);
-
-      .aircraft-images {
-        display: flex;
-
-        .aircraft-image {
-          object-fit: cover;
-          max-width: 25%;
-          width: 200px;
-        }
-      }
-    }
+  .aircraft-section {
+    z-index: 1;
   }
 
-  .mb-300sl {
+  .mb-300sl-section {
+    background: #000000;
     position: sticky;
     bottom: 0;
     z-index: 0;
-    text-align: center;
-    scroll-snap-align: start;
-    background-size: cover;
-    font-size: 300px;
-    color: white;
   }
 }

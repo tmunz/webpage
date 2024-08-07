@@ -1,11 +1,13 @@
 import { Line } from "@react-three/drei";
-import { invalidate, useFrame } from "@react-three/fiber";
+import { invalidate, useFrame, useThree } from "@react-three/fiber";
 import React, { useRef } from "react";
 import { useEffect, useMemo } from "react";
 import { CatmullRomCurve3, Group, Object3D, Vector3 } from "three";
 import { clamp } from "three/src/math/MathUtils";
 
-export function ModelMovement({ model, showPath = false }: { model: Object3D | null, showPath?: boolean }) {
+export function ModelMovement({ model, animate, showPath = false }: { model: Object3D | null, animate?: boolean, showPath?: boolean }) {
+
+  const { clock, invalidate } = useThree();
 
   const { current: track } = useRef(new CatmullRomCurve3([
     new Vector3(-30, 0, 30),
@@ -32,12 +34,22 @@ export function ModelMovement({ model, showPath = false }: { model: Object3D | n
     }
   }, [model]);
 
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    const f = clamp(0, (t - 1) * 0.3, 1);
-    if (model && 0 <= f && f <= 1) {
-      drive(easeOut(f));
+  useEffect(() => {
+    if (animate) {
+      clock.start();
+      clock.elapsedTime = 0;
       invalidate();
+    }
+  }, [animate]);
+
+  useFrame((state) => {
+    if (animate) {
+      const t = state.clock.getElapsedTime();
+      const f = clamp(0, t * 0.3, 1);
+      if (model && 0 <= f && f <= 1) {
+        drive(easeOut(f));
+        invalidate();
+      }
     }
   });
 
@@ -46,8 +58,8 @@ export function ModelMovement({ model, showPath = false }: { model: Object3D | n
       const p = track.getPointAt(f);
       model.position.copy(p);
       model.lookAt(p.clone().add(track.getTangentAt(f).normalize().negate()));
-      wheels.forEach((wheel, i) => {
-        wheel.rotation.x = -f;
+      wheels.forEach((wheel) => {
+        wheel.rotation.x -= f/10;
       });
     }
   }
