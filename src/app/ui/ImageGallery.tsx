@@ -211,7 +211,7 @@ export function ImageGallery({ sections, desiredMinHeight = 250, gap = 20 }: Ima
                     <button className='next-button control-button' onClick={() => setActive(+1)}><Icon name={IconName.NEXT} /></button>
                   </div>
                   <button className='img-button' onClick={() => setActiveImage(isSingleImageMode() ? null : d.index)}>
-                    <div>
+                    <div className='img-button-circle'>
                       <Icon name={IconName.PREV} />
                       <Icon name={IconName.NEXT} />
                     </div>

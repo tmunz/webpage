@@ -62,7 +62,7 @@
 
           .img-button {
             opacity: 1;
-            clip-path: circle(60px at 50% 50%);
+            clip-path: circle(50px at 50% 50%);
 
             .icon:nth-child(1) {
               transform: translateX(21px);
@@ -127,8 +127,20 @@
             opacity: 0;
             clip-path: circle(88% at 50% 50%);
 
-            .icon {
-              transition: transform 1s ease;
+            .img-button-circle {
+              width: 120px;
+              height: 120px;
+              box-sizing: border-box;
+              border-radius: 50%;
+              background-color: rgba(255, 255, 255, 0.2);
+              border: 3px solid var(--actionColor);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              .icon {
+                transition: transform 1s ease;
+              }
             }
 
             &:hover {

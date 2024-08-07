@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { EiffelTower } from './EiffelTower';
+import { EiffelTower } from './eiffeltower/EiffelTower';
 import { Polaroid } from '../../ui/Polaroid';
 
 import './Bricks.styl';
-import { Mb300sl } from './Mb300sl';
+import { Mb300sl } from './mb300sl/Mb300sl';
 
 
 export function Bricks() {
