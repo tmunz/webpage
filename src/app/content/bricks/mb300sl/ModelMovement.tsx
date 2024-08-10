@@ -15,19 +15,19 @@ export function ModelMovement({ model, animate, showPath = false }: { model: Obj
     new Vector3(0, 0, 10),
     new Vector3(0, 0, 0),
   ]));
-
-  const wheels: Group[] = useMemo(() => {
-    const arr: Group[] = [];
-    model?.traverse((child) => {
-      if (child.name.startsWith('wheel')) {
-        arr.push(child as Group);
-      }
-    });
-    return arr;
-  }, [model]);
+  const wheelsRef = useRef<Group[]>([])
 
   useEffect(() => {
     if (model) {
+      wheelsRef.current = (() => {
+        const wheels: Group[] = [];
+        model.traverse((child) => {
+          if (child.name.startsWith('wheel')) {
+            wheels.push(child as Group);
+          }
+        });
+        return wheels;
+      })();
       drive(0);
       model.visible = true;
       invalidate();
@@ -45,7 +45,7 @@ export function ModelMovement({ model, animate, showPath = false }: { model: Obj
   useFrame((state) => {
     if (animate) {
       const t = state.clock.getElapsedTime();
-      const f = clamp(0, t * 0.3, 1);
+      const f = clamp(0, t * 0.2, 1);
       if (model && 0 <= f && f <= 1) {
         drive(easeOut(f));
         invalidate();
@@ -58,8 +58,8 @@ export function ModelMovement({ model, animate, showPath = false }: { model: Obj
       const p = track.getPointAt(f);
       model.position.copy(p);
       model.lookAt(p.clone().add(track.getTangentAt(f).normalize().negate()));
-      wheels.forEach((wheel) => {
-        wheel.rotation.x -= f/10;
+      wheelsRef.current.forEach((wheel, i) => {
+        wheel.rotation.x = i - f * Math.PI * 2 * 8;
       });
     }
   }

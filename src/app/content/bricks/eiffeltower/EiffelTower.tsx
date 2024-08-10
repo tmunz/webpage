@@ -49,6 +49,7 @@ const Model = ({ onLoad }: { onLoad: (model: Object3D) => void }) => {
   }, [file]);
 
   useEffect(() => {
+    mixer.current?.update(1.2);
     invalidate();
   }, [mixer.current]);
 

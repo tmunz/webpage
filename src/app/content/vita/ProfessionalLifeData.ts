@@ -16,7 +16,7 @@ export const professionalLifeData: ProfessionalLifeData[] = [
   }, {
     company: 'WMC Healthcare',
     role: 'Software Engineer',
-    date: 'September 2016 to Mai 2018',
+    date: 'September 2016 to May 2018',
     tasks: ['React and JavaEE Development', 'Data Integration (Pentaho)'],
     logo: 'wmc_healthcare.png',
   }, {
@@ -35,7 +35,7 @@ export const professionalLifeData: ProfessionalLifeData[] = [
     company: 'Experteer (Emplido)',
     role: 'Working Student',
     date: 'September 2011 to November 2013',
-    tasks: ['Web-Development, Front- and Backend (Java)', 'Design'],
+    tasks: ['Web-Development, Front- and Backend (Apache Wicket)', 'Design'],
     logo: 'emplido.png',
   }, {
     company: 'Glassbox Games',

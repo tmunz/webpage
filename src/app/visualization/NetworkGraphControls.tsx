@@ -55,7 +55,7 @@ export const NetworkGraphControls = forwardRef(
       if (!enabled || !ref.current) { return; }
       const { delta: [deltaX, deltaY] } = event;
       const cameraDirection = camera.getWorldDirection(new Vector3());
-      ref.current.position.add(cameraDirection.multiplyScalar(deltaY * speed));
+      ref.current.position.add(cameraDirection.multiplyScalar(deltaY * speed / 10));
     }
 
     const gesture = useGesture({

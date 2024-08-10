@@ -32,6 +32,7 @@ type GridRow = GridImageRow | GridRowTitle;
 
 export function generateGrid(sections: { title: string, data: GridEntryImage[] }[], desiredMinHeight: number, gridWidth: number, gap: number, active?: [number, number] | null): Grid {
 
+  const width = gridWidth - gap;
   const gridRows: GridRow[] = [];
   sections.forEach((section, sectionIndex) => {
     gridRows.push({ type: 'title', title: section.title });
@@ -43,7 +44,7 @@ export function generateGrid(sections: { title: string, data: GridEntryImage[] }
 
       let currentRow = gridRows[gridRows.length - 1] as GridImageRow;
 
-      if (gridWidth < currentRow.width + desiredImageWidth + gap) {
+      if (width < currentRow.width + desiredImageWidth + gap) {
         currentRow.completed = true;
         gridRows.push({ type: 'image', width: -gap, gap, data: [], completed: false });
       }
@@ -58,7 +59,7 @@ export function generateGrid(sections: { title: string, data: GridEntryImage[] }
     });
   });
 
-  return convertGridRowsToGrid(gridRows, gap, gridWidth, desiredMinHeight);
+  return convertGridRowsToGrid(gridRows, gap, width, desiredMinHeight);
 }
 
 function convertGridRowsToGrid(gridRows: GridRow[], gap: number, gridWidth: number, desiredMinHeight: number): Grid {
@@ -66,13 +67,13 @@ function convertGridRowsToGrid(gridRows: GridRow[], gap: number, gridWidth: numb
 
   gridRows.forEach(row => {
     if (row.type === 'title') {
-      grid.data.push({ ...row, x: 0, y: grid.height });
+      grid.data.push({ ...row, x: gap, y: grid.height });
       grid.height += 30 + gap;
     } else if (row.type === 'image') {
       const gapSpace = (row.data.length - 1) * gap;
       const multiplier = row.completed ? (gridWidth - gapSpace) / (row.width - gapSpace) : 1;
       const height = multiplier * desiredMinHeight;
-      let baseX = 0;
+      let baseX = gap;
       row.data.forEach((d: GridEntryImage) => {
         const width = d.width * multiplier;
         grid.data.push({ ...d, x: baseX, y: grid.height, width, height });
@@ -82,5 +83,5 @@ function convertGridRowsToGrid(gridRows: GridRow[], gap: number, gridWidth: numb
     }
   });
 
-  return { ...grid, height: grid.height - gap };
+  return { ...grid, height: grid.height };
 }

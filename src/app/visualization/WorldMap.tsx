@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from 'd3';
-import * as geodata from './world.geo.json';
+import { default as geodata } from './world.geo.json';
 
 export interface WorldMapData {
   name?: string;
@@ -33,7 +33,7 @@ export function WorldMap({ data, width = 200, height = 200 }: { data: WorldMapDa
       .attr('r', '50%')
       .attr('fx', '50%')
       .attr('fy', '50%');
-    
+
     gradient.append('stop')
       .attr('offset', '0%')
       .attr('stop-color', '#222');

@@ -53,7 +53,6 @@ export function NetworkGraph(props: Props) {
         const matrix = calculateTransformationMatrix(new Vector3(source.x, source.y, source.z), new Vector3(target.x, target.y, target.z));
         // matrix.makeRotationFromQuaternion(groupQuaternion).makeRotationFromQuaternion(cameraQuaterion);
         v.matrix.copy(matrix);
-        console.log(v.matrix, matrix);
       }
     });
   });

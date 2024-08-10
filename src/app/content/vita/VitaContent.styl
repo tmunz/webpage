@@ -1,0 +1,67 @@
+.vita-content {
+  padding: var(--gapSize) var(--gapSize) 0 4px;
+  columns: 350px;
+  gap: var(--gapSize);
+
+  .social-links {
+    position: sticky;
+    z-index: 2;
+  }
+
+  .academic-life {
+    .academic-icons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: var(--gapSize);
+      align-items: flex-start;
+      align-content: center;
+      .academic-icon {
+        mix-blend-mode: difference;
+        color: white;
+        fill: white;
+      
+        display: inline-block;
+        min-width: 50px;
+        max-width: 350px;
+        width: 50%;
+      }
+    }
+  }
+
+  .professional-life {
+    .professional-life-card {
+      display: inline-flex;
+      width: 100%;
+      box-sizing: border-box;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      flex-grow: 1;
+      flex-basis: 0;
+      align-items: flex-start;
+      align-content: center;
+      margin-bottom: var(--gapSize);
+      padding: 10px;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1); 
+      background-color:rgba(255, 255, 255, 0.3); 
+      backdrop-filter: blur(8px);
+      .company-logo {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+      }
+      .company-text {
+        margin-left: 20px;
+        .company-date, .company-role {
+          color: var(--textColorLight);
+        }
+        .company-description {
+          padding-inline-start: 10px;
+          >li {
+            list-style-type: circle;
+          }
+        }
+      }
+    }
+  }
+}

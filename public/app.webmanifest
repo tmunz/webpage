@@ -1,0 +1,32 @@
+{
+    "theme_color": "#dddddd",
+    "background_color": "#dddddd",
+    "display": "standalone",
+    "scope": "https://tmunz.art/",
+    "start_url": "https://tmunz.art/",
+    "description": "Discover the portfolio of Tobias Munzert, a versatile developer and photographer, showcasing experimental and fun projects as well as captivating photography. Explore a blend of creativity and technical expertise.",
+    "name": "Tobias Munzert",
+    "short_name": "TMunz",
+    "icons": [
+        {
+            "src": "icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
