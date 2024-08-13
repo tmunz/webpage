@@ -1,5 +1,5 @@
 import React from 'react';
-import Frame, { FrameProps } from './Frame';
+import { Frame, FrameProps } from './Frame';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
@@ -13,7 +13,6 @@ describe('Frame Component', () => {
     id: 'test-frame',
     title: 'Test Title',
     content: <div data-testid="test-frame">Test Content</div>,
-    color: '#fff',
     imgSrc: 'test-image.jpg',
     onClick: jest.fn(),
     active: true,

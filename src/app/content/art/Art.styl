@@ -1,3 +1,22 @@
+.art-frame {
+  .background-image {
+    transition: filter 0.8s ease;
+    &.parallax {
+      transition: transform 0.2s ease, filter 0.8s ease;
+    }
+  }
+
+  &.active .background-image {
+    filter: blur(50px);
+  }
+}
+
 .art {
-  height: 100%;
+  .paper-canvas {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }

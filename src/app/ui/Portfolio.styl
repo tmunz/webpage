@@ -1,12 +1,13 @@
 .portfolio {
-  .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+  overflow: auto;
+  height: 100%;
+  /* scroll-snap-type: y mandatory; */
 
   .item-wrapper {
     perspective: 1000px;
+    width: clamp(400px, 90%, 1000px);
+    margin: 0 auto;
+    scroll-snap-align: center;
 
     .item {
       perspective: 1000px;
@@ -17,15 +18,18 @@
       align-items: center;
       align-content: center;
       transform: rotateX(-90deg);
+      /* margin: 100px auto; */
 
       &>* {
-        width: 300px;
+        width: 50%;
         aspect-ratio: 1 / 1;
         backface-visibility: hidden;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
       }
 
       .image-container {
         background: white;
+        overflow: hidden;
 
         img {
           width: 100%;
@@ -35,14 +39,20 @@
       }
 
       .text-container {
-        background: yellow;
+        background-color: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
         transform: rotateY(90deg);
+        overflow: auto;
       }
     }
 
     &:nth-child(2n) {
       .item {
         flex-direction: row-reverse;
+        .text-container {
+          transform: rotateY(-90deg);
+        }
       }
 
       &.entering-top .item .text-container {

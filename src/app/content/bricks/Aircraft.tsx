@@ -38,6 +38,7 @@ export function Aircraft({ width, scrollRatio }: { width: number, scrollRatio: n
         style={{ width: brickZ, height: brickY, transform: `translate(-50%, -50%) rotateY(-90deg) translateZ(${brickX * 0.5}px)` }}
       />
       {['brick-face-top', 'brick-studs'].map((t, layer) => <div
+        key={t}
         className={`brick-face ${t}`}
         style={{ width: brickX, height: brickZ, transform: `translate(-50%, -50%) rotateX(90deg) translateZ(${brickY * (0.5 + layer * 0.1)}px)` }}
       >

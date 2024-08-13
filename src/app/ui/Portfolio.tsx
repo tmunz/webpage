@@ -26,7 +26,6 @@ export function Portfolio({ items }: PortfolioProps) {
           }
         });
       },
-      // { threshold: 0.1 }
     );
 
     elementsRef.current.forEach((element) => {

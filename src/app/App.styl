@@ -1,4 +1,17 @@
 .app {
-  display: flex;
   height: 100svh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  .frame {
+    /* clip-path: polygon(0% 0%, 90% 0%, 110% 100%, 0% 100%); */
+    box-shadow: inset 4px 0px 8px  rgba(0, 0, 0, 0.4);
+    height: 100%;
+
+    .background-image {
+      z-index: -1;
+    }
+  }
 }

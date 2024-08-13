@@ -20,6 +20,7 @@
     "@react-three/postprocessing": "^2.16.2",
     "d3": "^7.9.0",
     "figlet": "^1.7.0",
+    "leva": "^0.9.35",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.25.1",
@@ -80,5 +81,11 @@
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.9.3",
     "webpack-merge": "^5.8.0"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

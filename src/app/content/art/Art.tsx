@@ -1,7 +1,9 @@
 import React from 'react';
 import { Portfolio } from '../../ui/Portfolio';
+import { OilPainting } from '../../effects/OilPainting';
 
 import './Art.styl';
+import { PaperCanvas } from '../../effects/PaperCanvas';
 
 
 export function Art() {
@@ -13,6 +15,7 @@ export function Art() {
   ].map(data => ({ title: data.title, img: require(`./assets/${data.src}.jpg?{sizes:[200, 400, 720, 1200, 2000], format: "webp"}`), content: data.content }));
 
   return <div className="art">
+    <PaperCanvas />
     <Portfolio items={[...items, ...items, ...items, ...items, ...items, ...items]} />
   </div>;
 }

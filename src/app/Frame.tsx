@@ -1,4 +1,4 @@
-import React, { MouseEvent, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, MouseEvent, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
 import CloseButton from './ui/CloseButton';
 
 import './Frame.styl';
@@ -13,8 +13,7 @@ export interface FrameProps {
   active?: boolean;
 }
 
-export default function Frame(props: FrameProps) {
-
+export const Frame = forwardRef(function Frame(props: FrameProps, ref) {
   const imgRef = useRef<HTMLImageElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
 
@@ -99,4 +98,4 @@ export default function Frame(props: FrameProps) {
       </div>
     </div>
   );
-}
+});

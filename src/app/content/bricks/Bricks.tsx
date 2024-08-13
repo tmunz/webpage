@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { EiffelTower } from './eiffeltower/EiffelTower';
 import { Polaroid } from '../../ui/Polaroid';
-import { Mb300sl, Quality } from './mb300sl/Mb300sl';
+import { CarShow } from '../../visualization/car-show/CarShow';
 import { Aircraft } from './Aircraft';
+import { Mb300Ssl } from './mb300sl/Mb300Ssl';
 
 import './Bricks.styl';
 
@@ -79,7 +80,7 @@ export function Bricks() {
       <Aircraft width={size.width} scrollRatio={scrollRatio} />
     </section >;
     <section className='mb-300sl-section' style={{ width: size.width, height: size.height, visibility: mb300slInView ? 'visible' : 'hidden' }}>
-      <Mb300sl animate={mb300slInView} quality={Quality.PERFORMANCE} />
+      <CarShow Model={Mb300Ssl} animate={mb300slInView} />
     </section>
     <section className='placeholder' style={{ background: 'black', height: '2000px' }}></section>
   </div >;

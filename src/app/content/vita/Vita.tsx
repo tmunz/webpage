@@ -4,10 +4,10 @@ import { VitaContent } from './VitaContent';
 
 import './Vita.styl';
 
-export function Vita() {
 
+export function Vita() {
   return <div className="vita">
     <VitaContent />
-    { false && <Knowledge /> }
+    {false && <Knowledge />}
   </div >;
 }

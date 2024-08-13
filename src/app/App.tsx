@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Frame, { FrameProps } from './Frame';
+import { Frame, FrameProps } from './Frame';
 import { Vita } from './content/vita/Vita';
 import { Art } from './content/art/Art';
 import { Projects } from './content/projects/Projects';
 import { Bricks } from './content/bricks/Bricks';
 import { Photo } from './content/photo/Photo';
+import { FrameCursor } from './FrameCursor';
 
 import './App.styl';
 
@@ -15,6 +16,7 @@ export function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedFrame, setSelectedFrame] = useState<null | string>(null);
+  const framesRef = useRef<Frame[]>([]);
 
   const frames: FrameProps[] = [
     { id: 'vita', title: 'Vita', content: <Vita />, imgSrc: './content/vita/vita_title.jpg' },
@@ -42,9 +44,10 @@ export function App() {
 
   return (
     <div className="app">
-      {frames.map((frame) => (
+      {frames.map((frame, i) => (
         <Frame
           key={frame.id}
+          ref={(e: any) => framesRef.current[i] = e}
           active={selectedFrame === frame.id}
           onClick={() => handleClick(frame.id)}
           id={frame.id}
