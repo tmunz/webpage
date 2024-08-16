@@ -5,8 +5,8 @@ import { Frame, FrameProps } from './Frame';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 
-jest.mock('./ui/CloseButton', () => ({ onClick, active }: { onClick: () => void, active: boolean }) => (
-  <button onClick={onClick} data-testid="close-button">{active ? 'Close' : 'Open'}</button>
+jest.mock('./ui/FrameCloseButton', () => ({ onClick, active }: { onClick: () => void, active: boolean }) => (
+  <button onClick={onClick} data-testid="frame-close-button">{active ? 'Close' : 'Open'}</button>
 ));
 
 describe('Frame Component', () => {
@@ -29,7 +29,7 @@ describe('Frame Component', () => {
   it('should call onClick handler when CloseButton is clicked', () => {
     render(<Frame {...defaultProps} active={true} />);
 
-    fireEvent.click(screen.getByTestId('close-button'));
+    fireEvent.click(screen.getByTestId('frame-close-button'));
 
     expect(defaultProps.onClick).toHaveBeenCalledTimes(1);
   });
