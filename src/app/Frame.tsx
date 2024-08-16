@@ -1,7 +1,7 @@
-import React, { forwardRef, MouseEvent, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
-import CloseButton from './ui/CloseButton';
-
 import './Frame.styl';
+
+import React, { forwardRef, MouseEvent, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
+import CloseButton from './ui/FrameCloseButton';
 
 
 export interface FrameProps {

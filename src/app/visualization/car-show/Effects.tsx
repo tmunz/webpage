@@ -63,7 +63,7 @@ export function Effects({ camera, quality, debug, focus }: { camera: Perspective
     case Quality.PERFORMANCE:
       break;
   }
-
+  
   return (
     <>
       <Leva hidden={!debug} />

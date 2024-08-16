@@ -1,8 +1,8 @@
+import './Vita.styl';
+
 import React from 'react';
 import { Knowledge } from './Knowledge';
 import { VitaContent } from './VitaContent';
-
-import './Vita.styl';
 
 
 export function Vita() {

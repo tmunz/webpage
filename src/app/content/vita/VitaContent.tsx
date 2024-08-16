@@ -1,10 +1,10 @@
+import './VitaContent.styl';
+
 import React from 'react';
 import { SocialLinks } from '../../ui/icon/SocialLinks';
 import { Icon } from '../../ui/icon/Icon';
 import { IconName } from '../../ui/icon/IconName';
 import { professionalLifeData } from './ProfessionalLifeData';
-
-import './VitaContent.styl';
 
 
 export function VitaContent() {

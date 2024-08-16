@@ -1,10 +1,13 @@
+
+
+import './variables.styl';
+import './index.styl';
+
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { App } from './app/App';
 
-import './variables.styl';
-import './index.styl';
 
 const appElement = document.getElementById('app');
 if (appElement) {

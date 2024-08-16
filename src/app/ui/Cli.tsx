@@ -1,9 +1,9 @@
+import './Cli.styl';
+
 import React, { useState, useEffect } from 'react';
 import figlet from 'figlet';
 // @ts-ignore
 import standard from 'figlet/importable-fonts/Standard.js';
-
-import './Cli.styl';
 
 interface Props {
   cmds: (input: string) => string;

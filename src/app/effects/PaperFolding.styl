@@ -1,0 +1,247 @@
+.paper-folding {
+  position: relative;
+  aspect-ratio: 3/2;
+  perspective: 1000px;
+
+  .paper {
+    height: 100%;
+    width: 100%;
+
+    .paper-folding-infold {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+
+    .paper-folding-unfold {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 1;
+    }
+
+    .paper-folding-content {
+      height: 100%;
+      width: 100%;
+    }
+
+    &.open {
+      .paper-folding-content {
+        animation: fold-content-open 2s ease forwards;
+      }
+
+      .paper-part-tr {
+        animation: fold-tr-open 2s ease forwards;
+      }
+
+      .paper-part-bl {
+        animation: fold-bl-open 2s ease forwards;
+      }
+
+      .paper-part-br {
+        animation: fold-br-open 2s ease forwards;
+      }
+    }
+
+    &.closed {
+      .paper-folding-content {
+        animation: fold-content-close 2s ease forwards;
+      }
+
+      .paper-part-tr {
+        animation: fold-tr-close 2s ease forwards;
+      }
+
+      .paper-part-bl {
+        animation: fold-bl-close 2s ease forwards;
+      }
+
+      .paper-part-br {
+        animation: fold-br-close 2s ease forwards;
+      }
+    }
+
+    &.closed.initial {
+      .paper-folding-content {
+        animation: fold-content-close 0s forwards;
+      }
+
+      .paper-part-tr {
+        animation: fold-tr-close 0s forwards;
+      }
+
+      .paper-part-bl {
+        animation: fold-bl-close 0s forwards;
+      }
+
+      .paper-part-br {
+        animation: fold-br-close 0s forwards;
+      }
+    }
+
+    .paper-part {
+      transform-style: preserve-3d;
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+      .paper-part-frontside,
+      .paper-part-backside {
+        backface-visibility: hidden;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        box-sizing: border-box;
+
+        &.paper-part-backside {
+          transform: rotateY(179deg) scaleX(-1);
+        }
+      }
+
+      &.paper-part-tr {
+        left: 50%;
+        transform-origin: 0 0;
+      }
+
+      &.paper-part-bl {
+        top: 50%;
+        left: 0%;
+        transform-origin: 0 0;
+      }
+
+      &.paper-part-br {
+        top: 50%;
+        left: 50%;
+        transform-origin: 0 0;
+      }
+    }
+  }
+}
+
+@keyframes fold-content-open {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, calc(100% - 50px) 0, 0 0);
+  }
+
+  50% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, calc(100% - 50px) 0, 0 0);
+  }
+
+  90% {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 50px), calc(100% - 50px) 100%, 0 100%);
+  }
+
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 50px), calc(100% - 50px) 100%, 0 100%);
+  }
+}
+
+@keyframes fold-content-close {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 50px), calc(100% - 50px) 100%, 0 100%);
+  }
+
+  40% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, calc(100% - 50px) 0, 0 0);
+  }
+
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, calc(100% - 50px) 0, 0 0);
+  }
+}
+
+@keyframes fold-tr-open {
+  0% {
+    z-index: 1;
+    transform: rotateY(179deg);
+  }
+
+  50% {
+    z-index: 0;
+    transform: rotateY(360deg);
+  }
+
+  100% {
+    z-index: 0;
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes fold-tr-close {
+  0% {
+    z-index: 0;
+    transform: rotateY(360deg);
+  }
+
+  50% {
+    z-index: 0;
+    transform: rotateY(360deg);
+  }
+
+  100% {
+    z-index: 1;
+    transform: rotateY(179deg);
+  }
+}
+
+@keyframes fold-bl-open {
+  0% {
+    transform: rotateX(179deg);
+  }
+
+  50% {
+    transform: rotateX(179deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+@keyframes fold-bl-close {
+  0% {
+    transform: rotateX(0deg);
+  }
+
+  50% {
+    transform: rotateX(179deg);
+  }
+
+  100% {
+
+    transform: rotateX(179deg);
+  }
+}
+
+@keyframes fold-br-open {
+  0% {
+    transform: rotateX(179deg) rotateY(-179deg);
+  }
+
+  50% {
+    transform: rotateX(179deg) rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+}
+
+@keyframes fold-br-close {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateX(179deg) rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateX(179deg) rotateY(-179deg);
+  }
+}

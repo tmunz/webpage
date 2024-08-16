@@ -1,11 +1,11 @@
+import './Bricks.styl';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { EiffelTower } from './eiffeltower/EiffelTower';
-import { Polaroid } from '../../ui/Polaroid';
+import { Polaroid } from '../../effects/Polaroid';
 import { CarShow } from '../../visualization/car-show/CarShow';
 import { Aircraft } from './Aircraft';
 import { Mb300Ssl } from './mb300sl/Mb300Ssl';
-
-import './Bricks.styl';
 
 
 export function Bricks() {

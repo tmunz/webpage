@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { WorldMap } from '../visualization/WorldMap';
-
 import './ImageEntry.styl';
 
+import React, { useEffect, useState } from 'react';
+import { WorldMap } from '../visualization/WorldMap';
 
 interface ImageEntryProps {
   data: ImageData;

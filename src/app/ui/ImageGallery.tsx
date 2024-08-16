@@ -1,11 +1,10 @@
+import './ImageGallery.styl';
+
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ImageEntry, ImageData } from './ImageEntry';
 import { GridEntryImage, generateGrid } from './ImageGalleryGridGenerator';
 import { Icon } from './icon/Icon';
 import { IconName } from './icon/IconName';
-
-import './ImageGallery.styl';
-
 
 interface ImageGalleryProps {
   sections: {

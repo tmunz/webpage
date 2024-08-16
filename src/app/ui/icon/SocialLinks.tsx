@@ -1,7 +1,6 @@
-import React from 'react';
-
-
 import './SocialLinks.styl';
+
+import React from 'react';
 import { Icon } from './Icon';
 import { IconName } from './IconName';
 

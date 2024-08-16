@@ -1,11 +1,10 @@
+import './Projects.styl';
+
 import React from 'react';
 import { Cli } from '../../ui/Cli';
 import { Icon } from '../../ui/icon/Icon';
 import { IconName } from '../../ui/icon/IconName';
 import { PebbleAlphaBinary } from './PebbleAlphaBinary';
-
-import './Projects.styl';
-
 
 
 enum SelectionType { CLI, LIST }

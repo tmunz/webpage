@@ -1,7 +1,8 @@
+import './PebbleAlphaBinary.styl';
+
 import React, { useState } from 'react';
 import { AlphaBinaryClock, AlphaBinaryClockProps } from '../../visualization/AlphaBinaryClock';
 
-import './PebbleAlphaBinary.styl';
 
 export function PebbleAlphaBinary() {
   const [config, setConfig] = useState<AlphaBinaryClockProps>({

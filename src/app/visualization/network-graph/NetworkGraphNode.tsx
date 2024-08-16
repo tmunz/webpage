@@ -29,10 +29,14 @@ export const NetworkGraphNode = forwardRef(function NetworkGraphNode(
     ref={ref}
     position={[node.x, node.y, node.z]}
   >
-    {node.userData.name && <Sphere args={[10, 16, 16]} {...{ ...objProps }}>
-      <meshBasicMaterial {...{ ...nodeMaterialProps }}
-        transparent={false}
-      />
-    </Sphere>}
+    {node.userData.name &&
+      <Sphere args={[10, 16, 16]} {...{ ...objProps }}>
+        <meshBasicMaterial {...{ ...nodeMaterialProps }}
+          transparent={false}
+        >
+          {/* <plane attach="clippingPlanes-0" normal={[0, 0, 1]} constant={0} /> */}
+        </meshBasicMaterial>
+      </Sphere>
+    }
   </group>;
 });

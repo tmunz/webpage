@@ -95,7 +95,7 @@ export function NetworkGraph(props: Props) {
               />
             ))
           }
-          < axesHelper args={[10]} />
+          < axesHelper args={[20]} />
         </DragControls>
       </NetworkGraphControls >
       <Stats />

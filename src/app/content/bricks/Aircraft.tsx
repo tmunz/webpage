@@ -1,6 +1,6 @@
-import React from "react";
-
 import './Aircraft.styl';
+
+import React from 'react';
 
 
 export function Aircraft({ width, scrollRatio }: { width: number, scrollRatio: number }) {
@@ -11,7 +11,7 @@ export function Aircraft({ width, scrollRatio }: { width: number, scrollRatio: n
   const brickZ = brickX * 0.5;
   const scroll = scrollRatio * 1.8;
 
-  return <div className="aircraft">
+  return <div className='aircraft'>
     <div className='divider-brick' style={{
       width: brickX, height: brickY, transform: `
           translate3d(${50 - (brickMultiplier - 1) / 2 * 100}%, 0, 0) 

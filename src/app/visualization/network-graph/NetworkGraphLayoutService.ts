@@ -4,6 +4,9 @@ export interface NetworkNode {
   x?: number;
   y?: number;
   z?: number;
+  fx?: number;
+  fy?: number;
+  fz?: number;
 }
 
 export interface NetworkNode3d {
@@ -15,6 +18,9 @@ export interface NetworkNode3d {
   vx: number;
   vy: number;
   vz: number;
+  fx?: number;
+  fy?: number;
+  fz?: number;
 }
 
 export interface NetworkLink {
@@ -44,6 +50,9 @@ export const convertTo3d = (nodes: NetworkNode[], links: NetworkLink[]) => {
       vx: 0,
       vy: 0,
       vz: 0,
+      fx: node.fx,
+      fy: node.fy,
+      fz: node.fz,
     };
 
     result.nodes3d.push(node3d);
@@ -107,12 +116,24 @@ export const updateNodePositions = (nodes: NetworkNode3d[], linkMap: Map<string,
     const adjustedByTimeY = vy * timeMultiplier;
     const adjustedByTimeZ = vz * timeMultiplier;
 
-    node.x += adjustedByTimeX;
-    node.y += adjustedByTimeY;
-    node.z += adjustedByTimeZ;
-    node.vx = vx - adjustedByTimeX;
-    node.vy = vy - adjustedByTimeY;
-    node.vz = vz - adjustedByTimeZ;
+    if (node.fx === undefined) {
+      node.x += adjustedByTimeX;
+      node.vx = vx - adjustedByTimeX;
+    } else {
+      node.x = node.fx;
+    }
+    if (node.fy === undefined) {
+      node.y += adjustedByTimeY;
+      node.vy = vy - adjustedByTimeY;
+    } else {
+      node.y = node.fy;
+    }
+    if (node.fz === undefined) {
+      node.z += adjustedByTimeZ;
+      node.vz = vz - adjustedByTimeZ;
+    } else {
+      node.z = node.fz;
+    }
 
     graphActivity += Math.abs(vx) + Math.abs(vy) + Math.abs(vz);
   }
