@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { PaperEffect } from './PaperEffect';
 
 
-export function PaperFolding({ children, onUnfold, onInfold }: { children?: React.ReactNode, onUnfold?: () => void, onInfold?: () => void }) {
+export function PaperFolding({ children, onUnfold, onInfold, className }: { children?: React.ReactNode, onUnfold?: () => void, onInfold?: () => void, className?: string }) {
 
   const [initial, setInitial] = useState<boolean>(true);
   const [open, setOpen] = useState<boolean>(false);
@@ -19,7 +19,7 @@ export function PaperFolding({ children, onUnfold, onInfold }: { children?: Reac
     }
   };
 
-  return <div className='paper-folding'>
+  return <div className={`paper-folding ${className ?? ''}`}>
     <div className={`paper ${open ? 'open' : 'closed'} ${initial ? 'initial' : ''}`}>
       {['tl', 'tr', 'bl', 'br'].map((id) =>
         <PaperEffect key={id} seed={id}>
