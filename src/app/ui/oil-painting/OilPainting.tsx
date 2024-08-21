@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, { forwardRef, MouseEvent, useEffect, useImperativeHandle, useRef } from "react";
 import { AvgCalculator } from "../../utils/AvgCalculator";
 import { HistoryManager } from "../../utils/HistoryManager";
 import { useMouseHandler } from "./OilPaintingMouseHandler";
@@ -7,23 +7,25 @@ import { useKeyboardHandler } from "./OilPaintingKeyboardHandler";
 
 
 interface OilPaintingProps {
+  width: number,
+  height: number,
   color?: { r: number, g: number, b: number };
   distribution?: number;
   strokeWidth?: number;
   maxSprankleSize?: number;
-  onControlRequest?: () => void;
+  onControlRequest?: (event: MouseEvent, rect?: DOMRect) => void;
 }
 
 export const OilPainting = forwardRef(
-  function OilPainting({ color = { r: 0, g: 0, b: 0 }, strokeWidth = 10, maxSprankleSize = 10, distribution = 10, onControlRequest }: OilPaintingProps, ref) {
+  function OilPainting({ width, height, color = { r: 0, g: 0, b: 0 }, strokeWidth = 10, maxSprankleSize = 10, distribution = 10, onControlRequest }: OilPaintingProps, ref) {
 
-    const [size, setSize] = useState({ width: 1, height: 1 });
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const intervalRef = useRef<number | null>(null);
     const { current: avgCalculator } = useRef(AvgCalculator(20, strokeWidth));
     const { current: history } = useRef<ReturnType<typeof HistoryManager<ImageData>>>(HistoryManager<ImageData>(25, [new ImageData(1, 1)]));
-    const { current: currPosition } = useRef({ x: size.width / 2, y: size.height / 2 });
+    const { current: currPosition } = useRef({ x: width / 2, y: height / 2 });
     const prevPositionRef = useRef<{ x: number, y: number } | null>(null);
+
     let paintMode = false;
 
     const undo = () => {
@@ -56,13 +58,13 @@ export const OilPainting = forwardRef(
       const canvas = canvasRef.current;
       const context = canvas?.getContext("2d");
       if (context) {
-        context.clearRect(0, 0, size.width, size.height);
+        context.clearRect(0, 0, width, height);
       }
     };
 
-    const useBrush = (context: CanvasRenderingContext2D, from: {x: number, y: number}, to: {x: number, y: number}, params: { color: string, width: number }) => {
+    const useBrush = (context: CanvasRenderingContext2D, from: { x: number, y: number }, to: { x: number, y: number }, params: { color: string, width: number }) => {
       context.lineCap = "round";
-      context.lineJoin = "round";''
+      context.lineJoin = "round"; ''
       context.strokeStyle = params.color;
       context.lineWidth = params.width;
       context.moveTo(from.x, from.y);
@@ -158,7 +160,7 @@ export const OilPainting = forwardRef(
 
       if (canvas && context) {
         const keyboardHandler = useKeyboardHandler({ undo, redo, reset });
-        const mouseHandler = useMouseHandler({ canvas, onPositionChanged: setPosition, startPaint, endPaint, onControlRequest, reset });
+        const mouseHandler = useMouseHandler({ canvas, onPositionChanged: setPosition, startPaint, endPaint, reset });
         const touchHandler = useTouchHandler({ canvas, onPositionChanged: setPosition, startPaint, endPaint });
 
         return () => {
@@ -168,43 +170,21 @@ export const OilPainting = forwardRef(
           clearPaintInterval();
         };
       }
-    }, [canvasRef.current, size, distribution, color, strokeWidth, maxSprankleSize]);
-
-    useEffect(() => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-
-      const resizeObserver = new ResizeObserver((entries) => {
-        for (let entry of entries) {
-          if (entry.contentBoxSize) {
-            const width = entry.contentRect.width;
-            const height = entry.contentRect.height;
-            setSize({ width, height });
-          }
-        }
-      });
-      resizeObserver.observe(canvas);
-
-      return () => {
-        resizeObserver.unobserve(canvas);
-      };
-    }, []);
+    }, [canvasRef.current, width, height, distribution, color, strokeWidth, maxSprankleSize]);
 
     useEffect(() => {
       const canvas = canvasRef.current;
       const context = canvas?.getContext("2d");
       const current = history.getCurrent();
       if (canvas && context && current) {
-        context.clearRect(0, 0, size.width, size.height);
+        context.clearRect(0, 0, width, height);
         context.putImageData(current, 0, 0);
       }
-    }, [size]);
+    }, [width, height]);
 
     useImperativeHandle(ref, () => ({
       undo, redo, reset, canUndo: history.canUndo, canRedo: history.canRedo,
     }));
 
-    return <>
-      <canvas ref={canvasRef} className="oil-painting" width={size.width} height={size.height} />
-    </>;
+    return <canvas ref={canvasRef} className="oil-painting" width={width} height={height} style={{ width, height }} onContextMenu={(e) => onControlRequest?.(e, canvasRef.current?.getBoundingClientRect())} />;
   });

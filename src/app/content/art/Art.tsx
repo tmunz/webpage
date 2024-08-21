@@ -1,17 +1,18 @@
 import './Art.styl';
 
-import React, { ReactNode, useState } from 'react';
-import { FlipList } from '../../effects/FlipList';
-import { PaperFolding } from '../../effects/PaperFolding';
-import { OilPaintingWithControls } from '../../ui/oil-painting/OilPaintingWithControls';
-import { PaperEffect } from '../../effects/PaperEffect';
-import { MoveBoard } from '../../effects/MoveBoard';
+import React, { ReactNode } from 'react';
+import { DragBoard } from '../../ui/drag-board/DragBoard';
 import { Polaroid } from '../../effects/Polaroid';
+import { PaintDragBoardItem } from './PaintDragBoardItem';
+import { useDimension } from '../../utils/Dimension';
+import { DragBoardItem } from '../../ui/drag-board/DragBoardItem';
+import { ProjectDocument } from '../../effects/ProjectDocument';
 
 
 export function Art() {
 
-  const [paintYourself, setPaintYourself] = useState(false);
+  const elementRef = React.useRef<HTMLDivElement>(null);
+  const dimension = useDimension(elementRef, 40);
 
   const items = [
     { title: '300 SL', src: '300sl.jpg', content: '300 SL Lorem ipsum eofwpfo f kweopf kweopf kweof kowe foewp fkweop fk owefko ewfkop weofk ewof ewf kwfopewfkeowf kewo fkweo fkowe kofw eopf weopfkwef kwepfo ewopfk eowpf kep weopfk kweop' },
@@ -27,14 +28,11 @@ export function Art() {
     </div>
   ]) as [ReactNode, ReactNode][];
 
-  return <div className='art'>
-    <MoveBoard>
-      {items.map(([image, text]) => <Polaroid>{image}{text}</Polaroid>)}
-    </MoveBoard>
-    <div className={`paint-yourself ${paintYourself ? 'active' : ''}`}>
-      <PaperFolding onUnfold={() => setPaintYourself(true)} onInfold={() => setPaintYourself(false)}>
-        <OilPaintingWithControls />
-      </PaperFolding>
-    </div>
+  return <div className='art' ref={elementRef}>
+    <DragBoard>
+      {items.map(([image, text]) => <DragBoardItem><ProjectDocument>{image}{text}</ProjectDocument></DragBoardItem>)}
+      <PaintDragBoardItem width={dimension?.width ?? 400} height={dimension?.height ?? 400} />
+      {items.map(([image, text]) => <DragBoardItem><Polaroid>{image}{text}</Polaroid></DragBoardItem>)}
+    </DragBoard>
   </div>;
 }

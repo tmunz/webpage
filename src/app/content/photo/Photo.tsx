@@ -1,7 +1,7 @@
 import './Photo.styl';
 
 import React, { useRef } from 'react';
-import { ImageGallery } from '../../ui/ImageGallery';
+import { ImageGallery } from '../../ui/image-gallery/ImageGallery';
 
 
 export function Photo() {

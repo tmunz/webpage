@@ -3,8 +3,9 @@ import './ImageGallery.styl';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ImageEntry, ImageData } from './ImageEntry';
 import { GridEntryImage, generateGrid } from './ImageGalleryGridGenerator';
-import { Icon } from './icon/Icon';
-import { IconName } from './icon/IconName';
+import { Icon } from '../icon/Icon';
+import { IconName } from '../icon/IconName';
+import { useDimension } from '../../utils/Dimension';
 
 interface ImageGalleryProps {
   sections: {
@@ -29,15 +30,14 @@ export function ImageGallery({ sections, desiredMinHeight = 250, gap = 20 }: Ima
     }))
   );
 
-  const [size, setSize] = useState<{ width: number, height: number } | null>(null);
   const [showImages, setShowImages] = useState(false);
   const [activeImage, setActiveImage] = useState<[number, number] | null>(null);
   const [userAction, setUserAction] = useState(false);
 
   const userActionTimeoutRef = useRef<number | null>(null);
-  const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const grid = useMemo(() => size && generateGrid(loadedSections, desiredMinHeight, size.width - SCROLLBAR_WIDTH, gap, activeImage), [loadedSections, desiredMinHeight, size?.width, gap, activeImage]);
+  const dimension = useDimension(elementRef, 40);
+  const grid = useMemo(() => dimension && generateGrid(loadedSections, desiredMinHeight, dimension.width - SCROLLBAR_WIDTH, gap, activeImage), [loadedSections, desiredMinHeight, dimension?.width, gap, activeImage]);
 
 
   const isSingleImageMode = () => {
@@ -88,43 +88,10 @@ export function ImageGallery({ sections, desiredMinHeight = 250, gap = 20 }: Ima
   }, [activeImage]);
 
   useEffect(() => {
-    if (size !== null) {
+    if (dimension !== null) {
       setShowImages(true);
     }
-  }, [size]);
-
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver(entries => {
-      for (let entry of entries) {
-        if (entry.target instanceof HTMLDivElement) {
-          const width = Math.floor(entry.target.offsetWidth);
-          const height = Math.floor(entry.target.offsetHeight);
-          if (size === null || size.width !== width || size.height !== height) {
-            if (resizeTimeoutRef.current) {
-              clearTimeout(resizeTimeoutRef.current);
-            }
-            resizeTimeoutRef.current = setTimeout(() => {
-              setSize({ width, height });
-            }, 40);
-          }
-        }
-      }
-    });
-
-    if (elementRef.current) {
-      resizeObserver.observe(elementRef.current);
-    }
-
-    return () => {
-      if (elementRef.current) {
-        resizeObserver.unobserve(elementRef.current);
-      }
-      if (resizeTimeoutRef.current) {
-        clearTimeout(resizeTimeoutRef.current);
-        resizeTimeoutRef.current = null;
-      }
-    };
-  }, []);
+  }, [dimension]);
 
   const setActive = (e: -1 | 0 | 1 | null) => {
     if (e === null) {
@@ -150,7 +117,7 @@ export function ImageGallery({ sections, desiredMinHeight = 250, gap = 20 }: Ima
 
   return (
     <div className={`image-gallery ${isSingleImageMode() ? 'single-image-mode' : ''}`} ref={elementRef}>
-      {size !== null && grid !== null &&
+      {dimension !== null && grid !== null &&
         <div
           className='image-grid'
           style={{ height: grid.height }}
@@ -169,14 +136,14 @@ export function ImageGallery({ sections, desiredMinHeight = 250, gap = 20 }: Ima
               </div>
             } else {
               const inactiveTargetScale = 0.9;
-              const gridScale = Math.max(d.width / size.width, d.height / size.height);
+              const gridScale = Math.max(d.width / dimension.width, d.height / dimension.height);
               const scale = isSingleImageMode() ?
                 (d.active ? 1 : inactiveTargetScale * gridScale) :
                 gridScale;
               const translate = isSingleImageMode() ?
                 (d.active ? {
-                  x: 0 + (size.width - d.width / gridScale) * 0.5,
-                  y: (elementRef.current?.scrollTop ?? 0) + (size.height - d.height / gridScale) * 0.5,
+                  x: 0 + (dimension.width - d.width / gridScale) * 0.5,
+                  y: (elementRef.current?.scrollTop ?? 0) + (dimension.height - d.height / gridScale) * 0.5,
                   z: 0
                 } :
                   { x: d.x ?? 0 + d.width * 0.5 * (1 - inactiveTargetScale), y: d.y ?? 0 + d.height * 0.5 * (1 - inactiveTargetScale), z: -1 }) :

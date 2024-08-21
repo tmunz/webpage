@@ -1,0 +1,16 @@
+.drag-board-item {
+  position: absolute;
+  transition: transform 0.1s ease-out;
+
+  &:not(.drag-board-item-drag-disabled) {
+    cursor: grab;
+
+    &.drag-board-item-dragging {
+      cursor: grabbing;
+
+      &>* {
+        pointer-events: none;
+      }
+    }
+  }
+}

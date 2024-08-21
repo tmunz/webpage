@@ -1,67 +1,77 @@
 .polaroid {
+  display: inline-block;
   background-color: transparent;
   margin: 5px;
   perspective: 9999px;
 
-  &:hover {
+  &.flip-on-hover:hover, &.flipped {
     .polaroid-card {
       transform: rotateY(180deg);
     }
   }
-}
 
-.polaroid-card {
-  position: relative;
-  text-align: center;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  width: 344px;
-  height: 419px;
-  border-radius: 5px;
-
-  background:
-    linear-gradient(30deg, transparent 4px, rgba(0, 0, 0, 0.02) 7px, transparent 8px),
-    linear-gradient(-30deg, transparent 4px, rgba(0, 0, 0, 0.02) 7px, transparent 8px),
-    rgba(240, 240, 240, 1);
-  background-size: 14px 8px, 14px 8px;
-  background-position: 0px 0px, 0px 0px;
-
-  .polaroid-frontside,
-  .polaroid-backside {
-    padding: 19px;
-    backface-visibility: hidden;
+  .flip-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
   }
 
-  .polaroid-frontside {
-    .polaroid-image {
-      width: 306px;
-      height: 313px;
+  .polaroid-card {
+    position: relative;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 344px;
+    height: 419px;
+    border-radius: 5px;
 
-      &>*,
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: 50% 50%;
-        background-color: rgba(0, 0, 0, 1);
+    background:
+      linear-gradient(30deg, transparent 4px, rgba(0, 0, 0, 0.02) 7px, transparent 8px),
+      linear-gradient(-30deg, transparent 4px, rgba(0, 0, 0, 0.02) 7px, transparent 8px),
+      rgba(240, 240, 240, 1);
+    background-size: 14px 8px, 14px 8px;
+    background-position: 0px 0px, 0px 0px;
+
+    .polaroid-frontside,
+    .polaroid-backside {
+      padding: 19px;
+      backface-visibility: hidden;
+    }
+
+    .polaroid-frontside {
+      .polaroid-image {
+        width: 306px;
+        height: 313px;
+
+        &>*,
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: 50% 50%;
+          background-color: rgba(0, 0, 0, 1);
+          pointer-events: none;
+        }
+      }
+
+      .polaroid-caption {
+        font-family: kristi, sans-serif;
+        transform: rotate(-10deg) translate(-10px, -0.5em);
+        font-size: 6em;
       }
     }
 
-    .polaroid-caption {
-      font-family: kristi, sans-serif;
-      transform: rotate(-10deg) translate(-10px, -0.5em);
-      font-size: 6em;
+    .polaroid-backside {
+      text-align: left;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      transform: rotateY(180deg);
     }
-  }
-
-  .polaroid-backside {
-    text-align: left;
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    transform: rotateY(180deg);
   }
 }
