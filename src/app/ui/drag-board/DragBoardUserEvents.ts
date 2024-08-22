@@ -29,7 +29,7 @@ export const useUserEvents = (
 
     const handleEnd = (e: MouseEvent | TouchEvent) => {
       e.preventDefault();
-      document.body.style.overscrollBehaviorX = 'auto';
+      document.body.style.overscrollBehavior = 'auto';
       onEnd();
     }
 
@@ -75,6 +75,6 @@ export const useUserEvents = (
 // called by the item itself
 export const handleStart = (position: { clientX: number, clientY: number }, e: ReactMouseEvent | ReactTouchEvent) => {
   e.preventDefault();
-  document.body.style.overscrollBehaviorX = 'none';
+  document.body.style.overscrollBehavior = 'none';
   return { clientX: position.clientX, clientY: position.clientY, rect: e.currentTarget.getBoundingClientRect() };
 }
