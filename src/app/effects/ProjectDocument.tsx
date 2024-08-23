@@ -1,21 +1,56 @@
 import './ProjectDocument.styl';
 import React from 'react';
 
-export function ProjectDocument({ children }: { children?: React.ReactNode }) {
+interface ProjectDocumentProps {
+  titleBlock?: {
+    project?: string;
+    notes?: string;
+    creator?: string;
+    dateStarted?: string;
+    link?: string;
+    dateCompleted?: string;
+    dimensions?: string;
+    unit?: string;
+    material?: string;
+    instructions?: boolean;
+    revision?: string;
+  }
+  children?: React.ReactNode;
+}
+
+export function ProjectDocument({ titleBlock, children }: ProjectDocumentProps) {
   return (
     <div className="project-document">
-      <div className='project-document-container'>
-        {['left', 'top', 'right', 'bottom'].map((id) =>
+      <div className="project-document-container">
+        {['left', 'top', 'right', 'bottom'].map((id) => (
           <div key={id} className={`project-document-border-indicator project-document-border-indicator-${id}`} />
-        )}
-        <form className='project-document-title-block'>
-          <div className="project-document-mainfield"></div>
-          <label className='project-document-project'><span>Project</span><input></input></label>
-          <label className='project-document-creator'><span>Creator</span><input></input></label>
-          <label className='project-document-date-started'><span>Date Started</span><input></input></label>
-          <label className='project-document-date-links'><span>Link</span><input></input></label>
-          <label className='project-document-date-completed'><span>Date Completed</span><input></input></label>
-          <div className="project-document-perspective">
+        ))}
+        <form className="project-document-title-block">
+          <div className="project-document-field project-document-notes">
+            <label>Notes</label>
+            <span className="value">{titleBlock?.notes}</span>
+          </div>
+          <div className="project-document-field project-document-project">
+            <label>Project</label>
+            <span className="value">{titleBlock?.project}</span>
+          </div>
+          <div className="project-document-field project-document-creator">
+            <label>Creator</label>
+            <span className="value">{titleBlock?.creator}</span>
+          </div>
+          <div className="project-document-field project-document-date-started">
+            <label>Date Started</label>
+            <span className="value">{titleBlock?.dateStarted}</span>
+          </div>
+          <div className="project-document-field project-document-links">
+            <label>Link</label>
+            <span className="value">{titleBlock?.link}</span>
+          </div>
+          <div className="project-document-field project-document-date-completed">
+            <label>Date Completed</label>
+            <span className="value">{titleBlock?.dateCompleted}</span>
+          </div>
+          <div className="project-document-field project-document-perspective">
             <svg width="110" height="50" xmlns="http://www.w3.org/2000/svg">
               <circle cx="25" cy="25" r="5" stroke="black" fill="none" />
               <circle cx="25" cy="25" r="10" stroke="black" fill="none" />
@@ -24,12 +59,28 @@ export function ProjectDocument({ children }: { children?: React.ReactNode }) {
               <polygon points="55,20 85,10 85,40 55,30" stroke="black" fill="none" />
             </svg>
           </div>
-          <label className='project-document-scale'><span>Scale</span><input></input></label>
-          <label className='project-document-material'><span>Material</span><input></input></label>
-          <label className='project-document-instructions'><span>Instr.</span><input></input></label>
-          <label className='project-document-revision'><span>Rev_No</span><input></input></label>
+          <div className="project-document-field project-document-dimensions">
+            <label>Dimensons</label>
+            <span className="value">{titleBlock?.dimensions}</span>
+          </div>
+          <div className="project-document-field project-document-unit">
+            <label>Unit</label>
+            <span className="value">{titleBlock?.unit}</span>
+          </div>
+          <div className="project-document-field project-document-material">
+            <label>Material</label>
+            <span className="value">{titleBlock?.material}</span>
+          </div>
+          <div className="project-document-field project-document-instructions">
+            <label>Instr.</label>
+            <span className="value">{titleBlock?.instructions ? '✔' : '✖'}</span>
+          </div>
+          <div className="project-document-field project-document-revision">
+            <label>Rev_No</label>
+            <span className="value">{titleBlock?.revision}</span>
+          </div>
         </form>
-        <div className='project-document-content'>
+        <div className="project-document-content">
           {children}
         </div>
       </div>

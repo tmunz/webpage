@@ -1,0 +1,72 @@
+.citroen-ds-lamp {
+
+  .project-document-notes .value {
+    font-size: 0.5rem !important;
+  }
+
+  .citroen-ds-lamp-content {
+    display: relative;
+    background-image:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.25) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.25) 1px, transparent 1px);
+    background-size: 10px 10px, 10px 10px, 100px 100px, 100px 100px;
+
+
+    &>:nth-child(1) {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 70%;
+      object-position: 100% 0%;
+    }
+
+    &>:nth-child(2) {
+      top: 0;
+      left: 2%;
+      width: 25%;
+      height: 25%;
+      object-position: 0% 50%;
+    }
+
+    &>:nth-child(3) {
+      top: 0;
+      left: 18%;
+      width: 48%;
+      height: 48%;
+      object-position: 0% 0%;
+    }
+
+    &>:nth-child(4) {
+      bottom: 0;
+      left: 0;
+      width: 40%;
+      height: 20%;
+    }
+
+    &>:nth-child(5) {
+      bottom: 25%;
+      left: 0;
+      width: 50%;
+      height: 50%;
+      z-index: 2
+    }
+
+    &.citroen-ds-lamp-portrait {
+      &>:nth-child(4) {
+        bottom: 45%;
+      }
+
+      &>:nth-child(5) {
+        top: 2%;
+      }
+    }
+
+    img {
+      position: absolute;
+      object-fit: contain;
+    }
+  }
+}

@@ -92,7 +92,7 @@ export const DragBoard = ({ children }: DragBoardProps) => {
     }
   }, []);
 
-  const handleMouseMove = useCallback((e: { clientX: number, clientY: number }) => {
+  const handlePointerMove = useCallback((e: { clientX: number, clientY: number }) => {
     if (!selectedItem) return;
 
     const deltaX = e.clientX - selectedItem.startX;
@@ -125,7 +125,8 @@ export const DragBoard = ({ children }: DragBoardProps) => {
     });
   }, [selectedItem]);
 
-  const handleMouseUp = useCallback(() => {
+  const handlePointerEnd = useCallback(() => {
+
     if (!selectedItem) return;
 
     setItemStates((prevStates) => {
@@ -205,7 +206,7 @@ export const DragBoard = ({ children }: DragBoardProps) => {
     });
   }, []);
 
-  useUserEvents(boardRef, selectedItem?.id ?? null, handleMouseMove, handleMouseUp, handleScroll);
+  useUserEvents(boardRef, selectedItem?.id ?? null, handlePointerMove, handlePointerEnd, handleScroll);
 
   return (
     <div className="drag-board" ref={boardRef}>
