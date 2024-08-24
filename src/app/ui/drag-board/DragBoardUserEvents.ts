@@ -28,7 +28,6 @@ export const useUserEvents = (
     };
 
     const handleEnd = (e: MouseEvent | TouchEvent) => {
-      console.log('end');
       document.body.style.overscrollBehavior = 'auto';
       onEnd();
     }

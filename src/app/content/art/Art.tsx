@@ -14,7 +14,7 @@ export function Art() {
   const elementRef = React.useRef<HTMLDivElement>(null);
   const dimension = useDimension(elementRef, 40);
 
-  const items = [
+  const polaroids = [
     { title: '300 SL', src: '300sl.jpg', content: '300 SL Lorem ipsum eofwpfo f kweopf kweopf kweof kowe foewp fkweop fk owefko ewfkop weofk ewof ewf kwfopewfkeowf kewo fkweo fkowe kofw eopf weopfkwef kwepfo ewopfk eowpf kep weopfk kweop' },
     { title: 'Dog', src: 'dog.jpg', content: 'Dog Lorem ipsum eofwpfo f kweopf kweopf kweof kowe foewp fkweop fk owefko ewfkop weofk ewof ewf kwfopewfkeowf kewo fkweo fkowe kofw eopf weopfkwef kwepfo ewopfk eowpf kep weopfk kweop' },
   ].map(data => [
@@ -31,7 +31,7 @@ export function Art() {
     <DragBoard>
       <DragBoardItem><CitroenDsLamp width={(dimension?.width ?? 400) * 0.6} height={(dimension?.height ?? 400) * 0.6} /></DragBoardItem>
       <PaintDragBoardItem width={dimension?.width ?? 400} height={dimension?.height ?? 400} />
-      {items.map(([image, text]) => <DragBoardItem><Polaroid>{image}{text}</Polaroid></DragBoardItem>)}
+      {polaroids.map(([image, text]) => <DragBoardItem><Polaroid>{image}{text}</Polaroid></DragBoardItem>)}
     </DragBoard>
   </div>;
 }

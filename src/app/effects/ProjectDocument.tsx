@@ -60,7 +60,7 @@ export function ProjectDocument({ titleBlock, children }: ProjectDocumentProps) 
             </svg>
           </div>
           <div className="project-document-field project-document-dimensions">
-            <label>Dimensons</label>
+            <label>Dimensions</label>
             <span className="value">{titleBlock?.dimensions}</span>
           </div>
           <div className="project-document-field project-document-unit">

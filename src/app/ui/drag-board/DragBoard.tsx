@@ -209,7 +209,7 @@ export const DragBoard = ({ children }: DragBoardProps) => {
   useUserEvents(boardRef, selectedItem?.id ?? null, handlePointerMove, handlePointerEnd, handleScroll);
 
   return (
-    <div className="drag-board" ref={boardRef}>
+    <div className='drag-board' ref={boardRef}>
       {React.Children.map(children, (child, index) => {
         const itemState = itemStates[index];
         return (
