@@ -28,7 +28,6 @@ export function App() {
 
   const handleClick = (id: string) => {
     const selectedId = id === selectedFrame ? null : id;
-    setSelectedFrame(selectedId);
     navigate(`/${selectedId || ''}`);
   };
 

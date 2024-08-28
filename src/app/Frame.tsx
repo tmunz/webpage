@@ -1,7 +1,7 @@
 import './Frame.styl';
 
 import React, { forwardRef, MouseEvent, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
-import CloseButton from './ui/FrameCloseButton';
+import FrameCloseButton from './ui/FrameCloseButton';
 
 
 export interface FrameProps {
@@ -87,7 +87,7 @@ export const Frame = forwardRef(function Frame(props: FrameProps, ref) {
         </h1>
       </div>
       <div className={`content-container ${props.active ? 'active' : ''}`}>
-        <CloseButton onClick={() => {
+        <FrameCloseButton onClick={() => {
           props.onClick && props.onClick();
           resetPosition(imgRef);
           // resetPosition(titleRef);

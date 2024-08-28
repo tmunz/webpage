@@ -25,7 +25,7 @@ export function CitroenDsLamp(props: { width: number, height: number }) {
             creator: 'Tobias Munzert',
             dateStarted: '2024-01-11',
             dateCompleted: '2024-03-25',
-            dimensions: '115 x 40 x 40',
+            dimensions: '160 x 40 x 40',
             unit: 'cm',
             material: 'Metal, Wood, Fabric, Polypropylene',
             instructions: false,

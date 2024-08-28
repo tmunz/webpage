@@ -1,5 +1,4 @@
 import './Aircraft.styl';
-
 import React from 'react';
 
 
@@ -65,7 +64,7 @@ export function Aircraft({ width, scrollRatio }: { width: number, scrollRatio: n
     </div>
     <div className='aircraft-content' style={{ paddingTop: '300px' }}>
       <div className='aircraft-images'>
-        {[...Array(3)].map((_, i) => <img key={i} className='aircraft-image' src={require(`./assets/aircraft_${i}.jpg`)} />)}
+        {[...Array(3)].map((_, i) => <img key={i} className='aircraft-image' src={require(`./aircraft_${i}.jpg`)} />)}
       </div>
     </div>
   </div >;

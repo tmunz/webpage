@@ -34,7 +34,7 @@ export const Cli = (props: Props) => {
   });
 
   useEffect(() => {
-    elem.current?.focus();
+    // elem.current?.focus();
     (async () => {
       const title = await figletText(props.title ? props.title : '');
       clear();

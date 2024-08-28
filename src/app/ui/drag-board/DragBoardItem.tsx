@@ -39,7 +39,7 @@ export const DragBoardItem = (props: Partial<DragBoardItemCurrentState> & { chil
           className={`drag-board-item ${value.isDragging ? 'drag-board-item-dragging' : ''} ${props.disableDrag ? 'drag-board-item-drag-disabled' : ''}`}
           style={{
             transform: `translate(${x}px, ${y}px) rotate(${rotation}deg)`,
-            zIndex: z,
+            zIndex: z + 1,
           }}
           onTouchStart={(e) => !props.disableDrag && value.onPointerDown(value.id, handleStart(e.touches[0], e))}
           onMouseDown={(e) => !props.disableDrag && value.onPointerDown(value.id, handleStart(e, e))}

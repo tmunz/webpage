@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { Object3D, PerspectiveCamera as Camera, Vector3 } from 'three';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import { ContactShadows, OrbitControls, Stats, PerspectiveCamera } from '@react-three/drei';
 import { Ground } from './Ground';
 import { ModelMovement } from './ModelMovement';
@@ -13,9 +13,10 @@ interface CarShowProps {
   debug?: boolean;
   quality?: Quality;
   Model: FC<CarShowModelProps>;
+  controls?: boolean;
 }
 
-export const CarShow: FC<CarShowProps> = ({ animate, debug, Model, quality }) => {
+export const CarShow: FC<CarShowProps> = ({ animate, debug, Model, quality, controls }) => {
   const [model, setModel] = useState<Object3D | null>(null);
   const cameraRef = useRef<Camera>(null);
   const elementRef = useRef<HTMLCanvasElement>(null);
@@ -34,14 +35,15 @@ export const CarShow: FC<CarShowProps> = ({ animate, debug, Model, quality }) =>
   }, [animate]);
 
   return (
-    <Canvas
-      style={{ width: '100%', height: '100%' }}
-      ref={elementRef}
-      shadows
-      frameloop="demand"
-      gl={{ logarithmicDepthBuffer: true, antialias: true }}
-      dpr={[1, 1.5]}
-    >
+    // <Canvas
+    //   style={{ width: '100%', height: '100%' }}
+    //   ref={elementRef}
+    //   shadows
+    //   frameloop="demand"
+    //   gl={{ logarithmicDepthBuffer: true, antialias: true }}
+    //   dpr={[1, 1.5]}
+    // >
+    <>
       <ambientLight intensity={0.01} />
       <pointLight intensity={2} decay={0.3} position={[5, 30, 3]} />
       <PerspectiveCamera ref={cameraRef} makeDefault />
@@ -61,13 +63,13 @@ export const CarShow: FC<CarShowProps> = ({ animate, debug, Model, quality }) =>
         target={[0, 1.5, 0]}
       />
 
-      <AutoQuality forceQuality={quality}>
+      {/* <AutoQuality forceQuality={quality}>
         <QualityContext.Consumer>{
           renderQuality => <Effects camera={cameraRef.current} quality={renderQuality} debug={debug} focus={{ position: model?.position ?? center, dimensions: defaultDimensions }} />
         }</QualityContext.Consumer>
-      </AutoQuality>
+      </AutoQuality> */}
 
       {debug && <Stats />}
-    </Canvas>
+    </>
   );
 };

@@ -1,65 +1,7 @@
 .bricks {
-  height: 100%;
-  background-image:
-    linear-gradient(-11deg, #fff 50px, transparent 50px),
-    linear-gradient(169deg, #fff 50px, transparent 50px),
-    linear-gradient(-11deg, #fff 50px, transparent 50px),
-    linear-gradient(169deg, #fff 50px, transparent 50px);
-  background-size: 258px 106px;
-  background-position: 0px 0px, 1px 56px, 134px 54px, 136px 2px;
-  background-color: rgba(200, 200, 200, 0.8);
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
-  /* scroll-snap-type: y proximity; */
+  width: calc(100% + var(--frame-title-size));
+  height: calc(100% + var(--frame-close-button-size));
 
-  &>* {
-    scroll-snap-align: start;
-    position: relative;
-  }
-
-  .polaroid-section {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    position: sticky;
-    top: 0;
-
-    .polaroid {
-      &.flower-polaroid {
-        transform: translate(40px, 40px) rotate(-3deg);
-      }
-
-      &.eiffel-polaroid {
-        transform: translate(-40px, 90px) rotate(4deg);
-
-        .eiffel-polaroid-content {
-          position: relative;
-
-          &>* {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-
-        }
-      }
-    }
-
-    text-align: center;
-  }
-
-  .aircraft-section {
-    z-index: 1;
-  }
-
-  .mb-300sl-section {
-    background: #000000;
-    position: sticky;
-    bottom: 0;
-    z-index: 0;
-  }
+  margin-left: calc(-1 * var(--frame-title-size));
+  margin-top: calc(-1 * var(--frame-close-button-size));
 }

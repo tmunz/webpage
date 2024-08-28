@@ -29,11 +29,13 @@ export function ModelMovement({ model, animate, showPath = false }: { model: Obj
         });
         return wheels;
       })();
-      drive(0);
+      if (animate) {
+        drive(animate ? 0 : 1);
+      }
       model.visible = true;
       invalidate();
     }
-  }, [model]);
+  }, [model, animate]);
 
   useEffect(() => {
     if (animate) {
