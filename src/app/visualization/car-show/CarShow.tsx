@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { Object3D, PerspectiveCamera as Camera, Vector3 } from 'three';
-import { Canvas, useThree } from '@react-three/fiber';
+
 import { ContactShadows, OrbitControls, Stats, PerspectiveCamera } from '@react-three/drei';
 import { Ground } from './Ground';
 import { ModelMovement } from './ModelMovement';
@@ -16,10 +16,9 @@ interface CarShowProps {
   controls?: boolean;
 }
 
-export const CarShow: FC<CarShowProps> = ({ animate, debug, Model, quality, controls }) => {
+export const CarShow: FC<CarShowProps> = ({ animate, debug, Model, quality = Quality.LOW, controls = true }) => {
   const [model, setModel] = useState<Object3D | null>(null);
   const cameraRef = useRef<Camera>(null);
-  const elementRef = useRef<HTMLCanvasElement>(null);
   const { current: center } = useRef(new Vector3(0, 1, 0));
   const { current: defaultDimensions } = useRef(new Vector3(2, 2.5, 5.5));
 
@@ -35,14 +34,6 @@ export const CarShow: FC<CarShowProps> = ({ animate, debug, Model, quality, cont
   }, [animate]);
 
   return (
-    // <Canvas
-    //   style={{ width: '100%', height: '100%' }}
-    //   ref={elementRef}
-    //   shadows
-    //   frameloop="demand"
-    //   gl={{ logarithmicDepthBuffer: true, antialias: true }}
-    //   dpr={[1, 1.5]}
-    // >
     <>
       <ambientLight intensity={0.01} />
       <pointLight intensity={2} decay={0.3} position={[5, 30, 3]} />
@@ -53,9 +44,10 @@ export const CarShow: FC<CarShowProps> = ({ animate, debug, Model, quality, cont
       <Ground />
 
       <Model onLoadComplete={setModel} />
-
       <ModelMovement model={model} animate={animate} showPath={debug} />
+      
       <OrbitControls
+        enabled={controls}
         enablePan={false}
         enableZoom={false}
         minPolarAngle={0}
@@ -63,11 +55,11 @@ export const CarShow: FC<CarShowProps> = ({ animate, debug, Model, quality, cont
         target={[0, 1.5, 0]}
       />
 
-      {/* <AutoQuality forceQuality={quality}>
+      {false && <AutoQuality forceQuality={quality}>
         <QualityContext.Consumer>{
           renderQuality => <Effects camera={cameraRef.current} quality={renderQuality} debug={debug} focus={{ position: model?.position ?? center, dimensions: defaultDimensions }} />
         }</QualityContext.Consumer>
-      </AutoQuality> */}
+      </AutoQuality>}
 
       {debug && <Stats />}
     </>

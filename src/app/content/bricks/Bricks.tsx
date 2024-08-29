@@ -16,8 +16,8 @@ const SCROLL_STATES: Record<TransformableObject, Transformations> = {
     [1.0, { rotateX: 0, rotateY: Math.PI * 2, positionX: 0, positionY: -1 }],
   ]),
   mb300sl: new Map([
-    [0.09, { positionZ: -2 }],
-    [0.12, { positionY: 3 }],
+    [0.08, { positionZ: -2 }],
+    [0.2, { positionY: 3 }],
   ]),
 };
 
@@ -26,17 +26,22 @@ const PAGES = 3;
 export function Bricks() {
   return (
     <div className='bricks'>
-      <Canvas camera={{ position: [0, 0, 10], fov: 10 }}>
+      <Canvas
+        camera={{ position: [0, 0, 10], fov: 10 }}
+      //   shadows
+      //   frameloop="demand"
+      //   gl={{ logarithmicDepthBuffer: true, antialias: true }}
+      >
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <ScrollControls pages={PAGES} damping={0.5}>
           <BrickScroll transformations={SCROLL_STATES.brick} />
           <Mb300slScroll transformations={SCROLL_STATES.mb300sl} />
-          <Scroll>
+          {/* <Scroll>
             {new Array(PAGES + 1).fill(0).map((_, i) => (
               <Html
                 key={i}
-                position={[0, -i * 4, 0]}
+                position={[0, -i * PAGES, 0]}
                 style={{ height: '100vh', width: '100vw', transform: 'translate(-50%, -50%)', padding: '50px', background: i % 2 ? 'rgba(0, 0, 0, 0.1)' : 'none' }}
               >
                 <section>
@@ -45,9 +50,8 @@ export function Bricks() {
                   <p>Curabitur sit amet felis elit. In sit amet venenatis ligula. Proin tincidunt luctus dui, sit amet faucibus felis laoreet sed.</p>
                 </section>
               </Html>
-            )
-            )}
-          </Scroll>
+            ))}
+          </Scroll> */}
         </ScrollControls>
         <Environment preset="sunset" />
       </Canvas>
