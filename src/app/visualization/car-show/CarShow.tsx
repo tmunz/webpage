@@ -16,10 +16,10 @@ interface CarShowProps {
   controls?: boolean;
 }
 
-export const CarShow: FC<CarShowProps> = ({ animate, debug, Model, quality = Quality.LOW, controls = true }) => {
+export const CarShow = ({ animate, debug, Model, quality = Quality.LOW, controls = true }: CarShowProps) => {
   const [model, setModel] = useState<Object3D | null>(null);
   const cameraRef = useRef<Camera>(null);
-  const { current: center } = useRef(new Vector3(0, 1, 0));
+  const { current: center } = useRef(new Vector3(0, 1.5, 0));
   const { current: defaultDimensions } = useRef(new Vector3(2, 2.5, 5.5));
 
   // Setup camera properties on initial mount
@@ -47,12 +47,12 @@ export const CarShow: FC<CarShowProps> = ({ animate, debug, Model, quality = Qua
       <ModelMovement model={model} animate={animate} showPath={debug} />
       
       <OrbitControls
-        enabled={controls}
+        enableRotate={controls}
         enablePan={false}
         enableZoom={false}
         minPolarAngle={0}
         maxPolarAngle={Math.PI / 2}
-        target={[0, 1.5, 0]}
+        target={center}
       />
 
       {false && <AutoQuality forceQuality={quality}>

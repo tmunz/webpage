@@ -16,9 +16,9 @@ export function Brick({ onLoadComplete }: { onLoadComplete: (model: Object3D) =>
 
   return (
     <group ref={modelRef}>
-      {
-        file.scene && <mesh position={[0, 0, 0]} rotation={[0, Math.PI, 0]}>
-          <primitive object={file.scene}/>
+      {file.scene &&
+        <mesh position={[0, 0, 0]} rotation={[0, Math.PI, 0]}>
+          <primitive object={file.scene} />
         </mesh>
       }
     </group >

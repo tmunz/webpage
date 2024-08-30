@@ -11,11 +11,8 @@ export function BrickScroll({transformations}: {transformations: Transformations
   const transformationAnimator = useTransformationAnimator(transformations);
 
   useFrame(() => {
-    const state = transformationAnimator.get(scroll.offset);
     if (ref.current) {
-      ref.current.rotation.set(state.rotateX, state.rotateY, state.rotateZ);
-      ref.current.scale.set(state.scaleX, state.scaleY, state.scaleZ);
-      ref.current.position.set(state.positionX, state.positionY, state.positionZ);
+      transformationAnimator.apply(ref.current, scroll.offset);
     }
   });
 

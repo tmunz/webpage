@@ -12,21 +12,20 @@ export function Mb300slScroll({ transformations }: { transformations: Transforma
   const scroll = useScroll();
   const transformationAnimator = useTransformationAnimator(transformations);
   const [animate, setAnimate] = React.useState(true);
-
   const { size } = useThree();
 
   useFrame(() => {
-    const state = transformationAnimator.get(scroll.offset);
     // TODO move animation logig to Bricks States
-    if (0.02 <= scroll.offset && scroll.offset <= 0.12 && !animate) {
+    const top = 0.02;
+    const bottom = 0.17;
+    if (top <= scroll.offset && scroll.offset <= bottom && !animate) {
       setAnimate(true);
-    } else if ((scroll.offset < 0.02 || 0.12 < scroll.offset) && animate) {
+    } else if ((scroll.offset < top || bottom < scroll.offset) && animate) {
       setAnimate(false);
     }
+    //
     if (ref.current) {
-      ref.current.rotation.set(state.rotateX, state.rotateY, state.rotateZ);
-      ref.current.scale.set(state.scaleX, state.scaleY, state.scaleZ);
-      ref.current.position.set(state.positionX, state.positionY, state.positionZ);
+      transformationAnimator.apply(ref.current, scroll.offset);
     }
   });
 

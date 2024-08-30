@@ -41,8 +41,8 @@ export function Mb300Ssl({ onLoadComplete }: CarShowModelProps) {
   return (
     <group ref={modelRef}>
       <mesh position={[0, 0, -1000]} ref={headlightTargetRef} />
-      {
-        file.scene && headlightTarget && <>
+      {file.scene && headlightTarget &&
+        <>
           <mesh position={[0, 0, 0]}>
             <primitive object={model} />
           </mesh>
