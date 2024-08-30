@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Particles } from './Particles';
-import { Environment, OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import { Environment, PerspectiveCamera } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Mesh, Object3D } from 'three';
 import { Dc3Buffalo } from '../Dc3Buffalo';
@@ -55,14 +55,12 @@ export function FlightSimulator() {
       <directionalLight position={[0, 10, 0]} intensity={4} />
       <Environment
         files={require('./sky.hdr')}
-        backgroundBlurriness={1}
         background
         environmentIntensity={0.8}
       />
       <Dc3Buffalo ref={airplaneRef} />
       <Particles ref={particlesRef} />
       <axesHelper args={[5]} />
-      <OrbitControls />
     </>
   );
 };
