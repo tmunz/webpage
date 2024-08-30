@@ -11,18 +11,18 @@ type TransformableObject = 'brick' | 'mb300sl' | 'aircraft';
 
 const SCROLL_STATES: Record<TransformableObject, Transformations> = {
   brick: new Map([
-    [0.0, { rotateX: 0.25, rotateY: Math.PI / 5, scaleX: 4, scaleY: 4, scaleZ: 4, positionX: 0.1, positionY: -1.8, positionZ: 2 }],
-    [0.1, { rotateX: 0, rotateY: 0, positionY: 1.25 }],
-    [0.7, { rotateX: Math.PI / 2, rotateY: Math.PI, positionX: 0, positionY: 0 }],
+    [0.03, { rotateX: 0.25, rotateY: Math.PI / 5, scaleX: 4, scaleY: 4, scaleZ: 4, positionX: 0.1, positionY: -1.8, positionZ: 2 }],
+    [0.13, { rotateX: 0, rotateY: 0, positionY: 1.25 }],
+    [0.73, { rotateX: Math.PI / 2, rotateY: Math.PI, positionX: 0, positionY: 0 }],
     [1.0, { rotateX: 0, rotateY: Math.PI * 2, positionX: 0, positionY: -1 }],
   ]),
   aircraft: new Map([
-    [0.02, { positionZ: 0 }],
-    [0.06, { positionY: 3 }],
+    [0.05, { positionZ: 0 }],
+    [0.09, { positionY: 3 }],
   ]),
   mb300sl: new Map([
-    [0.12, { positionY: 0, positionZ: -0.1 }],
-    [0.18, { positionY: 3 }],
+    [0.15, { positionY: 0, positionZ: -0.1 }],
+    [0.21, { positionY: 3 }],
   ]),
 };
 
