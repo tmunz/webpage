@@ -1,18 +1,16 @@
-import React, { useRef, forwardRef } from 'react';
+import React, { useRef, forwardRef, ForwardedRef, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { getRandomColor } from '../../../../utils/ColorUtils';
 import { BoxGeometry, Mesh, MeshLambertMaterial, SphereGeometry, TetrahedronGeometry } from 'three';
 
+const BOUNDARY = 20;
+const MAX_Z = 1;
 
-const BOUNDARY = 10;
-const MAX_Z = 10;
+export const Particles = forwardRef(({ amount = 100 }: { amount?: number }, ref: ForwardedRef<Mesh[]>) => {
+  const flyingParticles = useRef<Mesh[]>([]);
+  const waitingParticles = useRef<Mesh[]>([]);
 
-export const Particles = forwardRef(({ amount = 200 }: { amount?: number }, ref: any) => {
-
-  const { current: flyingParticles } = useRef<Mesh[]>([]);
-  const { current: waitingParticles } = useRef<Mesh[]>([]);
-
-  React.useImperativeHandle(ref, () => flyingParticles);
+  React.useImperativeHandle(ref, () => flyingParticles.current);
 
   const createParticle = () => {
     let geometryCore;
@@ -28,30 +26,48 @@ export const Particles = forwardRef(({ amount = 200 }: { amount?: number }, ref:
 
     const materialCore = new MeshLambertMaterial({
       color: getRandomColor(['#dff69e', '#00ceff', '#002bca', '#ff00e0', '#3f159f', '#71b583', '#00a2ff']),
-      flatShading: true
+      flatShading: true,
     });
 
     return new Mesh(geometryCore, materialCore);
   };
 
-  const getParticle = () => waitingParticles.pop() || createParticle();
+  const getParticle = () => waitingParticles.current.pop() || createParticle();
+
+  useEffect(() => {
+    waitingParticles.current = [];
+    flyingParticles.current = [];
+    for (let i = 0; i < amount; i++) {
+      const particle = getParticle();
+      particle.position.set(
+        Math.random() * BOUNDARY * 2 - BOUNDARY,
+        Math.random() * BOUNDARY * 2 - BOUNDARY,
+        Math.random() * MAX_Z
+      );
+      flyingParticles.current.push(particle);
+    }
+  }, [amount]);
 
   useFrame(() => {
-    flyingParticles.forEach((particle) => {
+    flyingParticles.current.forEach((particle, index) => {
       if (particle.position.x < -BOUNDARY) {
-        flyingParticles.splice(flyingParticles.indexOf(particle), 1);
-        waitingParticles.push(particle);
+        waitingParticles.current.push(particle);
+        flyingParticles.current.splice(index, 1);
       }
     });
-    if (flyingParticles.length < amount) {
+
+    while (flyingParticles.current.length < amount) {
       const particle = getParticle();
       particle.position.set(BOUNDARY, Math.random() * BOUNDARY * 2 - BOUNDARY, Math.random() * MAX_Z);
-      particle.scale.set(0.5 + Math.random(), 0.5 + Math.random(), 0.5 + Math.random());
-      flyingParticles.push(particle);
+      flyingParticles.current.push(particle);
     }
   });
 
-  return flyingParticles.map((particle, index) => (
-    <primitive key={index} object={particle} />
-  ));
+  return (
+    <group>
+      {flyingParticles.current.map((particle, index) => (
+        <primitive key={index} object={particle} />
+      ))}
+    </group>
+  );
 });

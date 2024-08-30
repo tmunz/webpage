@@ -9,6 +9,8 @@ export interface DragBoardProps {
 }
 
 export const DragBoard = ({ children }: DragBoardProps) => {
+  const SMOOTHNESS = 10;
+
   const boardRef = useRef<HTMLDivElement>(null);
   const [selectedItem, setSelectedItem] = useState<{
     id: number;
@@ -40,10 +42,10 @@ export const DragBoard = ({ children }: DragBoardProps) => {
             ...itemState,
             current: {
               ...current,
-              x: current.x + (target.x !== undefined ? (target.x - current.x) * 0.1 : 0),
-              y: current.y + (target.y !== undefined ? (target.y - current.y) * 0.1 : 0),
+              x: current.x + (target.x !== undefined ? (target.x - current.x) / SMOOTHNESS : 0),
+              y: current.y + (target.y !== undefined ? (target.y - current.y) / SMOOTHNESS : 0),
               rotation:
-                current.rotation + (target.rotation !== undefined ? (target.rotation - current.rotation) * 0.1 : 0),
+                current.rotation + (target.rotation !== undefined ? (target.rotation - current.rotation) / SMOOTHNESS : 0),
             },
           };
         });
