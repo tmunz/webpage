@@ -60,7 +60,7 @@ export function FlightSimulator() {
       />
       <Dc3Buffalo ref={airplaneRef} />
       <Particles ref={particlesRef} />
-      <axesHelper args={[5]} />
+      {/* <axesHelper args={[5]} /> */}
     </>
   );
 };

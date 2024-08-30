@@ -24,7 +24,7 @@ export const Dc3Buffalo = forwardRef((_, ref) => {
   return (
     <group ref={modelRef}>
       {file.scene &&
-        <mesh position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+        <mesh position={[-3, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
           <primitive object={model} />
         </mesh>
       }

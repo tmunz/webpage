@@ -1,7 +1,7 @@
 import './Bricks.styl';
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { ScrollControls, Scroll, Environment, Html } from '@react-three/drei';
+import { ScrollControls, Environment } from '@react-three/drei';
 import { BrickScroll } from './brick/BrickScroll';
 import { Transformations } from '../../utils/TransformationAnimator';
 import { Mb300slScroll } from './mb300sl/Mb300slScroll';
@@ -17,11 +17,11 @@ const SCROLL_STATES: Record<TransformableObject, Transformations> = {
     [1.0, { rotateX: 0, rotateY: Math.PI * 2, positionX: 0, positionY: -1 }],
   ]),
   aircraft: new Map([
-    [0.05, { positionZ: 0 }],
+    [0.05, { positionZ: 0.01 }],
     [0.09, { positionY: 3 }],
   ]),
   mb300sl: new Map([
-    [0.15, { positionY: 0, positionZ: -0.1 }],
+    [0.15, { positionY: 0, positionZ: 0 }],
     [0.21, { positionY: 3 }],
   ]),
 };

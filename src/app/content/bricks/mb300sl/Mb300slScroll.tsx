@@ -6,13 +6,13 @@ import { Mb300Ssl } from './Mb300sl';
 import { Quality } from '../../../visualization/QualityProvider';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Mesh } from 'three';
+import { FullscreenPlane } from '../../../visualization/FullscreenPlane';
 
 export function Mb300slScroll({ transformations }: { transformations: Transformations }) {
   const ref = useRef<Mesh | null>(null);
   const scroll = useScroll();
   const transformationAnimator = useTransformationAnimator(transformations);
   const [animate, setAnimate] = React.useState(true);
-  const { size } = useThree();
 
   useFrame(() => {
     // TODO move animation logig to Bricks States
@@ -31,13 +31,12 @@ export function Mb300slScroll({ transformations }: { transformations: Transforma
 
 
   return (
-    <mesh ref={ref}>
-      <planeGeometry args={[size.width / 400, size.height / 400]} />
+    <FullscreenPlane ref={ref}>
       <meshStandardMaterial>
         <RenderTexture attach='map'>
           <CarShow Model={Mb300Ssl} animate={animate} quality={Quality.HIGH} />
         </RenderTexture>
       </meshStandardMaterial>
-    </mesh>
+    </FullscreenPlane>
   );
 };
