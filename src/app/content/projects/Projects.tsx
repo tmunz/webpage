@@ -124,7 +124,7 @@ export function Projects(props: { onClose: () => void }) {
             cmds={
               (input: string) => {
                 const args = input.split(/(?<=^\S+)\s/);
-                const cmd = cmds.find(c => c.cmd === args[0]);
+                const cmd = cmds.find(c => c.cmd.toLocaleLowerCase() === args[0].toLocaleLowerCase());
                 if (cmd) {
                   return cmd.exec(args[1]);
                 } else {

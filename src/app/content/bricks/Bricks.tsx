@@ -1,7 +1,7 @@
 import './Bricks.styl';
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { ScrollControls, Environment } from '@react-three/drei';
+import { ScrollControls, Environment, Scroll, Html } from '@react-three/drei';
 import { BrickScroll } from './brick/BrickScroll';
 import { Transformations } from '../../utils/TransformationAnimator';
 import { Mb300slScroll } from './mb300sl/Mb300slScroll';
@@ -43,12 +43,12 @@ export function Bricks() {
           <BrickScroll transformations={SCROLL_STATES.brick} />
           <AircraftScroll transformations={SCROLL_STATES.aircraft} />
           <Mb300slScroll transformations={SCROLL_STATES.mb300sl} />
-          {/* <Scroll>
+          <Scroll>
             {new Array(PAGES + 1).fill(0).map((_, i) => (
               <Html
                 key={i}
                 position={[0, -i * PAGES, 0]}
-                style={{ height: '100vh', width: '100vw', transform: 'translate(-50%, -50%)', padding: '50px', background: i % 2 ? 'rgba(0, 0, 0, 0.1)' : 'none' }}
+                style={{ height: '90vh', width: '90vw', transform: 'translate(-50%, -50%)', background: i % 2 ? 'rgba(0, 0, 0, 0.1)' : 'none' }}
               >
                 <section>
                   <h1>Page {i + 1}</h1>
@@ -57,9 +57,9 @@ export function Bricks() {
                 </section>
               </Html>
             ))}
-          </Scroll> */}
+          </Scroll>
         </ScrollControls>
-        
+      
         <Environment preset="sunset" />
       </Canvas>
     </div>

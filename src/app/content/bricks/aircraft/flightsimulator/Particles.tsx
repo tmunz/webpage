@@ -1,72 +1,87 @@
 import React, { useRef, forwardRef, ForwardedRef, useEffect } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { getRandomColor } from '../../../../utils/ColorUtils';
-import { BoxGeometry, Mesh, MeshLambertMaterial, SphereGeometry, TetrahedronGeometry } from 'three';
+import { useFrame, useLoader } from '@react-three/fiber';
+import { Object3D, Vector3 } from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 const BOUNDARY = 20;
 const MAX_Z = 1;
 
-export const Particles = forwardRef(({ amount = 100 }: { amount?: number }, ref: ForwardedRef<Mesh[]>) => {
-  const flyingParticles = useRef<Mesh[]>([]);
-  const waitingParticles = useRef<Mesh[]>([]);
+export enum PartType {
+  PLATE_ROUND = 1,
+  BIRD = 0,
+  CLOUD = 2,
+}
 
-  React.useImperativeHandle(ref, () => flyingParticles.current);
+export interface Part {
+  object: Object3D;
+  rotation: boolean;
+}
 
-  const createParticle = () => {
-    let geometryCore;
+export const Particles = forwardRef(({ amount = 100 }: { amount?: number }, ref: ForwardedRef<Part[]>) => {
+  const { current: flyingParticles } = useRef<Part[]>([]);
+  const { current: waitingParticles } = useRef<Part[]>([]);
+  const { current: removeIndexes } = useRef<number[]>([]);
+  const particles = useLoader(GLTFLoader, require('./particles.glb')) as unknown as { scene: Object3D };
+
+  React.useImperativeHandle(ref, () => flyingParticles);
+
+  const createParticle = (): Part => {
     const rnd = Math.random();
+    let type = PartType.PLATE_ROUND;
 
-    if (rnd < 0.33) {
-      geometryCore = new BoxGeometry(0.1 + Math.random(), 0.1 + Math.random(), 0.1 + Math.random());
-    } else if (rnd < 0.66) {
-      geometryCore = new TetrahedronGeometry(0.2 + Math.random() * 0.2);
-    } else {
-      geometryCore = new SphereGeometry(0.2 + Math.random() * 0.2, 16, 8);
+    if (rnd < 0.01) {
+      type = PartType.BIRD;
+    } else if (rnd < 0.02) {
+      type = PartType.CLOUD;
     }
 
-    const materialCore = new MeshLambertMaterial({
-      color: getRandomColor(['#dff69e', '#00ceff', '#002bca', '#ff00e0', '#3f159f', '#71b583', '#00a2ff']),
-      flatShading: true,
-    });
-
-    return new Mesh(geometryCore, materialCore);
+    const part = (particles.scene.children[type] as Object3D).clone();
+    part.scale.copy(new Vector3(0.01, 0.01, 0.01));
+    return { object: part, rotation: type === PartType.PLATE_ROUND };
   };
 
-  const getParticle = () => waitingParticles.current.pop() || createParticle();
+  const getParticle = () => waitingParticles.pop() || createParticle();
 
   useEffect(() => {
-    waitingParticles.current = [];
-    flyingParticles.current = [];
+    waitingParticles.length = 0;
+    flyingParticles.length = 0;
     for (let i = 0; i < amount; i++) {
       const particle = getParticle();
-      particle.position.set(
+      particle.object.position.set(
         Math.random() * BOUNDARY * 2 - BOUNDARY,
         Math.random() * BOUNDARY * 2 - BOUNDARY,
         Math.random() * MAX_Z
       );
-      flyingParticles.current.push(particle);
+      flyingParticles.push(particle);
     }
   }, [amount]);
 
   useFrame(() => {
-    flyingParticles.current.forEach((particle, index) => {
-      if (particle.position.x < -BOUNDARY) {
-        waitingParticles.current.push(particle);
-        flyingParticles.current.splice(index, 1);
+    removeIndexes.length = 0;
+    flyingParticles.forEach((particle, i) => {
+      if (particle.object.position.x < -BOUNDARY) {
+        removeIndexes.push(i);
+        waitingParticles.push(particle);
       }
     });
 
-    while (flyingParticles.current.length < amount) {
+    removeIndexes.reverse().forEach(i => flyingParticles.splice(i, 1));
+
+    while (flyingParticles.length < amount) {
       const particle = getParticle();
-      particle.position.set(BOUNDARY, Math.random() * BOUNDARY * 2 - BOUNDARY, Math.random() * MAX_Z);
-      flyingParticles.current.push(particle);
+      particle.object.position.set(
+        BOUNDARY + Math.random(),
+        Math.random() * BOUNDARY * 2 - BOUNDARY,
+        Math.random() * MAX_Z
+      );
+      flyingParticles.push(particle);
     }
   });
 
   return (
     <group>
-      {flyingParticles.current.map((particle, index) => (
-        <primitive key={index} object={particle} />
+      {flyingParticles.map((particle, index) => (
+        <primitive key={index} object={particle.object} />
       ))}
     </group>
   );

@@ -4,9 +4,9 @@ import { RenderTexture, useScroll } from '@react-three/drei';
 import { CarShow } from '../../../visualization/car-show/CarShow';
 import { Mb300Ssl } from './Mb300sl';
 import { Quality } from '../../../visualization/QualityProvider';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { Mesh } from 'three';
-import { FullscreenPlane } from '../../../visualization/FullscreenPlane';
+import { FullscreenPlane } from '../../../utils/FullscreenPlane';
 
 export function Mb300slScroll({ transformations }: { transformations: Transformations }) {
   const ref = useRef<Mesh | null>(null);

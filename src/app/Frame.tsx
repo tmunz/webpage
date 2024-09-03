@@ -1,7 +1,7 @@
 import './Frame.styl';
-
-import React, { forwardRef, MouseEvent, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, ReactNode, useRef, useState } from 'react';
 import FrameCloseButton from './ui/FrameCloseButton';
+import { PerspectiveImage } from './effects/PerspectiveImage';
 
 
 export interface FrameProps {
@@ -9,93 +9,87 @@ export interface FrameProps {
   title: string;
   content: ReactNode;
   imgSrc: string;
+  depthImgSrc?: string;
   onClick?: () => void;
-  active?: boolean;
+  activeId?: string | null;
+  animate?: boolean;
+  effectValue?: number;
 }
 
-export const Frame = forwardRef(function Frame(props: FrameProps, ref) {
+export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, activeId, animate, effectValue = 1 }: FrameProps) => {
   const imgRef = useRef<HTMLImageElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
 
-  const [parallaxBackground, setParallaxBackground] = useState<boolean>(true);
+  const [parallaxPosition, setParallaxPosition] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
 
-  useEffect(() => {
-    if (parallaxBackground === props.active) {
-      setParallaxBackground(!props.active ?? true);
+  const active = activeId === id;
+  const parallax = !activeId; 
+
+  const setParallaxPositionFromEvent = (event: MouseEvent<unknown>): void => {
+    if (parallax && imgRef.current) {
+      const rect = imgRef.current.getBoundingClientRect();
+      setParallaxPosition({
+        x: ((event.clientX - rect.left) / rect.width - 0.5),
+        y: - ((event.clientY - rect.top) / rect.height - 0.5),
+      });
     }
-  }, [props, parallaxBackground]);
-
-
-  const setParallaxPosition = (event: MouseEvent<unknown>, ref: RefObject<HTMLElement>, multiplier: number = 1): void => {
-    const element = ref.current;
-    if (!element) return;
-    const elementRect = element.getBoundingClientRect();
-    const [offsetX, offsetY] = [
-      (event.clientX - elementRect.left) / elementRect.width,
-      (event.clientY - elementRect.top) / elementRect.height
-    ];
-    element.style.transform = `translate(${(multiplier * -0.5 + multiplier * offsetX) * 100}%, ${(multiplier * -0.5 + multiplier * offsetY) * 100}%)`;
   };
 
-  const resetPosition = (ref: RefObject<HTMLElement>): void => {
-    const element = ref.current;
-    if (!element) return;
-    element.style.transform = '';
-  };
+  const isBackgroundImageSvg = imgSrc.toLowerCase().endsWith('.svg')
 
-  const isBackgroundImageSvg = props.imgSrc.toLowerCase().endsWith('.svg')
-  const backgroundImage = isBackgroundImageSvg ?
-    require(`${props.imgSrc}`) :
-    require(`${props.imgSrc}?{sizes:[1680], format: "webp"}`);
+  const getBackgroundImage = () => {
+    if (isBackgroundImageSvg) {
+      const svg = require(`${imgSrc}`);
+      return <svg.default
+        style={{
+          width: '100%',
+          height: '100%',
+          transform: `translate(${effectValue * (parallaxPosition.x) * -5}%, ${effectValue * (parallaxPosition.y) * 5}%)`
+        }} />
+    } else {
+      const img = require(`${imgSrc}?{sizes:[1680], format: "webp"}`);
+      return <>
+        <img
+          src={img.default}
+          srcSet={img.srcSet}
+        />
+        {depthImgSrc && parallax && <PerspectiveImage
+          img={require(`${imgSrc}`)}
+          depthImg={require(`${depthImgSrc}`)}
+          position={parallaxPosition}
+          effectValue={effectValue * 0.25}
+        />}
+      </>
+    }
+  }
 
   return (
     <div
-      key={props.id}
-      className={`frame ${props.id}-frame ${props.active ? 'active' : ''}`}
-      onMouseMove={event => {
-        if (parallaxBackground) {
-          setParallaxPosition(event, imgRef, -0.1);
-          // setParallaxPosition(event, titleRef, 0.1);
-        }
-      }}
-      onMouseLeave={() => {
-        if (parallaxBackground) {
-          resetPosition(imgRef);
-          // resetPosition(titleRef);
-        }
-      }}
+      key={id}
+      className={`frame ${id}-frame ${active ? 'active' : ''} ${animate ? 'animate' : ''}`}
+      onMouseMove={setParallaxPositionFromEvent}
+      onMouseLeave={() => { setParallaxPosition({ x: 0, y: 0 }) }}
     >
       <div className="title-container">
-        {isBackgroundImageSvg ?
-          <div
-            className="background-image parallax"
-            ref={imgRef}
-          >
-            <backgroundImage.default style={{ width: '100%', height: '100%' }} />
-          </div>
-          :
-          <img
-            className="background-image parallax"
-            ref={imgRef}
-            src={backgroundImage.default}
-            srcSet={backgroundImage.srcSet}
-          />
-        }
-        {/* <div className="background-image-cover" style={{ animationDelay: `${Math.random() * 1 + 1}s` }} /> */}
-        <h1 className="title parallax" ref={titleRef}>
-          {props.title}
+        <div
+          className="background-image parallax"
+          ref={imgRef}
+          style={{ transform: `translate(${(effectValue * 0.1 * (parallaxPosition.x)) * -100}%, ${(effectValue * 0.1 * (parallaxPosition.y)) * 100}%)` }}
+        >
+          {getBackgroundImage()}
+        </div>
+        <h1 className="title parallax">
+          {title}
         </h1>
       </div>
-      <div className={`content-container ${props.active ? 'active' : ''}`}>
+      <div className={`content-container ${active ? 'active' : ''}`}>
         <FrameCloseButton onClick={() => {
-          props.onClick && props.onClick();
-          resetPosition(imgRef);
-          // resetPosition(titleRef);
-        }} active={props.active} />
+          onClick && onClick();
+          setParallaxPosition({ x: 0, y: 0 });
+        }} active={active} />
         <div className="content">
-          {props.active && props.content}
+          {active && content}
         </div>
       </div>
     </div>
   );
-});
+};

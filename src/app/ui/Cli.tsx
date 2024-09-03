@@ -101,7 +101,6 @@ export const Cli = (props: Props) => {
         setHistoryIndex(0);
         setNewLineValue('');
       }
-
     }
   }
 

@@ -1,3 +1,5 @@
+import { enableOverscrollBehaviour, preventOverscrollBehaviour } from "../../utils/EventUtils";
+
 export function useTouchHandler({ canvas, onPositionChanged, startPaint, endPaint }: {
   canvas: HTMLCanvasElement | null,
   onPositionChanged: (position: { x: number; y: number }) => void,
@@ -14,12 +16,14 @@ export function useTouchHandler({ canvas, onPositionChanged, startPaint, endPain
   };
 
   const handleTouchStart = (e: TouchEvent) => {
+    preventOverscrollBehaviour();
     const touch = e.touches[0];
     const rect = canvas.getBoundingClientRect();
     startPaint({ x: touch.clientX - rect.left, y: touch.clientY - rect.top });
   };
 
   const handleTouchEnd = () => {
+    enableOverscrollBehaviour();
     endPaint();
   };
 

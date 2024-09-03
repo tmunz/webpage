@@ -1,16 +1,16 @@
 import React, { useRef } from 'react';
-import { Particles } from './Particles';
 import { Environment, PerspectiveCamera } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Mesh, Object3D } from 'three';
+import { Object3D } from 'three';
 import { Dc3Buffalo } from '../Dc3Buffalo';
 import { clamp } from 'three/src/math/MathUtils';
+import { Part, Particles } from './Particles';
 
 export function FlightSimulator() {
   const SMOOTHNESS = 10;
 
   const { pointer } = useThree();
-  const particlesRef = useRef<Mesh[]>([]);
+  const particlesRef = useRef<Part[]>([]);
   const airplaneRef = useRef<{ model: Object3D, movingParts: Object3D[] }>(null);
 
   const { scene } = useThree();
@@ -27,7 +27,7 @@ export function FlightSimulator() {
     const airplane = airplaneRef.current?.model;
     if (airplane) {
       airplane.rotation.x += (-pointer.y / 3 - airplane.rotation.x) / SMOOTHNESS;
-      airplane.rotation.y += (speed / 300 - airplane.rotation.y) / SMOOTHNESS;
+      airplane.rotation.y += (speed / 30 - airplane.rotation.y) / SMOOTHNESS;
       airplane.rotation.z += (pointer.y / 3 - airplane.rotation.z) / SMOOTHNESS;
       airplane.position.x += (pointer.x * 10 - airplane.position.x) / SMOOTHNESS;
       airplane.position.y += (pointer.y * 10 - airplane.position.y) / SMOOTHNESS;
@@ -40,11 +40,13 @@ export function FlightSimulator() {
     const particles = particlesRef.current;
     if (particles) {
       particles.forEach((particle) => {
-        particle.position.x -= 0.3 * speed;
-        particle.position.y -= 0.3 * pointer.y;
-        particle.rotation.x += 0.05;
-        particle.rotation.y += 0.05;
-        particle.rotation.z += 0.05;
+        particle.object.position.x -= 0.3 * speed;
+        particle.object.position.y -= 0.3 * pointer.y;
+        if (particle.rotation) {
+          particle.object.rotation.x += (Math.random() - 0.5);
+          particle.object.rotation.y += (Math.random() - 0.5);
+          particle.object.rotation.z += (Math.random() - 0.5);
+        }
       });
     }
   });
@@ -59,7 +61,7 @@ export function FlightSimulator() {
         environmentIntensity={0.8}
       />
       <Dc3Buffalo ref={airplaneRef} />
-      <Particles ref={particlesRef} />
+      <Particles ref={particlesRef} amount={1000} />
       {/* <axesHelper args={[5]} /> */}
     </>
   );

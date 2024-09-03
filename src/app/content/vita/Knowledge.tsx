@@ -43,7 +43,7 @@ export function Knowledge() {
     // frameloop="demand"
     >
       <Environment
-        files={require('./assets/dunes.hdr')}
+        files={require('./vita_title.hdr')}
         encoding={sRGBEncoding}
         blur={1}
         background={false}

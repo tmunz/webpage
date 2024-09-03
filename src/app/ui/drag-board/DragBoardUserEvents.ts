@@ -1,4 +1,5 @@
 import { useEffect, MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent } from "react";
+import { enableOverscrollBehaviour, preventOverscrollBehaviour } from "../../utils/EventUtils";
 
 export const useUserEvents = (
   dragBoardRef: React.RefObject<HTMLDivElement>,
@@ -28,7 +29,7 @@ export const useUserEvents = (
     };
 
     const handleEnd = (e: MouseEvent | TouchEvent) => {
-      document.body.style.overscrollBehavior = 'auto';
+      enableOverscrollBehaviour();
       onEnd();
     }
 
@@ -73,6 +74,6 @@ export const useUserEvents = (
 
 // called by the item itself
 export const handleStart = (position: { clientX: number, clientY: number }, e: ReactMouseEvent | ReactTouchEvent) => {
-  document.body.style.overscrollBehavior = 'none';
+  preventOverscrollBehaviour();
   return { clientX: position.clientX, clientY: position.clientY, rect: e.currentTarget.getBoundingClientRect() };
 }

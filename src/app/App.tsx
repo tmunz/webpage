@@ -1,7 +1,7 @@
 
 import './App.styl';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Frame, FrameProps } from './Frame';
 import { Vita } from './content/vita/Vita';
@@ -15,42 +15,38 @@ export function App() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedFrame, setSelectedFrame] = useState<null | string>(null);
+  const [userSelection, setUserSelection] = useState(false);
 
   const frames: FrameProps[] = [
-    { id: 'vita', title: 'Vita', content: <Vita />, imgSrc: './content/vita/vita_title.jpg' },
-    { id: 'photo', title: 'Photography', content: <Photo />, imgSrc: './content/photo/photo_title.jpg' },
-    { id: 'art', title: 'Art / Design', content: <Art />, imgSrc: './content/art/art_title.jpg' },
+    { id: 'vita', title: 'Vita', content: <Vita />, imgSrc: './content/vita/vita_title.jpg', depthImgSrc: './content/vita/vita_title_depth.jpg' },
+    { id: 'photo', title: 'Photography', content: <Photo />, imgSrc: './content/photo/photo_title.jpg', depthImgSrc: './content/photo/photo_title_depth.jpg' },
+    { id: 'art', title: 'Art / Design', content: <Art />, imgSrc: './content/art/art_title.jpg', depthImgSrc: './content/art/art_title_depth.jpg' },
     { id: 'projects', title: 'Projects / Coding', content: <Projects onClose={() => handleClick('projects')} />, imgSrc: './content/projects/projects_title.svg' },
-    { id: 'bricks', title: 'Bricks', content: <Bricks />, imgSrc: './content/bricks/bricks_title.jpg' },
+    { id: 'bricks', title: 'Bricks', content: <Bricks />, imgSrc: './content/bricks/bricks_title.jpg', depthImgSrc: './content/bricks/bricks_title_depth.jpg' },
     /* / Concepts / Creations */
   ];
 
+  const getCurrentId = () => {
+    const id = location.pathname.split('/')[1];
+    return id.length > 0 ? id : null;
+  }
+
   const handleClick = (id: string) => {
-    const selectedId = id === selectedFrame ? null : id;
+    setUserSelection(true);
+    const selectedId = id === getCurrentId() ? null : id;
     navigate(`/${selectedId || ''}`);
   };
 
-  useEffect(() => {
-    const path = location.pathname.slice(1); // Remove the leading slash
-    if (frames.some(frame => frame.id === path)) {
-      setSelectedFrame(path);
-    } else {
-      setSelectedFrame(null);
-    }
-  }, [location.pathname]);
-
   return (
     <div className="app">
-      {frames.map((frame, i) => (
+      {frames.map((frame) => (
         <Frame
           key={frame.id}
-          active={selectedFrame === frame.id}
+          activeId={getCurrentId()}
           onClick={() => handleClick(frame.id)}
-          id={frame.id}
-          title={frame.title}
-          content={frame.content}
-          imgSrc={frame.imgSrc}
+          animate={userSelection}
+          effectValue={0.7}
+          {...frame}
         />
       ))}
     </div>

@@ -24,7 +24,7 @@ export function VitaContent() {
         <div className="professional-companies">
           {professionalLifeData.map((d) =>
             <div className="professional-life-card" key={d.company} >
-              <img className="company-logo" src={require(`./assets/${d.logo}`)} alt={d.company} />
+              <img className="company-logo" src={require(`./company-logos/${d.logo}`)} alt={d.company} />
               <div className="company-text">
                 <h3 className="company-name">{d.company}</h3>
                 <div className="company-role">{d.role}</div>
