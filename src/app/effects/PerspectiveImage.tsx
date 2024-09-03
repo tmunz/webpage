@@ -1,7 +1,7 @@
 import React, { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import * as THREE from 'three';
 import { OrthographicCamera } from '@react-three/drei';
+import { Mesh, ShaderMaterial, TextureLoader, Vector2 } from 'three';
 
 interface PerspectiveImageProps {
   img: string;
@@ -11,28 +11,28 @@ interface PerspectiveImageProps {
 }
 
 export const PerspectiveImagePlane = ({ img, depthImg, effectValue = 0.5, position }: PerspectiveImageProps) => {
-  const ref = useRef<THREE.Mesh>(null);
-  const materialRef = useRef<THREE.ShaderMaterial>(null);
-  const positionRef = useRef(new THREE.Vector2(0, 0));
+  const ref = useRef<Mesh>(null);
+  const materialRef = useRef<ShaderMaterial>(null);
+  const positionRef = useRef(new Vector2(0, 0));
   const { pointer, size } = useThree();
 
   const [isTextureLoaded, setIsTextureLoaded] = useState(false);
 
   const originalTexture = useMemo(() => {
-    const texture = new THREE.TextureLoader().load(img, () => {
+    const texture = new TextureLoader().load(img, () => {
       setIsTextureLoaded(true);
     });
     return texture;
   }, [img]);
 
-  const depthTexture = useMemo(() => new THREE.TextureLoader().load(depthImg), [depthImg]);
+  const depthTexture = useMemo(() => new TextureLoader().load(depthImg), [depthImg]);
 
-  const shaderMaterial = useMemo(() => new THREE.ShaderMaterial({
+  const shaderMaterial = useMemo(() => new ShaderMaterial({
     uniforms: {
       originalTexture: { value: originalTexture },
       depthTexture: { value: depthTexture },
-      effectValue: { value: new THREE.Vector2(effectValue, effectValue) },
-      position: { value: new THREE.Vector2(0, 0) },
+      effectValue: { value: new Vector2(effectValue, effectValue) },
+      position: { value: new Vector2(0, 0) },
     },
     fragmentShader: `
       uniform sampler2D originalTexture;

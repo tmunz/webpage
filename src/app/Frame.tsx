@@ -1,5 +1,5 @@
 import './Frame.styl';
-import React, { MouseEvent, ReactNode, useRef, useState } from 'react';
+import React, { MouseEvent, ReactNode, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import FrameCloseButton from './ui/FrameCloseButton';
 import { PerspectiveImage } from './effects/PerspectiveImage';
 
@@ -20,11 +20,21 @@ export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, active
   const imgRef = useRef<HTMLImageElement>(null);
 
   const [parallaxPosition, setParallaxPosition] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
+  const [showPerspectiveImage, setShowPerspectiveImage] = useState(false);
 
   const active = activeId === id;
-  const parallax = !activeId; 
+  const parallax = !activeId;
 
-  const setParallaxPositionFromEvent = (event: MouseEvent<unknown>): void => {
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (depthImgSrc) {
+      // delay showing perspective image to prevent flickering
+      timeoutId = setTimeout(() =>  setShowPerspectiveImage(parallax), 200);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [depthImgSrc, parallax]);
+
+  const setParallaxPositionFromEvent = useCallback((event: MouseEvent<unknown>): void => {
     if (parallax && imgRef.current) {
       const rect = imgRef.current.getBoundingClientRect();
       setParallaxPosition({
@@ -32,11 +42,10 @@ export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, active
         y: - ((event.clientY - rect.top) / rect.height - 0.5),
       });
     }
-  };
+  }, [parallax, imgRef]);
 
-  const isBackgroundImageSvg = imgSrc.toLowerCase().endsWith('.svg')
-
-  const getBackgroundImage = () => {
+  const getBackgroundImage = useCallback(() => {
+    const isBackgroundImageSvg = imgSrc.toLowerCase().endsWith('.svg');
     if (isBackgroundImageSvg) {
       const svg = require(`${imgSrc}`);
       return <svg.default
@@ -52,15 +61,17 @@ export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, active
           src={img.default}
           srcSet={img.srcSet}
         />
-        {depthImgSrc && parallax && <PerspectiveImage
-          img={require(`${imgSrc}`)}
-          depthImg={require(`${depthImgSrc}`)}
-          position={parallaxPosition}
-          effectValue={effectValue * 0.25}
-        />}
+        {depthImgSrc && parallax && showPerspectiveImage &&
+          <PerspectiveImage
+            img={require(`${imgSrc}`)}
+            depthImg={require(`${depthImgSrc}`)}
+            position={parallaxPosition}
+            effectValue={effectValue * 0.25}
+          />
+        }
       </>
     }
-  }
+  }, [imgSrc, depthImgSrc, parallaxPosition, effectValue, parallax, showPerspectiveImage]);
 
   return (
     <div
