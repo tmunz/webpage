@@ -6,7 +6,7 @@ import { Mb300Ssl } from './Mb300sl';
 import { Quality } from '../../../visualization/QualityProvider';
 import { useFrame } from '@react-three/fiber';
 import { Mesh } from 'three';
-import { FullscreenPlane } from '../../../utils/FullscreenPlane';
+import { FullscreenPlane } from '../../../ui/FullscreenPlane';
 
 export function Mb300slScroll({ transformations }: { transformations: Transformations }) {
   const ref = useRef<Mesh | null>(null);

@@ -1,100 +1,43 @@
-import React, { useRef, useMemo, useEffect, useState } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrthographicCamera } from '@react-three/drei';
-import { Mesh, ShaderMaterial, TextureLoader, Vector2 } from 'three';
+import React, { useMemo } from 'react';
+import { ShaderImage, ShaderImageType } from '../ui/ShaderImage';
+
 
 interface PerspectiveImageProps {
   img: string;
   depthImg: string;
   effectValue?: number;
   position?: { x: number, y: number };
+  perspectiveDisabled?: boolean;
+  color?: string;
 }
 
-export const PerspectiveImagePlane = ({ img, depthImg, effectValue = 0.5, position }: PerspectiveImageProps) => {
-  const ref = useRef<Mesh>(null);
-  const materialRef = useRef<ShaderMaterial>(null);
-  const positionRef = useRef(new Vector2(0, 0));
-  const { pointer, size } = useThree();
-
-  const [isTextureLoaded, setIsTextureLoaded] = useState(false);
-
-  const originalTexture = useMemo(() => {
-    const texture = new TextureLoader().load(img, () => {
-      setIsTextureLoaded(true);
-    });
-    return texture;
-  }, [img]);
-
-  const depthTexture = useMemo(() => new TextureLoader().load(depthImg), [depthImg]);
-
-  const shaderMaterial = useMemo(() => new ShaderMaterial({
-    uniforms: {
-      originalTexture: { value: originalTexture },
-      depthTexture: { value: depthTexture },
-      effectValue: { value: new Vector2(effectValue, effectValue) },
-      position: { value: new Vector2(0, 0) },
-    },
-    fragmentShader: `
-      uniform sampler2D originalTexture;
-      uniform sampler2D depthTexture;
-      uniform vec2 effectValue;
-      uniform vec2 position;
-      varying vec2 vUv;
-
-      void main() {
-        float depth = texture2D(depthTexture, vUv).r; // depthMap is expected to be grayscale, where r = b = g
-        vec2 offset = (depth - 0.5) * position * effectValue * 0.1;
-        gl_FragColor = texture2D(originalTexture, vUv + offset);
-      }
-    `,
-    vertexShader: `
-      varying vec2 vUv; 
-
-      void main() {
-        vUv = uv; 
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    `,
-  }), [originalTexture, depthTexture, effectValue]);
-
-  useEffect(() => {
-    if (isTextureLoaded && ref.current && originalTexture.image) {
-      const imgAspect = originalTexture.image.width / originalTexture.image.height;
-      const adjustToWidth = imgAspect < size.width / size.height;
-      ref.current.scale.set(
-        adjustToWidth ? size.width : size.height * imgAspect,
-        adjustToWidth ? size.width / imgAspect : size.height,
-        1,
-      );
-    }
-  }, [isTextureLoaded, originalTexture, size]);
-
-  useFrame(() => {
-    if (materialRef.current) {
-      const p = (position ? position : { x: pointer.x / 2, y: pointer.y / 2 });
-      positionRef.current.lerp(p, 0.1);
-      materialRef.current.uniforms.position.value = positionRef.current;
-    }
-  });
+export const PerspectiveImage = ({ img, depthImg, effectValue = 0.5, position, color, perspectiveDisabled = false }: PerspectiveImageProps) => {
+  const imageUrls = useMemo(() => ({ image: img, depthMap: depthImg }), [img, depthImg]);
 
   return (
-    <mesh ref={ref}>
-      <planeGeometry args={[1, 1]} />
-      <primitive ref={materialRef} object={shaderMaterial} attach="material" />
-    </mesh>
-  );
-};
+    <ShaderImage
+      shaderDisabled={perspectiveDisabled}
+      color={color}
+      type={ShaderImageType.THREE}
+      imageUrls={imageUrls}
+      uniforms={{
+        effectValue: { value: [effectValue, effectValue], type: '2f' },
+        position: { value: [position?.x ?? 0, -1 * (position?.y ?? 0)], type: '2f' },
+      }}
+      fragmentShader={`
+        precision mediump float;
+        uniform sampler2D image;
+        uniform sampler2D depthMap;
+        uniform vec2 effectValue;
+        uniform vec2 position;
+        varying vec2 vUv;
 
-export const PerspectiveImage = (props: PerspectiveImageProps) => {
-  return (
-    <Canvas orthographic className='perspective-image'>
-      <OrthographicCamera
-        makeDefault
-        near={0}
-        far={2}
-        position={[0, 0, 1]}
-      />
-      <PerspectiveImagePlane {...props} />
-    </Canvas>
+        void main() {
+          float depth = texture2D(depthMap, vUv).r; // depthMap is expected to be grayscale, where r = b = g
+          vec2 offset = (depth - 0.5) * position * effectValue * 0.1;
+          gl_FragColor = texture2D(image, vUv + offset);
+        }`
+      }
+    />
   );
 };
