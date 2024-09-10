@@ -28,7 +28,11 @@ export function Art() {
   ]) as [ReactNode, ReactNode][];
 
   return <div className='art' ref={elementRef}>
-    <DragBoard>
+    <DragBoard placementPattern={[
+      { x: -10, y: -20, rotation: -2 },
+      { x: -30, y: 25, rotation: 1 },
+      { x: 30, y: 30, rotation: 2.5 },
+    ]}>
       <DragBoardItem><CitroenDsLamp width={(dimension?.width ?? 400) * 0.6} height={(dimension?.height ?? 400) * 0.6} /></DragBoardItem>
       <PaintDragBoardItem width={dimension?.width ?? 400} height={dimension?.height ?? 400} />
       {polaroids.map(([image, text]) => <DragBoardItem><Polaroid>{image}{text}</Polaroid></DragBoardItem>)}

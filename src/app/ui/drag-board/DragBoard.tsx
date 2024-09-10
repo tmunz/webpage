@@ -6,9 +6,11 @@ import { useUserEvents } from './DragBoardUserEvents';
 
 export interface DragBoardProps {
   children: React.ReactNode;
+  placementPattern?: { x: number, y: number, rotation: number }[]
 }
 
-export const DragBoard = ({ children }: DragBoardProps) => {
+// positions are relative to the center of the board with axle directions to the right and down
+export const DragBoard = ({ children, placementPattern = [{ x: 0, y: 0, rotation: 0 }] }: DragBoardProps) => {
   const SMOOTHNESS = 10;
 
   const boardRef = useRef<HTMLDivElement>(null);
@@ -18,15 +20,22 @@ export const DragBoard = ({ children }: DragBoardProps) => {
     offsetY: number;
     startX: number;
     startY: number;
+    width: number;
+    height: number;
     isDragging: boolean;
   } | null>(null);
 
   const [itemStates, setItemStates] = useState<DragBoardItemState[]>(
-    React.Children.map(children, (child, i) => ({
-      id: i,
-      current: { x: 0, y: 0, z: i, rotation: Math.random() * 10 - 5, width: 0, height: 0 },
-      target: {},
-    })) ?? []
+    React.Children.map(children, (child, i) => {
+      const placement = placementPattern[i % placementPattern.length];
+      return {
+        id: i,
+        current: {
+          ...placement, z: i
+        },
+        target: {},
+      }
+    }) ?? []
   );
 
   useEffect(() => {
@@ -65,117 +74,88 @@ export const DragBoard = ({ children }: DragBoardProps) => {
 
     setItemStates((prevStates) => {
       const maxZ = Math.max(...prevStates.map((item) => item.current.z));
-      return prevStates.map((itemState) =>
-        itemState.id === id
-          ? {
-            ...itemState,
-            current: {
-              ...itemState.current,
-              z: maxZ + 1,
-              width: e.rect.width,
-              height: e.rect.height,
-            },
-          }
-          : itemState
-      );
-    });
-
-    const board = boardRef.current;
-    if (board) {
-      const boardRect = board.getBoundingClientRect();
-      setSelectedItem({
-        id,
-        offsetX: e.clientX - (e.rect.left - boardRect.left),
-        offsetY: e.clientY - (e.rect.top - boardRect.top),
-        startX: e.clientX,
-        startY: e.clientY,
-        isDragging: false,
+      return prevStates.map((itemState) => {
+        if (itemState.id !== id) return itemState;
+        setSelectedItem({
+          id,
+          offsetX: e.clientX - itemState.current.x,
+          offsetY: e.clientY - itemState.current.y,
+          width: e.rect.width,
+          height: e.rect.height,
+          startX: e.clientX,
+          startY: e.clientY,
+          isDragging: false,
+        });
+        return {
+          ...itemState,
+          current: {
+            ...itemState.current,
+            z: maxZ + 1,
+          },
+        };
       });
-    }
+    });
   }, []);
 
   const handlePointerMove = useCallback((e: { clientX: number, clientY: number }) => {
     if (!selectedItem) return;
-
-    const deltaX = e.clientX - selectedItem.startX;
-    const deltaY = e.clientY - selectedItem.startY;
-
-    if (!selectedItem.isDragging && Math.abs(deltaX) + Math.abs(deltaY) > 10) {
+    if (!selectedItem.isDragging && Math.abs(e.clientX - selectedItem.startX) + Math.abs(e.clientY - selectedItem.startY) > 10) {
       setSelectedItem((prev) => prev && { ...prev, isDragging: true });
     }
-
     setItemStates((prev) => {
-      const board = boardRef.current;
-      if (!board) return prev;
-
       return prev.map((itemState) => {
         if (itemState.id !== selectedItem.id) return itemState;
-
-        const target = {
-          x: e.clientX - selectedItem.offsetX,
-          y: e.clientY - selectedItem.offsetY,
-          rotation: itemState.current.rotation,
-          width: itemState.current.width,
-          height: itemState.current.height,
-        };
-
         return {
           ...itemState,
-          target,
+          target: {
+            x: e.clientX - selectedItem.offsetX,
+            y: e.clientY - selectedItem.offsetY,
+            rotation: itemState.current.rotation,
+          },
         };
       });
     });
   }, [selectedItem]);
 
   const handlePointerEnd = useCallback(() => {
-
-    if (!selectedItem) return;
-
     setItemStates((prevStates) => {
-      const board = boardRef.current;
-      const boardRect = board?.getBoundingClientRect();
-      return board && boardRect
-        ? prevStates.map((itemState) => {
-          if (itemState.id !== selectedItem.id) {
-            return itemState;
-          }
+      const boardRect = boardRef.current?.getBoundingClientRect();
+      setSelectedItem(null);
+      if (!selectedItem || !boardRect) return prevStates;
+      return prevStates.map((itemState) => {
+        if (itemState.id !== selectedItem.id) {
+          return itemState;
+        }
 
-          const current = itemState.current;
+        const maxX = (boardRect.width - selectedItem.width) / 2;
+        const maxY = (boardRect.height - selectedItem.height) / 2;
+        const currentItemState = itemState.current;
+        let targetX = currentItemState.x;
+        let targetY = currentItemState.y;
+        let targetRotation = currentItemState.rotation;
 
-          const minX = 0;
-          const minY = 0;
-          const maxX = boardRect.width - current.width;
-          const maxY = boardRect.height - current.height;
+        // TODO take rotation into account ?
+        if (currentItemState.x < -maxX) {
+          targetX = -maxX;
+          targetRotation = bounceAngle(currentItemState.rotation);
+        } else if (currentItemState.x > maxX) {
+          targetX = maxX;
+          targetRotation = bounceAngle(currentItemState.rotation);
+        }
 
-          let targetX = current.x;
-          let targetY = current.y;
-          let targetRotation = current.rotation;
-
-          if (current.x < minX) {
-            targetX = minX;
-            targetRotation = bounceAngle(current.rotation);
-          } else if (current.x > maxX) {
-            targetX = maxX;
-            targetRotation = bounceAngle(current.rotation);
-          }
-
-          if (current.y < minY) {
-            targetY = minY;
-            targetRotation = bounceAngle(current.rotation);
-          } else if (current.y > maxY) {
-            targetY = maxY;
-            targetRotation = bounceAngle(current.rotation);
-          }
-
-          return {
-            ...itemState,
-            target: { x: targetX, y: targetY, rotation: targetRotation },
-          };
-        })
-        : prevStates;
+        if (currentItemState.y < -maxY) {
+          targetY = -maxY;
+          targetRotation = bounceAngle(currentItemState.rotation);
+        } else if (currentItemState.y > maxY) {
+          targetY = maxY;
+          targetRotation = bounceAngle(currentItemState.rotation);
+        }
+        return {
+          ...itemState,
+          target: { x: targetX, y: targetY, rotation: targetRotation },
+        };
+      });
     });
-
-    setSelectedItem(null);
   }, [selectedItem]);
 
   const bounceAngle = (angle: number) => {

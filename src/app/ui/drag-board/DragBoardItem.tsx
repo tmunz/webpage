@@ -11,7 +11,7 @@ export interface DragBoardItemConsuming extends DragBoardItemState {
 
 export interface DragBoardItemState {
   id: number;
-  current: DragBoardItemCurrentState & { width: number; height: number };
+  current: DragBoardItemCurrentState;
   target: { x?: number; y?: number; rotation?: number };
 }
 
@@ -38,7 +38,9 @@ export const DragBoardItem = (props: Partial<DragBoardItemCurrentState> & { chil
           key={value.id}
           className={`drag-board-item ${value.isDragging ? 'drag-board-item-dragging' : ''} ${props.disableDrag ? 'drag-board-item-drag-disabled' : ''}`}
           style={{
-            transform: `translate(${x}px, ${y}px) rotate(${rotation}deg)`,
+            left: `calc(50% + ${x}px)`,
+            top: `calc(50% + ${y}px)`,
+            transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
             zIndex: z + 1,
           }}
           onTouchStart={(e) => !props.disableDrag && value.onPointerDown(value.id, handleStart(e.touches[0], e))}
