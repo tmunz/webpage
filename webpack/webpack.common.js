@@ -44,7 +44,7 @@ module.exports = (env) => ({
       test: /\.glb$|\.hdr$|\.ldr$|\.cube$/,
       type: 'asset/resource',
     }, {
-      test: /\.jpe?g$|\.gif$|\.png$/i,
+      test: /\.jpe?g$|\.gif$|\.png$|\.webp$/i,
       type: 'asset/resource',
       use: [
         {

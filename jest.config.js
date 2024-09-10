@@ -10,7 +10,7 @@ module.exports = {
   coverageReporters: ['text-summary'],
   moduleNameMapper: {
     '\\.(css|less|sass|scss|styl)$': 'identity-obj-proxy',
-    '\\.(jpg|jpeg|png|gif|svg)': '<rootDir>/src/fileMock.js',
+    '\\.(jpg|jpeg|png|gif|webp|svg)(\\?.*)?$': '<rootDir>/src/fileMock.js',
   },
-  testEnvironment: 'jsdom'
+  testEnvironment: 'jsdom',
 };
