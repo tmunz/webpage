@@ -1,5 +1,5 @@
-import { arc } from '../utils/SvgPathUtils';
 import './PieMenu.styl';
+import { arc } from '../utils/SvgPathUtils';
 import React, { Fragment } from 'react';
 
 interface PieMenuProps {
@@ -50,24 +50,6 @@ export function PieMenu({ children, size, innerCircleRatio = 0.5 }: PieMenuProps
             </div>
           </Fragment>
         );
-        // return (
-        //   <div
-        //     key={i}
-        //     className="pie-menu-option"
-        //     style={{ transform: `translate(-50%, -50%) rotate(${angle}deg)` }}
-        //   >
-        //     <svg className="pie-menu-section" viewBox={`-${size / 2} -${size / 2} ${size} ${size}`} width={size} height={size} xmlns="http://www.w3.org/2000/svg">
-        //       <path
-        //         d={arc(0, 0, r, ir, -angleStep / 2, angleStep / 2)}
-        //         fill={colors[i % colors.length]}
-        //         opacity={0.5}
-        //       />
-        //     </svg>
-        //     <div className="pie-menu-content" style={{ color: colors[i % colors.length], transform: `translate(-50%, -50%)  translate(${size * (1 + innerCircleRatio) / 4}px) rotate(-${angle}deg)` }}>
-        //       {child}
-        //     </div>
-        //   </div>
-        // );
       })}
     </div >
   );

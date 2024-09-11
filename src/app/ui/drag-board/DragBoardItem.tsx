@@ -24,7 +24,7 @@ export interface DragBoardItemCurrentState {
 
 export const DragBoardItemContext = createContext<DragBoardItemConsuming | null>(null);
 
-export const DragBoardItem = (props: Partial<DragBoardItemCurrentState> & { children?: ReactNode, disableDrag?: boolean }) => {
+export const DragBoardItem = (props: Partial<DragBoardItemCurrentState> & { children?: ReactNode, disableDrag?: boolean, className?: string }) => {
   return (
     <DragBoardItemContext.Consumer>
       {(value: DragBoardItemConsuming | null) => {
@@ -36,7 +36,7 @@ export const DragBoardItem = (props: Partial<DragBoardItemCurrentState> & { chil
 
         return <div
           key={value.id}
-          className={`drag-board-item ${value.isDragging ? 'drag-board-item-dragging' : ''} ${props.disableDrag ? 'drag-board-item-drag-disabled' : ''}`}
+          className={`${props.className ?? ''} drag-board-item ${value.isDragging ? 'drag-board-item-dragging' : ''} ${props.disableDrag ? 'drag-board-item-drag-disabled' : ''}`}
           style={{
             left: `calc(50% + ${x}px)`,
             top: `calc(50% + ${y}px)`,

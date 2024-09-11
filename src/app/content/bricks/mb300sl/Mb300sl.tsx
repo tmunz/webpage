@@ -3,7 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Object3D, AnimationClip, Mesh, MeshBasicMaterial, Color, Group } from 'three';
 import { useLoader } from '@react-three/fiber';
 import { SpotLight } from '@react-three/drei';
-import { CarShowModelProps } from '../../../visualization/car-show/CarShowModelProps';
+import { CarShowModelProps } from '../../../three/car-show/CarShowModelProps';
 
 export function Mb300Ssl({ onLoadComplete }: CarShowModelProps) {
   const modelRef = useRef<Group>(null);

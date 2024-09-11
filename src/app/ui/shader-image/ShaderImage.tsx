@@ -21,7 +21,7 @@ export const ShaderImage = (props: ShaderImageProps & { type?: ShaderImageType, 
   }
 
   return <div className='shader-image' style={{ backgroundColor: props.color ?? 'none', width: '100%', height: '100%' }}>
-    <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0, opacity: props.shaderDisabled ? 0 : 1 }}>
+    <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0, opacity: props.shaderDisabled ? 0 : 1}}>
       {getShaderImage()}
     </div>
     <img src={props.imageUrls[DEFAULT_IMAGE]} style={{ width: '100%', height: '100%', objectFit: props.objectFit ?? 'cover' }} />

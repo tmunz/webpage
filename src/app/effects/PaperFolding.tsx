@@ -5,7 +5,13 @@ import { PaperEffect } from './PaperEffect';
 import { useDimension } from '../utils/Dimension';
 
 
-export function PaperFolding({ children, onUnfold, onInfold, className }: { children?: React.ReactNode, onUnfold?: () => void, onInfold?: () => void, className?: string }) {
+export function PaperFolding({ children, onUnfold, onInfold, caption, className }: {
+  children?: React.ReactNode,
+  onUnfold?: () => void,
+  onInfold?: () => void,
+  caption?: string,
+  className?: string
+}) {
 
   const [initial, setInitial] = useState<boolean>(true);
   const [open, setOpen] = useState<boolean>(false);
@@ -33,14 +39,10 @@ export function PaperFolding({ children, onUnfold, onInfold, className }: { chil
       {['tl', 'tr', 'bl', 'br'].map((id) =>
         <PaperEffect key={id} seed={id}>
           <div className={`paper-part paper-part-${id}`}>
-            <div className='paper-part-frontside'>
-              {id === 'br' && <PaperEffect><button className="paper-folding-infold" onClick={() => setPaper(false)}>✖</button></PaperEffect>}
-            </div>
-            <div className='paper-part-backside'></div>
-            {
-              // use here instead of paper-part-backside because filter disable rotation
-              id === 'tr' && <button className="paper-folding-unfold" onClick={() => setPaper()} />
-            }
+            {id === 'tr' && <button className="paper-folding-unfold" onClick={() => setPaper(true)}>
+              <span className='caption'>{caption}</span>
+            </button>}
+            {id === 'br' && <PaperEffect><button className="paper-folding-infold" onClick={() => setPaper(false)}>✖</button></PaperEffect>}
           </div>
         </PaperEffect>
       )}

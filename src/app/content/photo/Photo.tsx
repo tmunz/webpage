@@ -2,6 +2,8 @@ import './Photo.styl';
 
 import React, { useRef } from 'react';
 import { ImageGallery } from '../../ui/image-gallery/ImageGallery';
+import { Camera } from 'three';
+import { CameraViewer } from '../../effects/CameraViewer';
 
 
 export function Photo() {
@@ -33,8 +35,11 @@ export function Photo() {
   // { name: 'Hummingbird', location: 'Mindo', src: 'mindo', lat: -0.0517694, lng: -78.7812344 },
 
   return <div ref={elementRef} className="photo">
-    <ImageGallery sections={sections.map(section => (
+    <CameraViewer>
+      Wildlife
+    </CameraViewer>
+    {/* <ImageGallery sections={sections.map(section => (
       { title: section.title, data: section.data.map(img => ({ ...img, ...require(`./assets/${img.src}.jpg?{sizes:[200, 400, 720, 1200, 2000], format: "webp"}`) })) })
-    )} />
+    )} /> */}
   </div>;
 }

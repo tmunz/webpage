@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { ShaderImage, ShaderImageType } from '../ui/ShaderImage';
+import { ShaderImage, ShaderImageType } from '../ui/shader-image/ShaderImage';
 
 
 interface PerspectiveImageProps {

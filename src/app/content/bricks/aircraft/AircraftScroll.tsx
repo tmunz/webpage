@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
 import { useTransformationAnimator, Transformations } from "../../../utils/TransformationAnimator";
 import { FlightSimulator } from "./flightsimulator/FlightSimulator";
-import { FullscreenPlane } from "../../../ui/FullscreenPlane";
+import { FullscreenPlane } from "../../../three/FullscreenPlane";
 
 export function AircraftScroll({ transformations }: { transformations: Transformations }) {
   const ref = useRef<Mesh>(null!);

@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
 import { Transformations, useTransformationAnimator } from '../../../utils/TransformationAnimator';
 import { RenderTexture, useScroll } from '@react-three/drei';
-import { CarShow } from '../../../visualization/car-show/CarShow';
+import { CarShow } from '../../../three/car-show/CarShow';
 import { Mb300Ssl } from './Mb300sl';
-import { Quality } from '../../../visualization/QualityProvider';
+import { Quality } from '../../../three/QualityProvider';
 import { useFrame } from '@react-three/fiber';
 import { Mesh } from 'three';
-import { FullscreenPlane } from '../../../ui/FullscreenPlane';
+import { FullscreenPlane } from '../../../three/FullscreenPlane';
 
 export function Mb300slScroll({ transformations }: { transformations: Transformations }) {
   const ref = useRef<Mesh | null>(null);

@@ -1,4 +1,4 @@
-import { useEffect, MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent } from "react";
+import { useEffect, MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent, useRef } from "react";
 import { enableOverscrollBehaviour, preventOverscrollBehaviour } from "../../utils/EventUtils";
 
 export const useUserEvents = (
@@ -8,6 +8,8 @@ export const useUserEvents = (
   onEnd: () => void,
   onFlipThrough: (delta: number) => void,
 ) => {
+
+  const scrollRef = useRef<number>(0);
 
   // item dragging
   useEffect(() => {
@@ -56,7 +58,10 @@ export const useUserEvents = (
   // flip through
   useEffect(() => {
     const handleScroll = (e: WheelEvent) => {
-      onFlipThrough(Math.sign(e.deltaY));
+      const startPosition = scrollRef.current;
+      scrollRef.current += e.deltaY / 6;
+      const delta = Math.round(startPosition - scrollRef.current)
+      onFlipThrough(Math.round(delta));
     }
 
     const dragBoard = dragBoardRef.current;

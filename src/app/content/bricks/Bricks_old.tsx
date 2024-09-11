@@ -3,7 +3,7 @@ import './Bricks.styl';
 import React, { useEffect, useRef, useState } from 'react';
 import { EiffelTower } from './eiffeltower/EiffelTower';
 import { Polaroid } from '../../effects/Polaroid';
-import { CarShow } from '../../visualization/car-show/CarShow';
+import { CarShow } from '../../three/car-show/CarShow';
 import { Aircraft } from './aircraft/Aircraft';
 import { Mb300Ssl } from './mb300sl/Mb300sl';
 import { useDimension } from '../../utils/Dimension';

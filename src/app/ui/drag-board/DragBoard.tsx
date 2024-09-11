@@ -3,6 +3,7 @@ import './DragBoard.styl';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { DragBoardItemContext, DragBoardItemState } from './DragBoardItem';
 import { useUserEvents } from './DragBoardUserEvents';
+import { CarouselIndicator } from '../CarouselIndicator';
 
 export interface DragBoardProps {
   children: React.ReactNode;
@@ -12,6 +13,7 @@ export interface DragBoardProps {
 // positions are relative to the center of the board with axle directions to the right and down
 export const DragBoard = ({ children, placementPattern = [{ x: 0, y: 0, rotation: 0 }] }: DragBoardProps) => {
   const SMOOTHNESS = 10;
+  const FRAMERATE = 30;
 
   const boardRef = useRef<HTMLDivElement>(null);
   const [selectedItem, setSelectedItem] = useState<{
@@ -40,30 +42,37 @@ export const DragBoard = ({ children, placementPattern = [{ x: 0, y: 0, rotation
 
   useEffect(() => {
     let animationFrameId: number;
+    let lastFrameTime = performance.now();
 
-    const updatePosition = () => {
-      setItemStates((prevStates) => {
-        return prevStates.map((itemState) => {
-          const current = itemState.current;
-          const target = itemState.target;
+    const updatePosition = (currentTime: number) => {
+      const timeElapsed = currentTime - lastFrameTime;
 
-          return {
-            ...itemState,
-            current: {
-              ...current,
-              x: current.x + (target.x !== undefined ? (target.x - current.x) / SMOOTHNESS : 0),
-              y: current.y + (target.y !== undefined ? (target.y - current.y) / SMOOTHNESS : 0),
-              rotation:
-                current.rotation + (target.rotation !== undefined ? (target.rotation - current.rotation) / SMOOTHNESS : 0),
-            },
-          };
+      if (timeElapsed >= 1000 / FRAMERATE) {
+        setItemStates((prevStates) => {
+          return prevStates.map((itemState) => {
+            const current = itemState.current;
+            const target = itemState.target;
+
+            return {
+              ...itemState,
+              current: {
+                ...current,
+                x: current.x + (target.x !== undefined ? (target.x - current.x) / SMOOTHNESS : 0),
+                y: current.y + (target.y !== undefined ? (target.y - current.y) / SMOOTHNESS : 0),
+                rotation:
+                  current.rotation + (target.rotation !== undefined ? (target.rotation - current.rotation) / SMOOTHNESS : 0),
+              },
+            };
+          });
         });
-      });
+
+        lastFrameTime = currentTime;
+      }
 
       animationFrameId = requestAnimationFrame(updatePosition);
     };
 
-    updatePosition();
+    animationFrameId = requestAnimationFrame(updatePosition);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
@@ -204,6 +213,11 @@ export const DragBoard = ({ children, placementPattern = [{ x: 0, y: 0, rotation
           </DragBoardItemContext.Provider>
         );
       })}
+      <CarouselIndicator
+        total={itemStates.length}
+        activeIndex={itemStates.findIndex(item => item.current.z === Math.max(...itemStates.map(item => item.current.z)))}
+        onSelect={index => { setItemStates(prevStates => prevStates.map((item, i) => ({ ...item, current: { ...item.current, z: i === index ? Math.max(...prevStates.map(item => item.current.z)) + 1 : item.current.z } }))) }}
+      />
     </div>
   );
 };

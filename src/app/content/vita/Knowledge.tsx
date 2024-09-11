@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { NetworkGraph, NetworkLink, NetworkNode } from '../../visualization/network-graph/NetworkGraph';
+import { NetworkGraph, NetworkLink, NetworkNode } from '../../three/network-graph/NetworkGraph';
 import { StipplingService } from '../../visualization/StipplingService';
 import { linkData, nodeData } from './KnowledgeData';
 import { Canvas } from '@react-three/fiber';
