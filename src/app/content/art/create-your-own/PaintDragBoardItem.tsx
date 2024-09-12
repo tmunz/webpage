@@ -15,7 +15,7 @@ export function PaintDragBoardItem({ width, height, gap = 40 }: { width: number,
     rotation={active ? 0 : undefined}
     className='paint-drag-board-item'
   >
-    <PaperFolding onUnfold={() => setActive(true)} onInfold={() => setActive(false)} caption='Paint your own Masterpiece'>
+    <PaperFolding onUnfold={() => setActive(true)} onInfold={() => setActive(false)} title='Paint your own Masterpiece'>
       <OilPaintingWithControls width={width - 2 * gap} height={height - 2 * gap} />
     </PaperFolding>
   </DragBoardItem >;

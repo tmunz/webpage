@@ -5,11 +5,11 @@ import { PaperEffect } from './PaperEffect';
 import { useDimension } from '../utils/Dimension';
 
 
-export function PaperFolding({ children, onUnfold, onInfold, caption, className }: {
+export function PaperFolding({ children, onUnfold, onInfold, title, className }: {
   children?: React.ReactNode,
   onUnfold?: () => void,
   onInfold?: () => void,
-  caption?: string,
+  title?: string,
   className?: string
 }) {
 
@@ -40,7 +40,7 @@ export function PaperFolding({ children, onUnfold, onInfold, caption, className 
         <PaperEffect key={id} seed={id}>
           <div className={`paper-part paper-part-${id}`}>
             {id === 'tr' && <button className="paper-folding-unfold" onClick={() => setPaper(true)}>
-              <span className='caption'>{caption}</span>
+              <span className='title'>{title}</span>
             </button>}
             {id === 'br' && <PaperEffect><button className="paper-folding-infold" onClick={() => setPaper(false)}>✖</button></PaperEffect>}
           </div>

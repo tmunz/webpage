@@ -1,11 +1,8 @@
 .camera-viewer {
-
+  --cameraOverlayColor: rgba(255, 255, 255, 0.5);
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: 100%;
+  justify-content: center;
   position: relative;
-  /* TODO */
 
   .camera-viewer-overlay {
     position: absolute;
@@ -23,14 +20,38 @@
       flex-direction: column;
       justify-content: space-between;
 
+      &.camera-viewer-left {
+        .title {
+          position: absolute;
+          top: 0px;
+          left: 20px;
+          font-size: 0;
+
+          &:first-letter {
+            font-size: 8vw;
+          }
+        }
+
+        .caption {
+          position: absolute;
+          bottom: 20px;
+          left: 20px;
+        }
+      }
+
+      &.camera-viewer-right .title {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
       &::before,
       &::after {
         content: "";
         display: block;
         height: 5vw;
         width: 5vw;
-        border: 1.5px solid #fff;
-        mix-blend-mode: difference;
+        border: 1.5px solid var(--cameraOverlayColor);
       }
 
       &.camera-viewer-left::before {
@@ -48,15 +69,6 @@
       &.camera-viewer-right::after {
         border-width: 0 1.5px 1.5px 0;
       }
-    }
-
-    .camera-viewer-center {
-      align-self: center;
-      width: 5vw;
-      height: 5vw;
-      border-radius: 50%;
-      border: 1.5px solid #fff;
-      mix-blend-mode: difference;
     }
   }
 }
