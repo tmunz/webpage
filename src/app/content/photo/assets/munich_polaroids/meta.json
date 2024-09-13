@@ -1,0 +1,173 @@
+{
+  "title": "Polaroid Series \"München\"",
+  "data": [
+    {
+      "name": "Museum Brandhorst",
+      "location": "Munich",
+      "src": "01.jpg",
+      "lat": 48.147458,
+      "lng": 11.574544
+    },
+    {
+      "name": "Lenbachhaus",
+      "location": "Munich",
+      "src": "02.jpg",
+      "lat": 48.146046,
+      "lng": 11.565689
+    },
+    {
+      "name": "Metropol Garage",
+      "location": "Munich",
+      "src": "03.jpg",
+      "lat": 48.136817,
+      "lng": 11.565128
+    },
+    {
+      "name": "Old North Cemetery",
+      "location": "Munich",
+      "src": "04.jpg",
+      "lat": 48.154202,
+      "lng": 11.569741
+    },
+    {
+      "name": "Nymphenburg Gardens",
+      "location": "Munich",
+      "src": "05.jpg",
+      "lat": 48.158835,
+      "lng": 11.503876
+    },
+    {
+      "name": "Augustin",
+      "location": "Munich",
+      "src": "06.jpg",
+      "lat": 48.155789,
+      "lng": 11.542281
+    },
+    {
+      "name": "Sugar Mountain",
+      "location": "Munich",
+      "src": "07.jpg",
+      "lat": 48.097291,
+      "lng": 11.515826
+    },
+    {
+      "name": "Kreativquartier",
+      "location": "Munich",
+      "src": "08.jpg",
+      "lat": 48.156617,
+      "lng": 11.541611
+    },
+    {
+      "name": "Bahnwärter Thiel",
+      "location": "Munich",
+      "src": "09.jpg",
+      "lat": 48.119661,
+      "lng": 11.543636
+    },
+    {
+      "name": "Stellwerk München Hauptbahnhof",
+      "location": "Munich",
+      "src": "10.jpg",
+      "lat": 48.140251,
+      "lng": 11.558666
+    },
+    {
+      "name": "Lerchenauer See",
+      "location": "Munich",
+      "src": "11.jpg",
+      "lat": 48.204292,
+      "lng": 11.548932
+    },
+    {
+      "name": "Karolinenplatz",
+      "location": "Munich",
+      "src": "12.jpg",
+      "lat": 48.145935,
+      "lng": 11.567867
+    },
+    {
+      "name": "Alte Utting",
+      "location": "Munich",
+      "src": "13.jpg",
+      "lat": 48.116511,
+      "lng": 11.545965
+    },
+    {
+      "name": "Nymphenburg Palace",
+      "location": "Munich",
+      "src": "14.jpg",
+      "lat": 48.158055,
+      "lng": 11.503445
+    },
+    {
+      "name": "Geschwister-Scholl-Platz",
+      "location": "Munich",
+      "src": "15.jpg",
+      "lat": 48.150051,
+      "lng": 11.580297
+    },
+    {
+      "name": "Endless Stairs",
+      "location": "Munich",
+      "src": "16.jpg",
+      "lat": 48.131943,
+      "lng": 11.568043
+    },
+    {
+      "name": "Münchner Freiheit",
+      "location": "Munich",
+      "src": "17.jpg",
+      "lat": 48.161007,
+      "lng": 11.585986
+    },
+    {
+      "name": "Olympic Stadium",
+      "location": "Munich",
+      "src": "18.jpg",
+      "lat": 48.173419,
+      "lng": 11.546745
+    },
+    {
+      "name": "Siegestor",
+      "location": "Munich",
+      "src": "19.jpg",
+      "lat": 48.152752,
+      "lng": 11.583075
+    },
+    {
+      "name": "Underpass",
+      "location": "Munich",
+      "src": "20.jpg",
+      "lat": 48.132491,
+      "lng": 11.544179
+    },
+    {
+      "name": "Mae West",
+      "location": "Munich",
+      "src": "21.jpg",
+      "lat": 48.131377,
+      "lng": 11.544956
+    },
+    {
+      "name": "BMW Welt",
+      "location": "Munich",
+      "src": "22.jpg",
+      "lat": 48.176668,
+      "lng": 11.556222
+    },
+    {
+      "name": "Subway Station Westfriedhof",
+      "location": "Munich",
+      "src": "23.jpg",
+      "lat": 48.162423,
+      "lng": 11.513792
+    },
+    {
+      "name": "Königsplatz",
+      "location": "Munich",
+      "src": "24.jpg",
+      "lat": 48.144623,
+      "lng": 11.564939
+    }
+  ]
+}

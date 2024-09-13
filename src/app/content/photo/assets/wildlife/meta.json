@@ -1,0 +1,53 @@
+{
+  "title": "Wildlife",
+  "data": [
+    {
+      "name": "Hummingbird",
+      "location": "Mindo",
+      "lat": -0.0517694,
+      "lng": -78.7812344
+    },
+    {
+      "name": "Bison",
+      "location": "Yellow Stone National Park",
+      "src": "bison.jpg",
+      "lat": 44.7360723,
+      "lng": -110.5322271
+    },
+    {
+      "name": "Butterfly",
+      "location": "Mindo",
+      "src": "butterfly_1.jpg",
+      "lat": -0.0517694,
+      "lng": -78.7812344
+    },
+    {
+      "name": "Lizard",
+      "location": "New Zealand",
+      "src": "lizard.jpg",
+      "lat": -35.7228195,
+      "lng": 174.2100138
+    },
+    {
+      "name": "Inca Tern",
+      "location": "New York",
+      "src": "inca_tern.jpg",
+      "lat": 40.8479356,
+      "lng": -73.8836235
+    },
+    {
+      "name": "Butterfly",
+      "location": "Mindo",
+      "src": "butterfly_2.jpg",
+      "lat": -0.0517694,
+      "lng": -78.7812344
+    },
+    {
+      "name": "Turtle",
+      "location": "Galapagos Islands",
+      "src": "turtle.jpg",
+      "lat": -0.9881846,
+      "lng": -91.0306625
+    }
+  ]
+}

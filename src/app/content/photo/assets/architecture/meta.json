@@ -1,0 +1,82 @@
+{
+  "title": "Architecture",
+  "data": [
+    {
+      "name": "Opera House",
+      "location": "Sydney",
+      "src": "sydney_opera_house.jpg",
+      "lat": -33.8567799,
+      "lng": 151.2127218
+    },
+    {
+      "name": "Estadio Panamericano de Cuba",
+      "location": "Havanna",
+      "src": "havanna_stadium.jpg",
+      "lat": 23.1382214,
+      "lng": -82.3669656
+    },
+    {
+      "name": "Arquipélago - Arts Center",
+      "location": "São Miguel",
+      "src": "arquipelago.jpg",
+      "lat": 37.8185649,
+      "lng": -25.6049037
+    },
+    {
+      "name": "Emirates Towers Metro Station",
+      "location": "Dubai",
+      "src": "dubai.jpg",
+      "lat": 25.2173295,
+      "lng": 55.2786327
+    },
+    {
+      "name": "Königsplatz",
+      "location": "München",
+      "src": "muenchen_koenigsplatz.jpg",
+      "lat": 48.812245,
+      "lng": 8.6475281
+    },
+    {
+      "name": "Arc de Triomphe de l’Étoile",
+      "location": "Paris",
+      "src": "paris_arc_de_triomphe.jpg",
+      "lat": 48.8729441,
+      "lng": 2.296929
+    },
+    {
+      "name": "Arc de Triomphe de l’Étoile Stairways",
+      "location": "Paris",
+      "src": "paris_spiral.jpg",
+      "lat": 48.8729441,
+      "lng": 2.296929
+    },
+    {
+      "name": "Solomon R. Guggenheim Museum",
+      "location": "New York",
+      "src": "new_york_guggenheim.jpg",
+      "lat": 40.7829836,
+      "lng": -73.961545
+    },
+    {
+      "name": "Puente de Arganzuela",
+      "location": "Madrid",
+      "src": "madrid.jpg",
+      "lat": 40.3976496,
+      "lng": -3.7143633
+    },
+    {
+      "name": "Ponta Delgada Port",
+      "location": "Sao Miguel",
+      "src": "sao_miguel.jpg",
+      "lat": 37.7448876,
+      "lng": -25.6991493
+    },
+    {
+      "name": "César Manrique",
+      "location": "Lanzarote",
+      "src": "lanzarote.jpg",
+      "lat": 29.0010932,
+      "lng": -13.5495948
+    }
+  ]
+}

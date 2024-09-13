@@ -1,0 +1,47 @@
+{
+  "title": "Landscape",
+  "data": [
+    {
+      "name": "That Wanaka Tree",
+      "location": "Wanaka Lake",
+      "src": "wanaka.jpg",
+      "lat": -44.698579,
+      "lng": 169.1148488
+    },
+    {
+      "name": "Shooting star over Joshua Tree",
+      "location": "Joshua Tree National Park",
+      "src": "joshua_tree.jpg",
+      "lat": 33.9001129,
+      "lng": -116.190321
+    },
+    {
+      "name": "Dawn at Umpire Rock",
+      "location": "New York",
+      "src": "new_york_central_park.jpg",
+      "lat": 40.76924,
+      "lng": -73.9777389
+    },
+    {
+      "name": "Mount Cook",
+      "location": "New Zealand",
+      "src": "mount_cook.jpg",
+      "lat": -43.690667,
+      "lng": 170.103167
+    },
+    {
+      "name": "Cloudy Mountain",
+      "location": "Olympia National Park",
+      "src": "olympia_mountains.jpg",
+      "lat": 47.7979579,
+      "lng": -123.5143647
+    },
+    {
+      "name": "Kadiut Bridge",
+      "location": "Albania",
+      "src": "albania.jpg",
+      "lat": 40.2443987,
+      "lng": 20.4324621
+    }
+  ]
+}

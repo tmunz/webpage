@@ -42,35 +42,27 @@ export const DragBoard = ({ children, placementPattern = [{ x: 0, y: 0, rotation
 
   useEffect(() => {
     let animationFrameId: number;
-    let lastFrameTime = performance.now();
 
-    const updatePosition = (currentTime: number) => {
-      const timeElapsed = currentTime - lastFrameTime;
+    const updatePosition = () => {
+      setItemStates((prevStates) => {
+        return prevStates.map((itemState) => {
+          const current = itemState.current;
+          const target = itemState.target;
 
-      if (timeElapsed >= 1000 / FRAMERATE) {
-        setItemStates((prevStates) => {
-          return prevStates.map((itemState) => {
-            const current = itemState.current;
-            const target = itemState.target;
-
-            return {
-              ...itemState,
-              current: {
-                ...current,
-                x: current.x + (target.x !== undefined ? (target.x - current.x) / SMOOTHNESS : 0),
-                y: current.y + (target.y !== undefined ? (target.y - current.y) / SMOOTHNESS : 0),
-                rotation:
-                  current.rotation + (target.rotation !== undefined ? (target.rotation - current.rotation) / SMOOTHNESS : 0),
-              },
-            };
-          });
+          return {
+            ...itemState,
+            current: {
+              ...current,
+              x: current.x + (target.x !== undefined ? (target.x - current.x) / SMOOTHNESS : 0),
+              y: current.y + (target.y !== undefined ? (target.y - current.y) / SMOOTHNESS : 0),
+              rotation:
+                current.rotation + (target.rotation !== undefined ? (target.rotation - current.rotation) / SMOOTHNESS : 0),
+            },
+          };
         });
-
-        lastFrameTime = currentTime;
-      }
-
+      });
       animationFrameId = requestAnimationFrame(updatePosition);
-    };
+    }
 
     animationFrameId = requestAnimationFrame(updatePosition);
 
