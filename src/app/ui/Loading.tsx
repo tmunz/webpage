@@ -1,11 +1,12 @@
 import './Loading.styl';
+import React, { Suspense } from 'react';
 
-import React from 'react';
-
-export function Loading () {
+export function Loading({ children }: { children: React.ReactNode }) {
   return (
-    <div className='loading'>
+    <Suspense fallback={<div className='loading'>
       <div className='ripple'></div>
-    </div>
+    </div>}>
+      {children}
+    </Suspense>
   );
 }

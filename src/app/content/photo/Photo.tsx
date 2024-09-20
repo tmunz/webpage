@@ -80,25 +80,29 @@ export function Photo() {
       <CameraViewerFocusing />
       {sections.map((section, sectionIndex) => (
         <section className='photo-section' key={section.title + sectionIndex}>
-          <div className='photo-section-title'>
-            <h2 className='photo-section-header-letter'>{section.title}</h2>
+          <header className='photo-section-title'>
+            <h3 className='photo-section-header-letter'>{section.title}</h3>
             <h3 className='photo-section-header'>{section.title}</h3>
-          </div>
-          {section.data.map((photo, j) => (
-            <div className='photo-image' key={photo.name + j}>
-              <label>
-                {`[${(j + 1).toString().padStart(3, '0')}]`}<br />
-                {photo.name}<br />
-                {photo.location}<br />
-              </label>
-              {photo.src ? (
-                // <ShaderImage imageUrls={{ 'image': photo.src }} shaderDisabled={!filter} type={ShaderImageType.NATIVE} />
-                <img src={photo.src} />
-              ) : (
-                <div className='photo-image-placeholder' />
-              )}
-            </div>
-          ))}
+          </header>
+          <table className='photo-section-content'>
+            {section.data.map((photo, j) => (
+              <tr key={photo.name + j}>
+                <td className='label'>
+                  {`[${(j + 1).toString().padStart(3, '0')}]`}<br />
+                  {photo.name}<br />
+                  {photo.location}<br />
+                </td>
+                <td className='image'>
+                  {photo.src ? (
+                    // <ShaderImage imageUrls={{ 'image': photo.src }} shaderDisabled={!filter} type={ShaderImageType.NATIVE} />
+                    <img src={photo.src} />
+                  ) : (
+                    <div className='photo-image-placeholder' />
+                  )}
+                </td>
+              </tr>
+            ))}
+          </table>
         </section>
       ))}
     </div>

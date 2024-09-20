@@ -13,7 +13,6 @@
   },
   "keywords": [],
   "author": "Tobias Munzert",
-  "license": "MIT",
   "dependencies": {
     "@react-three/drei": "^9.108.4",
     "@react-three/fiber": "^8.16.8",
@@ -24,7 +23,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.25.1",
-    "rxjs": "^6.5.4",
+    "rxjs": "^6.6.7",
     "three": "^0.166.1",
     "three-forcegraph": "^1.41.14"
   },
