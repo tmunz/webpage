@@ -12,9 +12,8 @@ export function Projects(props: { onClose: () => void }) {
     name: project.name,
     id: project.id,
     description: project.description,
-    component: () => <div className='project-content'>
+    about: () => <div className='project-about'>
       <p className='info'>{project.description}</p>
-      {project.component}
       {
         project.githubLink &&
         <div className="github-link">
@@ -24,7 +23,8 @@ export function Projects(props: { onClose: () => void }) {
           </a>
         </div>
       }
-    </div>
+    </div>,
+    component: () => project.component
   })));
 
   return <div className='projects'>

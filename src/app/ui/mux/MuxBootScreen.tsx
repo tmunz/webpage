@@ -13,7 +13,7 @@ export const MuxBootScreen = ({ id, stdout }: MuxBootScreenProps) => {
   const text = stdout.map(log => log.message).join('\n');
 
   return (
-    <div className='mux-boot-screen'>
+    <div className='mux-boot-screen' style={{ color: 'white' }}>
       <SerialWriter content={text} contentId={id} />
     </div>
   );
