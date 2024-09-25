@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export function PaperEffect({ children, seed = 0 }: { children: React.ReactElement; seed?: string | number }) {
   const filterId = `paper-filter-${seed}`;
@@ -7,8 +7,8 @@ export function PaperEffect({ children, seed = 0 }: { children: React.ReactEleme
   return <>
     <svg style={{ display: 'none' }}>
       <filter id={filterId}>
-        <feTurbulence x="0" y="0" baseFrequency="0.01" numOctaves="1" seed={seedNumber} />
-        <feDisplacementMap in="SourceGraphic" scale="4" />
+        <feTurbulence x='0' y='0' baseFrequency='0.01' numOctaves='1' seed={seedNumber} />
+        <feDisplacementMap in='SourceGraphic' scale='4' />
       </filter>
     </svg>
     {React.cloneElement(children, {

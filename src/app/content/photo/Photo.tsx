@@ -2,6 +2,8 @@ import './Photo.styl';
 import React, { useRef, useEffect, useState } from 'react';
 import { CameraViewer } from '../../effects/CameraViewer';
 import { CameraViewerFocusing } from '../../effects/CameraViewerFocusing';
+import { RgbaFilter } from '../../effects/RgbaFilter';
+import { FilmStrip } from '../../effects/FilmStrip';
 
 const SCROLL_THRESHOLD = 100;
 
@@ -95,7 +97,15 @@ export function Photo() {
                 <td className='image'>
                   {photo.src ? (
                     // <ShaderImage imageUrls={{ 'image': photo.src }} shaderDisabled={!filter} type={ShaderImageType.NATIVE} />
-                    <img src={photo.src} />
+                    <>
+                      <img src={photo.src} />
+                      <div className='filter'>
+                        <FilmStrip />
+                        <RgbaFilter g={0} b={0}><img className='r' src={photo.src} /></RgbaFilter>
+                        <RgbaFilter r={0} b={0}><img className='g' src={photo.src} /></RgbaFilter>
+                        <RgbaFilter r={0} g={0}><img className='b' src={photo.src} /></RgbaFilter>
+                      </div>
+                    </>
                   ) : (
                     <div className='photo-image-placeholder' />
                   )}
