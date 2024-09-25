@@ -6,168 +6,264 @@
       "location": "Munich",
       "src": "01.jpg",
       "lat": 48.147458,
-      "lng": 11.574544
+      "lng": 11.574544,
+      "camera": "Polaroid 630SL",
+      "iso": "ISO-600",
+      "focalLength": "109mm",
+      "aperture": "F/14.6"
     },
     {
       "name": "Lenbachhaus",
       "location": "Munich",
       "src": "02.jpg",
       "lat": 48.146046,
-      "lng": 11.565689
+      "lng": 11.565689,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Metropol Garage",
       "location": "Munich",
       "src": "03.jpg",
       "lat": 48.136817,
-      "lng": 11.565128
+      "lng": 11.565128,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Old North Cemetery",
       "location": "Munich",
       "src": "04.jpg",
       "lat": 48.154202,
-      "lng": 11.569741
+      "lng": 11.569741,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Nymphenburg Gardens",
       "location": "Munich",
       "src": "05.jpg",
       "lat": 48.158835,
-      "lng": 11.503876
+      "lng": 11.503876,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Augustin",
       "location": "Munich",
       "src": "06.jpg",
       "lat": 48.155789,
-      "lng": 11.542281
+      "lng": 11.542281,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Sugar Mountain",
       "location": "Munich",
       "src": "07.jpg",
       "lat": 48.097291,
-      "lng": 11.515826
+      "lng": 11.515826,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Kreativquartier",
       "location": "Munich",
       "src": "08.jpg",
       "lat": 48.156617,
-      "lng": 11.541611
+      "lng": 11.541611,
+      "camera": "Polaroid 630SL",
+      "iso": "ISO-600",
+      "focalLength": "109mm",
+      "aperture": "F/14.6"
     },
     {
       "name": "Bahnwärter Thiel",
       "location": "Munich",
       "src": "09.jpg",
       "lat": 48.119661,
-      "lng": 11.543636
+      "lng": 11.543636,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Stellwerk München Hauptbahnhof",
       "location": "Munich",
       "src": "10.jpg",
       "lat": 48.140251,
-      "lng": 11.558666
+      "lng": 11.558666,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Lerchenauer See",
       "location": "Munich",
       "src": "11.jpg",
       "lat": 48.204292,
-      "lng": 11.548932
+      "lng": 11.548932,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Karolinenplatz",
       "location": "Munich",
       "src": "12.jpg",
       "lat": 48.145935,
-      "lng": 11.567867
+      "lng": 11.567867,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Alte Utting",
       "location": "Munich",
       "src": "13.jpg",
       "lat": 48.116511,
-      "lng": 11.545965
+      "lng": 11.545965,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Nymphenburg Palace",
       "location": "Munich",
       "src": "14.jpg",
       "lat": 48.158055,
-      "lng": 11.503445
+      "lng": 11.503445,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Geschwister-Scholl-Platz",
       "location": "Munich",
       "src": "15.jpg",
       "lat": 48.150051,
-      "lng": 11.580297
+      "lng": 11.580297,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Endless Stairs",
       "location": "Munich",
       "src": "16.jpg",
       "lat": 48.131943,
-      "lng": 11.568043
+      "lng": 11.568043,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm * 0.5",
+      "aperture": "F/8"
     },
     {
       "name": "Münchner Freiheit",
       "location": "Munich",
       "src": "17.jpg",
       "lat": 48.161007,
-      "lng": 11.585986
+      "lng": 11.585986,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Olympic Stadium",
       "location": "Munich",
       "src": "18.jpg",
       "lat": 48.173419,
-      "lng": 11.546745
+      "lng": 11.546745,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Siegestor",
       "location": "Munich",
       "src": "19.jpg",
       "lat": 48.152752,
-      "lng": 11.583075
+      "lng": 11.583075,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Underpass",
       "location": "Munich",
       "src": "20.jpg",
       "lat": 48.132491,
-      "lng": 11.544179
+      "lng": 11.544179,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Mae West",
       "location": "Munich",
       "src": "21.jpg",
       "lat": 48.131377,
-      "lng": 11.544956
+      "lng": 11.544956,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "BMW Welt",
       "location": "Munich",
       "src": "22.jpg",
       "lat": 48.176668,
-      "lng": 11.556222
+      "lng": 11.556222,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Subway Station Westfriedhof",
       "location": "Munich",
       "src": "23.jpg",
       "lat": 48.162423,
-      "lng": 11.513792
+      "lng": 11.513792,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     },
     {
       "name": "Königsplatz",
       "location": "Munich",
       "src": "24.jpg",
       "lat": 48.144623,
-      "lng": 11.564939
+      "lng": 11.564939,
+      "camera": "Polaroid SX-70",
+      "iso": "ISO-150",
+      "focalLength": "116mm",
+      "aperture": "F/8"
     }
   ]
 }

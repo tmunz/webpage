@@ -2,18 +2,14 @@ import './Photo.styl';
 import React, { useRef, useEffect, useState } from 'react';
 import { CameraViewer } from '../../effects/CameraViewer';
 import { CameraViewerFocusing } from '../../effects/CameraViewerFocusing';
-import { RgbaFilter } from '../../effects/RgbaFilter';
-import { FilmStrip } from '../../effects/FilmStrip';
+import { PhotoEntry } from './PhotoEntry';
+import { PhotoMetaData } from './PhotoMetaData';
 
 const SCROLL_THRESHOLD = 100;
 
 interface Section {
   title: string;
-  data: {
-    name: string;
-    location: string;
-    src?: string;
-  }[]
+  data: PhotoMetaData[]
 };
 
 export function Photo() {
@@ -23,7 +19,7 @@ export function Photo() {
       .map((section) => ({ ...(require(`./assets/${section}/meta.json`)), rootPath: `./assets/${section}` }))
       .map((section) => ({
         ...section, data: section.data.map((d: any) => ({
-          ...d, src: d.src ? require(`${section.rootPath + '/' + d.src}?{sizes:[200, 400, 720, 1200, 2000], format: "webp"}`) : undefined
+          ...d, src: d.src ? require(`${section.rootPath + '/' + d.src}?{sizes:[200, 400, 720, 1200, 2000], format: "jpeg"}`) : undefined
         }))
       }))
   );
@@ -97,15 +93,7 @@ export function Photo() {
                 <td className='image'>
                   {photo.src ? (
                     // <ShaderImage imageUrls={{ 'image': photo.src }} shaderDisabled={!filter} type={ShaderImageType.NATIVE} />
-                    <>
-                      <img src={photo.src} />
-                      <div className='filter'>
-                        <FilmStrip />
-                        <RgbaFilter g={0} b={0}><img className='r' src={photo.src} /></RgbaFilter>
-                        <RgbaFilter r={0} b={0}><img className='g' src={photo.src} /></RgbaFilter>
-                        <RgbaFilter r={0} g={0}><img className='b' src={photo.src} /></RgbaFilter>
-                      </div>
-                    </>
+                    <PhotoEntry photo={photo} />
                   ) : (
                     <div className='photo-image-placeholder' />
                   )}

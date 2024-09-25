@@ -5,49 +5,91 @@
       "name": "Hummingbird",
       "location": "Mindo",
       "lat": -0.0517694,
-      "lng": -78.7812344
+      "lng": -78.7812344,
+      "date": "2022-03-23",
+      "camera": "Sony Alpha 7 II",
+      "aperture": "F/5.6",
+      "shutterSpeed": "1/250",
+      "iso": "ISO-3200",
+      "focalLength": "300mm"
     },
     {
       "name": "Bison",
       "location": "Yellow Stone National Park",
       "src": "bison.jpg",
       "lat": 44.7360723,
-      "lng": -110.5322271
+      "lng": -110.5322271,
+      "date": "2022-05-27",
+      "camera": "Sony Alpha 7 II",
+      "aperture": "F/8",
+      "shutterSpeed": "1/160",
+      "iso": "ISO-100",
+      "focalLength": "70mm"
     },
     {
       "name": "Butterfly",
       "location": "Mindo",
       "src": "butterfly_1.jpg",
       "lat": -0.0517694,
-      "lng": -78.7812344
+      "lng": -78.7812344,
+      "date": "2022-03-21",
+      "camera": "Sony Alpha 7 II",
+      "aperture": "F/5.6",
+      "shutterSpeed": "1/320",
+      "iso": "ISO-3200",
+      "focalLength": "300mm"
     },
     {
       "name": "Lizard",
       "location": "New Zealand",
       "src": "lizard.jpg",
       "lat": -35.7228195,
-      "lng": 174.2100138
+      "lng": 174.2100138,
+      "date": "2019-03-03",
+      "camera": "Sony Alpha 7 II",
+      "aperture": "F/4",
+      "shutterSpeed": "1/160",
+      "iso": "ISO-1600",
+      "focalLength": "70mm"
     },
     {
       "name": "Inca Tern",
       "location": "New York",
       "src": "inca_tern.jpg",
       "lat": 40.8479356,
-      "lng": -73.8836235
+      "lng": -73.8836235,
+      "date": "2016-03-19",
+      "camera": "Sony Alpha 57",
+      "aperture": "F/5.6",
+      "shutterSpeed": "1/320",
+      "iso": "ISO-800",
+      "focalLength": "300mm"
     },
     {
       "name": "Butterfly",
       "location": "Mindo",
       "src": "butterfly_2.jpg",
       "lat": -0.0517694,
-      "lng": -78.7812344
+      "lng": -78.7812344,
+      "date": "2022-03-21",
+      "camera": "Sony Alpha 7 II",
+      "aperture": "F/5.6",
+      "shutterSpeed": "1/400",
+      "iso": "ISO-1600",
+      "focalLength": "300mm"
     },
     {
       "name": "Turtle",
       "location": "Galapagos Islands",
       "src": "turtle.jpg",
       "lat": -0.9881846,
-      "lng": -91.0306625
+      "lng": -91.0306625,
+      "date": "2019-03-03",
+      "camera": "GoPro Hero7",
+      "aperture": "F/2.8",
+      "shutterSpeed": "1/240",
+      "iso": "ISO-221",
+      "focalLength": "FFeq. 15mm"
     }
   ]
 }

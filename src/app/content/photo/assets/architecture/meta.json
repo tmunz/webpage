@@ -6,77 +6,136 @@
       "location": "Sydney",
       "src": "sydney_opera_house.jpg",
       "lat": -33.8567799,
-      "lng": 151.2127218
+      "lng": 151.2127218,
+      "date": "2019-03-03",
+      "camera": "Sony Alpha 7 II",
+      "aperture": "F/10",
+      "shutterSpeed": "1/200",
+      "iso": "ISO-100",
+      "focalLength": "24mm"
     },
     {
       "name": "Estadio Panamericano de Cuba",
       "location": "Havanna",
       "src": "havanna_stadium.jpg",
       "lat": 23.1382214,
-      "lng": -82.3669656
+      "lng": -82.3669656,
+      "date": "2022-04-23",
+      "camera": "Sony Alpha 7 II",
+      "aperture": "F/5",
+      "shutterSpeed": "1/100",
+      "iso": "ISO-100",
+      "focalLength": "15mm"
     },
     {
       "name": "Arquipélago - Arts Center",
       "location": "São Miguel",
       "src": "arquipelago.jpg",
       "lat": 37.8185649,
-      "lng": -25.6049037
+      "lng": -25.6049037,
+      "date": "2021-10-14",
+      "camera": "Sony Alpha 7 II",
+      "aperture": "F/5.6",
+      "shutterSpeed": "1/125",
+      "iso": "ISO-100",
+      "focalLength": "15mm"
     },
     {
       "name": "Emirates Towers Metro Station",
       "location": "Dubai",
       "src": "dubai.jpg",
       "lat": 25.2173295,
-      "lng": 55.2786327
+      "lng": 55.2786327,
+      "date": "2019-01-20",
+      "camera": "Sony Alpha 7 II",
+      "aperture": "F/2.8",
+      "shutterSpeed": "1/20",
+      "iso": "ISO-4000",
+      "focalLength": "50mm"
     },
     {
       "name": "Königsplatz",
       "location": "München",
       "src": "muenchen_koenigsplatz.jpg",
       "lat": 48.812245,
-      "lng": 8.6475281
+      "lng": 8.6475281,
+      "date": "2016-09-08",
+      "camera": "Sony Alpha 7 II",
+      "shutterSpeed": "1.0",
+      "iso": "ISO-800",
+      "focalLength": "8mm Fisheye"
     },
     {
       "name": "Arc de Triomphe de l’Étoile",
       "location": "Paris",
       "src": "paris_arc_de_triomphe.jpg",
       "lat": 48.8729441,
-      "lng": 2.296929
+      "lng": 2.296929,
+      "date": "2015-02-05",
+      "camera": "Sony Alpha 57",
+      "shutterSpeed": "3.2",
+      "iso": "ISO-100",
+      "focalLength": "8mm Fisheye"
     },
     {
       "name": "Arc de Triomphe de l’Étoile Stairways",
       "location": "Paris",
       "src": "paris_spiral.jpg",
       "lat": 48.8729441,
-      "lng": 2.296929
+      "lng": 2.296929,
+      "date": "2015-02-05",
+      "camera": "Sony Alpha 57",
+      "aperture": "F/3.5",
+      "shutterSpeed": "1/60",
+      "iso": "ISO-3200",
+      "focalLength": "16mm "
     },
     {
       "name": "Solomon R. Guggenheim Museum",
       "location": "New York",
       "src": "new_york_guggenheim.jpg",
       "lat": 40.7829836,
-      "lng": -73.961545
+      "lng": -73.961545,
+      "date": "2016-03-30",
+      "camera": "Sony Alpha 57",
+      "shutterSpeed": "1/60",
+      "iso": "ISO-200",
+      "focalLength": "8mm Fisheye"
     },
     {
       "name": "Puente de Arganzuela",
       "location": "Madrid",
       "src": "madrid.jpg",
       "lat": 40.3976496,
-      "lng": -3.7143633
+      "lng": -3.7143633,
+      "date": "2022-03-04",
+      "camera": "Sony Alpha 7 II",
+      "aperture": "F/4",
+      "shutterSpeed": "1/160",
+      "iso": "ISO-400",
+      "focalLength": "15mm"
     },
     {
       "name": "Ponta Delgada Port",
       "location": "Sao Miguel",
       "src": "sao_miguel.jpg",
       "lat": 37.7448876,
-      "lng": -25.6991493
+      "lng": -25.6991493,
+      "date": "2021-10-11",
+      "camera": "Sony Alpha 7 II",
+      "aperture": "F/7.1",
+      "shutterSpeed": "1/100",
+      "iso": "ISO-100",
+      "focalLength": "24mm"
     },
     {
       "name": "César Manrique",
       "location": "Lanzarote",
       "src": "lanzarote.jpg",
       "lat": 29.0010932,
-      "lng": -13.5495948
+      "lng": -13.5495948,
+      "date": "2023-02-13",
+      "camera": "Nokia 8.1"
     }
   ]
 }
