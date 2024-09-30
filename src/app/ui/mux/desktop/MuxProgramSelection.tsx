@@ -1,3 +1,4 @@
+import './MuxProgramSelection.styl';
 import React from 'react';
 import { MuxProgram } from '../MuxProgram';
 
@@ -11,11 +12,14 @@ export const MuxProgramSelection = ({ programs, onOpen }: MuxProgramSelectionPro
   const sortedProgramStates = Array.from(programs.values()).sort((a, b) => a.name.localeCompare(b.name));
 
   return (
-    <div className='mux-program-selectin'>
+    <div className='mux-program-selection'>
       <ul>
-        {sortedProgramStates.map(p => <li key={p.id}><button onClick={() => {
-          onOpen(p.id);
-        }}>{p.name}</button></li>)}
+        {sortedProgramStates.filter(p => p.pinned).map(p => <li key={p.id}>
+          <button onClick={() => { onOpen(p.id); }}>
+            <img src={p.iconPath} />
+            <span>{p.name}</span>
+          </button>
+        </li>)}
       </ul>
     </div>
   );

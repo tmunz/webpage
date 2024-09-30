@@ -1,12 +1,14 @@
 .film-strip {
   --_filmStripColor: var(--filmStripColor, rgba(54, 39, 0, 0.9));
   --_filmStripSize: var(--filmStripSize, 24px);
-  --_filmStripPerfRatio: var(--filmStripPerfRatio, 3);
+  --_filmStripPerfRatio: var(--filmStripPerfRatio, 1.5619);
+  --_filmStripHoleRatio: var(--filmStripHoleRatio, 0.8128);  
   --s: calc(var(--_filmStripSize) / 2.25);
+  --sh: calc(var(--s) * var(--_filmStripHoleRatio));
   background-repeat: repeat-x;
   background-image:
-    linear-gradient(to right, var(--_filmStripColor) var(--s), transparent var(--s), transparent calc(var(--s) * 2), var(--_filmStripColor) calc(var(--s) * 2)),
-    linear-gradient(to right, var(--_filmStripColor) var(--s), transparent var(--s), transparent calc(var(--s) * 2), var(--_filmStripColor) calc(var(--s) * 2)),
+    linear-gradient(to right, var(--_filmStripColor) var(--sh), transparent var(--sh), transparent calc(var(--sh) * 2), var(--_filmStripColor) calc(var(--sh) * 2)),
+    linear-gradient(to right, var(--_filmStripColor) var(--sh), transparent var(--sh), transparent calc(var(--sh) * 2), var(--_filmStripColor) calc(var(--sh) * 2)),
     linear-gradient(to bottom,
       var(--_filmStripColor) 0, var(--_filmStripColor) var(--s),
       transparent var(--s), transparent calc(2 * var(--s)),

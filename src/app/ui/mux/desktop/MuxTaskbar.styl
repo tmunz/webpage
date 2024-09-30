@@ -2,5 +2,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 var(--gapSize);
+  padding: 0 var(--muxGapSize);
+  background-color: var(--muxBarColor);
+
+  .mux-taskbar-pinned-programs {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+
+    img {
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+    }
+  }
 }

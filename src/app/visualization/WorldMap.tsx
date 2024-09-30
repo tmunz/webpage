@@ -14,7 +14,6 @@ export function WorldMap({ data, width = 200, height = 200 }: { data: WorldMapDa
   useEffect(() => {
     const svg = d3.select(svgRef.current);
 
-    // Initial projection and path generator
     const projection = d3.geoOrthographic()
       .scale(Math.min(width, height) / 2)
       .translate([width / 2, height / 2])
@@ -24,7 +23,6 @@ export function WorldMap({ data, width = 200, height = 200 }: { data: WorldMapDa
 
     const path = d3.geoPath().projection(projection);
 
-    // Create a gradient for the globe
     const gradient = svg.append('defs')
       .append('radialGradient')
       .attr('id', 'globeGradient')

@@ -5,7 +5,7 @@ import { MuxProgram } from "./MuxProgram";
 import { Log, muxOs } from "./MuxOs";
 import React from "react";
 import { MuxBootScreen } from "./MuxBootScreen";
-import { StandardClock } from "./programs/StandardClock";
+import { StandardClock } from "./programs/StandardClock/StandardClock";
 import { DefaultTheme } from "./themes/default/DefaultTheme";
 
 export interface MuxProps {
@@ -20,7 +20,6 @@ const DEFAULT_PROGRAMS: MuxProgram[] = [
 
 
 // this is a simulation of a modern retro computer operating system (whatever this means ;-)
-// with a default desktop inspired by Piet Mondrian's artwork
 export const Mux = ({ programs, onShutdown, bootTime = 2000 }: MuxProps) => {
 
   const [bootId, setBootId] = useState<string>(muxOs.bootId$.getValue());

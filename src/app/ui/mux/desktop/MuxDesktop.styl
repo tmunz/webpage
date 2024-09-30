@@ -2,12 +2,16 @@
   display: grid;
   grid-template-rows: 60px 1fr 60px;
   grid-template-columns: 60px 1fr 60px;
-  grid-template-areas: "selection main main" "selection main main" "menu taskbar taskbar";
+  grid-template-areas: "main main main" "main main main" "menu taskbar taskbar";
   height: 100%;
   width: 100%;
   gap: 4px;
 
-  .mux-menu-button {
+  &.mux-desktop-program-running {
+    /* TODO */
+  }
+
+  .mux-menu {
     grid-area: menu;
   }
 

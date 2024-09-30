@@ -1,4 +1,64 @@
 .mux-program-window-bar {
+  position: relative;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border-bottom: 2px solid #444;
+  font-size: 16px;
+
+  .window-title {
+    font-weight: bold;
+    flex-grow: 1;
+  }
+
+  .info-button,
+  .close-button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: color 0.3s ease;
+
+    &:hover {
+      background-color: #555;
+    }
+  }
+
+  .close-button {
+    color: #d9534f;
+    font-size: 20px;
+
+    &:hover {
+      background-color: #c9302c;
+    }
+  }
+
+  .info-button {
+    color: #bbb;
+    font-size: 20px;
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  .window-about {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: clamp(200px, 100%);
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #222;
+    color: #bbb;
+    border: 1px solid #444;
+    font-size: 14px;
+    z-index: 1;
+  }
 }

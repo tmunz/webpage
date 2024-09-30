@@ -1,0 +1,7 @@
+.mux {
+  --muxBackgroundColor: #ffffff;
+  --muxGapSize: 4px;
+  --muxMenuColor: #225095;
+  --muxCloseColor: #dd0100;
+  --muxBarColor: #fac901;
+}

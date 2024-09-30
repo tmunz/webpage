@@ -27,43 +27,37 @@
       transition: width 0.6s ease-in-out;
     }
 
-    .r,
-    .g,
-    .b {
-      transition: transform 0.6s ease-in-out, opacity 0.3s linear 0.6s;
+    .rgba-image {
+      transition: transform 0.6s ease-in-out, opacity 0.6s linear 0.3s;
       opacity: 0;
-    }
-
-    &:hover {
-      .film-strip {
-        width: 100%;
-      }
-
-      .r {
-        transform: translate(33.3%, 0%);
-        opacity: 1;
-        transition-delay: 0s;
-      }
-
-      .g {
-        transform: translate(66.6%, 0%);
-        opacity: 1;
-        transition-delay: 0s;
-      }
-
-      .b {
-        transform: translate(100%, 0%);
-        opacity: 1;
-        transition-delay: 0s;
-      }
-    }
-
-    img {
       left: 0;
       top: var(--filmStripSize);
       position: absolute;
       mix-blend-mode: lighten;
       pointer-events: none;
+    }
+  }
+
+  &:hover {
+    .film-strip {
+      width: 100%;
+    }
+
+    .rgba-image {
+      opacity: 1;
+      transition-delay: 0s;
+
+      &.r {
+        transform: translate(33.3%, 1px);
+      }
+
+      &.g {
+        transform: translate(66.6%, 1px);
+      }
+
+      &.b {
+        transform: translate(100%, 1px);
+      }
     }
   }
 }

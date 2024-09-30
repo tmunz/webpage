@@ -5,14 +5,18 @@ import { Icon } from '../../ui/icon/Icon';
 import { IconName } from '../../ui/icon/IconName';
 import { projects } from './ProjectsConfig';
 import { Mux } from '../../ui/mux/Mux';
+import { MuxProgram } from '../../ui/mux/MuxProgram';
 
 export function Projects(props: { onClose: () => void }) {
 
-  const { current: programs } = useRef(projects.map(project => ({
+  const { current: programs } = useRef<MuxProgram[]>(projects.map(project => ({
     name: project.name,
     id: project.id,
+    iconPath: project.iconPath ?? require('./default-project-icon.png'),
     description: project.description,
-    about: () => <div className='project-about'>
+    pinned: project.highlight,
+    slots: project.slots,
+    about: <div className='project-about'>
       <p className='info'>{project.description}</p>
       {
         project.githubLink &&
