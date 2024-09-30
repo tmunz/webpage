@@ -1,7 +1,7 @@
 
 import './App.styl';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Frame, FrameProps } from './Frame';
 import { Vita } from './content/vita/Vita';
@@ -15,7 +15,11 @@ export function App() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const [userSelection, setUserSelection] = useState(false);
+  const [animationEnabled, setAnimationEnabled] = useState(false);
+
+  useEffect(() => {
+    setAnimationEnabled(true);
+  });
 
   const frames: FrameProps[] = [
     { id: 'vita', title: 'Vita', content: <Vita />, color: '#a3dbfc', imgSrc: './content/vita/vita_title.jpg', depthImgSrc: './content/vita/vita_title_depth.jpg' },
@@ -32,7 +36,6 @@ export function App() {
   }
 
   const handleClick = (id: string) => {
-    setUserSelection(true);
     const selectedId = id === getCurrentId() ? null : id;
     navigate(`/${selectedId || ''}`);
   };
@@ -44,7 +47,7 @@ export function App() {
           key={frame.id}
           activeId={getCurrentId()}
           onClick={() => handleClick(frame.id)}
-          animate={userSelection}
+          animate={animationEnabled}
           effectValue={0.7}
           {...frame}
         />
