@@ -1,6 +1,6 @@
+import './MuxProgramWindowBar.styl';
 import React, { useState, ReactNode } from 'react';
 
-// Chevron constants for up and down
 const ABOUT_OPEN = '🛈';
 const ABOUT_CLOSE = '˄';
 const CLOSE = '✕';
