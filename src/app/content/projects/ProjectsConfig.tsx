@@ -9,7 +9,7 @@ export const projects: Project[] = [
     iconPath: 'https://github.com/tmunz/Mondrian/blob/master/public/icon-256x256.png?raw=true',
     description: 'Web Application to generate Art inspired by Piet Mondrian',
     githubLink: 'https://github.com/tmunz/Mondrian',
-    component: <iframe width='100%' height='100%' style={{ boxSizing: 'border-box' }} src='https://tmunz.github.io/Mondrian' />,
+    component: <iframe width='100%' height='100%' frameBorder="0" src='https://tmunz.github.io/Mondrian' />,
     highlight: true,
   },
   {
@@ -18,7 +18,7 @@ export const projects: Project[] = [
     iconPath: 'https://github.com/tmunz/GoldenSeeds/blob/master/public/icon-256x256.png?raw=true',
     description: 'Web Application to generate SVGs based on mathematical rules.',
     githubLink: 'https://github.com/tmunz/GoldenSeeds',
-    component: <iframe width='100%' height='100%' style={{ boxSizing: 'border-box' }} src='https://tmunz.github.io/GoldenSeeds/?name=golden+seeds' />,
+    component: <iframe width='100%' height='100%' frameBorder="0" src='https://tmunz.github.io/GoldenSeeds/?name=golden+seeds' />,
     highlight: true,
   },
   {
@@ -27,7 +27,7 @@ export const projects: Project[] = [
     iconPath: 'https://github.com/tmunz/MagicAnagram/blob/main/favicon.png?raw=true',
     description: 'Animate from a word to an anagram of it.',
     githubLink: 'https://github.com/tmunz/MagicAnagram',
-    component: <iframe width='100%' height='100%' style={{ boxSizing: 'border-box' }} src='https://tmunz.github.io/MagicAnagram' />,
+    component: <iframe width='100%' height='100%' frameBorder="0" src='https://tmunz.github.io/MagicAnagram' />,
     highlight: true,
   },
   {
@@ -43,7 +43,7 @@ export const projects: Project[] = [
     name: 'Volley',
     id: 'volley',
     description: 'XBox Live Indie Game "Volley" by Glassbox Games (released in 2011)',
-    component: <iframe width="100%" height="315" src="https://www.youtube-nocookie.com/embed/8l27WBWPRrU?si=RXYUEHcWNAUhGPYg" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
+    component: <iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/8l27WBWPRrU?si=RXYUEHcWNAUhGPYg" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
   },
   {
     name: 'Youmigo',
@@ -55,13 +55,14 @@ export const projects: Project[] = [
     name: 'Canvacity',
     id: 'canvacity',
     description: 'Concept for the "Tomorrow Talks" contest',
-    component: <iframe width="100%" height="315" src="https://www.youtube-nocookie.com/embed/DGJMyKJZBu8?si=3Ufo-i-X1Vk_o36w" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
+    component: <iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/DGJMyKJZBu8?si=3Ufo-i-X1Vk_o36w" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
   },
   {
     name: 'Inlinegraph',
     id: 'ig',
+    iconPath: 'https://github.com/tmunz/inlinegraph/blob/master/docs/favicon.png?raw=true',
     description: 'jQuery-Library for inline graphs like heatmap, pie, and boolean representation',
     githubLink: 'https://github.com/tmunz/inlinegraph',
-    component: <img src="https://raw.githubusercontent.com/tmunz/inlinegraph/master/img/inlinegraph_detail.png" width="100%" />,
+    component: <iframe width='100%' height='100%' frameBorder="0" src='https://tmunz.github.io/inlinegraph/' />,
   },
 ];
