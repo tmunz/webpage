@@ -1,7 +1,7 @@
 .mux {
   --muxBackgroundColor: #ffffff;
   --muxGapSize: 4px;
-  --muxMenuColor: #225095;
+  --muxMenuColor: rgba(62, 62, 62, 0.8);
   --muxCloseColor: #dd0100;
-  --muxBarColor: #fac901;
+  --muxBarColor: rgba(62, 62, 62, 0.8);
 }

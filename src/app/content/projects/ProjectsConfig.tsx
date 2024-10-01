@@ -42,18 +42,21 @@ export const projects: Project[] = [
   {
     name: 'Volley',
     id: 'volley',
+    iconPath: require('./assets/volley.png'),
     description: 'XBox Live Indie Game "Volley" by Glassbox Games (released in 2011)',
     component: <iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/8l27WBWPRrU?si=RXYUEHcWNAUhGPYg" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
   },
   {
     name: 'Youmigo',
     id: 'youmigo',
-    description: 'Award winning Windows Phone App by Glassbox Games - Penpal 2.0',
-    component: <div>TODO</div>,
+    iconPath: require('./assets/youmigo.png'),
+    description: 'Award winning Windows Phone 8 App by Glassbox Games - Penpal 2.0',
+    component: <iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/ha0vTpio0TE?si=BccLYcRUYBog4Kvd" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
   },
   {
     name: 'Canvacity',
     id: 'canvacity',
+    iconPath: require('./assets/canvacity.png'),
     description: 'Concept for the "Tomorrow Talks" contest',
     component: <iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/DGJMyKJZBu8?si=3Ufo-i-X1Vk_o36w" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
   },

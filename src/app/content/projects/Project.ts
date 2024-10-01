@@ -3,7 +3,7 @@ import React from "react";
 export interface Project {
   name: string;
   id: string;
-  iconPath?: string;
+  iconPath: string;
   pinned?: boolean;
   description: string;
   githubLink?: string;

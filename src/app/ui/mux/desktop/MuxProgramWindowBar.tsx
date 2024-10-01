@@ -1,8 +1,7 @@
 import './MuxProgramWindowBar.styl';
 import React, { useState, ReactNode } from 'react';
 
-const ABOUT_OPEN = '🛈';
-const ABOUT_CLOSE = '˄';
+const ABOUT = '🛈';
 const CLOSE = '✕';
 
 export const MuxProgramWindowBar = ({ title, about, onClose }: { title: string, about: ReactNode, onClose: () => void }) => {
@@ -14,10 +13,10 @@ export const MuxProgramWindowBar = ({ title, about, onClose }: { title: string, 
     <div className='mux-program-window-bar'>
       <div className='window-title'>{title}</div>
       <button className='info-button' onClick={toggleInfo}>
-        {showInfo ? ABOUT_CLOSE : ABOUT_OPEN}
+        {ABOUT}
       </button>
       <button className='close-button' onClick={onClose}>
-        {CLOSE} 
+        {CLOSE}
       </button>
       {showInfo && <div className='window-about'>{about}</div>}
     </div>

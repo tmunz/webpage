@@ -5,8 +5,9 @@ import { MuxProgram } from "./MuxProgram";
 import { Log, muxOs } from "./MuxOs";
 import React from "react";
 import { MuxBootScreen } from "./MuxBootScreen";
-import { StandardClock } from "./programs/StandardClock/StandardClock";
+import { StandardClock } from "./programs/standard-clock/StandardClock";
 import { DefaultTheme } from "./themes/default/DefaultTheme";
+import { Terminal } from './programs/terminal/Terminal';
 
 export interface MuxProps {
   programs: MuxProgram[];
@@ -16,6 +17,7 @@ export interface MuxProps {
 
 const DEFAULT_PROGRAMS: MuxProgram[] = [
   StandardClock,
+  Terminal,
 ];
 
 
