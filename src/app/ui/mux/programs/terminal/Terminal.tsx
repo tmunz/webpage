@@ -2,7 +2,6 @@ import React from "react";
 import { Cli } from "../../../Cli";
 import { MuxProgram } from "../../MuxProgram";
 import { MuxOs } from "../../MuxOs";
-import { MuxGui } from "../../MuxGui";
 
 interface MuxCliProps {
   programs: MuxProgram[];
@@ -78,10 +77,10 @@ export const Terminal: MuxProgram = {
   name: 'Terminal',
   id: 'terminal',
   description: 'standard cli',
-  component: (muxOs: MuxOs, muxGui: MuxGui) => TerminalComponent({
+  component: (muxOs: MuxOs) => TerminalComponent({
     programs: [...muxOs.programs$.getValue().values()],
-    onStartProgram: (programId) => muxGui.startProgram(programId),
-    onQuitProgram: (programId) => muxGui.quitProgram(programId),
+    onStartProgram: (programId) => muxOs.startProgram(programId),
+    onQuitProgram: (programId) => muxOs.quitProgram(programId),
     onShutdownRequest: () => muxOs.shutdown(),
   }),
   about: <div>System Standard Command Line Interface</div>,

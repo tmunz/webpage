@@ -1,20 +1,22 @@
 import './MuxDesktop.styl';
 import React, { useEffect, useState } from "react";
 import { MuxTaskbar } from "./MuxTaskbar";
-import { MuxMainWindow } from "./MuxMainWindow";
-import { MuxProgram } from '../MuxProgram';
+import { MuxProgram, MuxProgramState } from '../MuxProgram';
 import { MuxMenu } from './MuxMenu';
-import { MuxGui, MuxProgramState } from '../MuxGui';
 import { DefaultTheme } from '../themes/default/DefaultTheme';
+import { MuxOs } from '../MuxOs';
+import { MuxProgramWindow } from './MuxProgramWindow';
 
 export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) => {
 
-  const [programStates, setProgramStates] = useState<Map<string, MuxProgramState>>(MuxGui.get().programStates$.getValue());
+  const muxOs = MuxOs.get();
+
+  const [programStates, setProgramStates] = useState<Map<string, MuxProgramState>>(muxOs.programStates$.getValue());
   const theme = DefaultTheme;
 
   useEffect(() => {
     const subscriptions = [
-      MuxGui.get().programStates$.subscribe(setProgramStates),
+      muxOs.programStates$.subscribe(setProgramStates),
     ];
 
     return () => {
@@ -22,14 +24,17 @@ export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) 
     };
   }, []);
 
-  const programState = [...programStates.values()].find(p => p.isRunning);
-  const program = programState ? programs.get(programState.id) : null;
-
   return (
     <div className='mux-desktop'>
-      <MuxMenu theme={theme} onOpen={(programId) => MuxGui.get().startProgram(programId)} programs={programs} />
-      <MuxMainWindow onClose={(programId) => MuxGui.get().quitProgram(programId)} program={program} />
-      <MuxTaskbar theme={theme} onOpen={(programId) => MuxGui.get().startProgram(programId)} programs={programs} />
+      <MuxMenu theme={theme} onOpen={(programId) => muxOs.startProgram(programId)} programs={programs} />
+      <div className='mux-main-window'>
+        {[...programStates.values()].map(programState => <MuxProgramWindow
+          key={programState.program.id}
+          program={programState.program}
+          rect={programState.window}
+        />)}
+      </div>
+      <MuxTaskbar theme={theme} onOpen={(programId) => muxOs.startProgram(programId)} programs={programs} />
     </div >
   );
 }

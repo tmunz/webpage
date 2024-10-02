@@ -3,7 +3,6 @@ import React from 'react';
 import { MuxTheme } from '../MuxTheme';
 import { MuxProgram } from '../MuxProgram';
 import { MuxOs } from '../MuxOs';
-import { MuxGui } from '../MuxGui';
 
 interface MuxTaskBarProps {
   programs: Map<string, MuxProgram>;
@@ -26,7 +25,7 @@ export const MuxTaskbar = ({ programs, theme, onOpen }: MuxTaskBarProps) => {
             </button>
           </li>)}
       </ul>
-      {MuxOs.get().getProgramsBySlot('clock')[0]?.component(MuxOs.get(), MuxGui.get())}
+      {MuxOs.get().getProgramsBySlot('clock')[0]?.component(MuxOs.get())}
     </div>
   );
 };

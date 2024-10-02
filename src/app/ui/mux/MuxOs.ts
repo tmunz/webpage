@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { MuxProgram } from './MuxProgram';
+import { MuxProgram, MuxProgramState } from './MuxProgram';
 
 export enum LogType {
   INFO = 'info',
@@ -29,11 +29,11 @@ export class MuxOs {
     return MuxOs.instance;
   }
 
-
   bootId$ = new BehaviorSubject<string>([...Array(10)].map(() => Math.random().toString(36)[2]).join(''));
   bootProcess$ = new BehaviorSubject<number>(0);
   stdout$ = new BehaviorSubject<Log[]>([]);
   programs$ = new BehaviorSubject<Map<string, MuxProgram>>(new Map<string, MuxProgram>());
+  programStates$ = new BehaviorSubject<Map<string, MuxProgramState>>(new Map<string, MuxProgramState>());
   dateTime$ = new BehaviorSubject<Date>(new Date());
 
   private constructor() {
@@ -100,5 +100,37 @@ export class MuxOs {
       this.logInfo(`Program installed: "${program.name}" (${program.id})`);
     });
     this.programs$.next(state);
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  startProgram(programId: string) {
+    const program = MuxOs.get().programs$.getValue().get(programId);
+    if (program) {
+      MuxOs.get().logInfo(`Starting program with id ${programId}`);
+      const programStates = new Map(this.programStates$.getValue());
+      programStates.set(programId, { program, isRunning: true, window: { x: 0, y: 0, width: 400, height: 300 } });
+      this.programStates$.next(programStates);
+    } else {
+      MuxOs.get().logError(`Tried to start program with id ${programId}, but it does not exist`);
+    }
+  }
+
+  quitProgram(programId: string) {
+    MuxOs.get().logInfo(`Quitting program with id ${programId}`);
+    const programStates = new Map(this.programStates$.getValue());
+    programStates.delete(programId);
+    this.programStates$.next(programStates);
+  }
+
+  changeProgramWindow(programId: string, window: MuxProgramState['window']) {
+    const programStates = new Map(this.programStates$.getValue());
+    const programState = programStates.get(programId);
+    if (programState) {
+      programStates.set(programId, { ...programState, window });
+      this.programStates$.next(programStates);
+    } else {
+      MuxOs.get().logWarn(`Could not change window for Program with id ${programId}, it has not been started`);
+    }
   }
 }
