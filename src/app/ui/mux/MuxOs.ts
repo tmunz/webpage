@@ -20,7 +20,15 @@ export interface MuxOsState {
 
 export class MuxOs {
 
-  shutdown = () => { };
+  private static instance = new MuxOs();
+
+  static get() {
+    if (!MuxOs.instance) {
+      MuxOs.instance = new MuxOs();
+    }
+    return MuxOs.instance;
+  }
+
 
   bootId$ = new BehaviorSubject<string>([...Array(10)].map(() => Math.random().toString(36)[2]).join(''));
   bootProcess$ = new BehaviorSubject<number>(0);
@@ -28,7 +36,7 @@ export class MuxOs {
   programs$ = new BehaviorSubject<Map<string, MuxProgram>>(new Map<string, MuxProgram>());
   dateTime$ = new BehaviorSubject<Date>(new Date());
 
-  constructor() {
+  private constructor() {
     this.bootProcess$.subscribe((bootProcess) => {
       this.logInfo(`Boot process: ${bootProcess * 100}%`);
     });
@@ -38,6 +46,8 @@ export class MuxOs {
     }, 1000);
   }
 
+  shutdown = () => { };
+
   async boot(programs: MuxProgram[], bootTime: number, onShutdown: () => void) {
     this.reset();
     this.logInfo('Booting Mux OS');
@@ -45,7 +55,7 @@ export class MuxOs {
     this.logInfo('Functions loaded');
     this.bootProcess$.next(0.2);
     await new Promise(resolve => setTimeout(resolve, bootTime * 0.1));
-    this.register(...programs);
+    this.install(...programs);
     this.bootProcess$.next(0.9);
     await new Promise(resolve => setTimeout(resolve, bootTime * 0.8));
     this.logInfo('Mux OS booted up');
@@ -80,17 +90,15 @@ export class MuxOs {
     this.stdout$.next([...this.stdout$.getValue(), { type, message }]);
   }
 
-  register(...programs: MuxProgram[]) {
+  install(...programs: MuxProgram[]) {
     const state = new Map(this.programs$.getValue());
     programs.forEach((program) => {
       if (state.has(program.id)) {
-        this.logWarn(`Program already registered: ${program.id} will be overwritten`);
+        this.logWarn(`Program already installed: ${program.id} will be overwritten`);
       }
       state.set(program.id, program);
-      this.logInfo(`Program registered: "${program.name}" (${program.id})`);
+      this.logInfo(`Program installed: "${program.name}" (${program.id})`);
     });
     this.programs$.next(state);
   }
 }
-
-export const muxOs = new MuxOs();

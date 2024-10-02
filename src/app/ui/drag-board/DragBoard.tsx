@@ -13,7 +13,6 @@ export interface DragBoardProps {
 // positions are relative to the center of the board with axle directions to the right and down
 export const DragBoard = ({ children, placementPattern = [{ x: 0, y: 0, rotation: 0 }] }: DragBoardProps) => {
   const SMOOTHNESS = 10;
-  const FRAMERATE = 30;
 
   const boardRef = useRef<HTMLDivElement>(null);
   const [selectedItem, setSelectedItem] = useState<{

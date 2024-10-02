@@ -73,6 +73,7 @@ export function Photo() {
       style={{
         backgroundImage: `linear-gradient(transparent ${scrollPosition}px, var(--photoBackgroundColor) ${scrollPosition}px)`
       }}
+      tabIndex={0}
     >
       <CameraViewer />
       <CameraViewerFocusing />

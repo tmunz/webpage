@@ -50,7 +50,7 @@ export function Bricks() {
             <BrickScroll transformations={SCROLL_STATES.brick} />
             <AircraftScroll transformations={SCROLL_STATES.aircraft} />
             <Mb300slScroll transformations={SCROLL_STATES.mb300sl} />
-            <Scroll>
+            <Scroll >
               {new Array(PAGES + 1).fill(0).map((_, i) => (
                 <Html
                   key={i}

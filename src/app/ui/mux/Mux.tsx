@@ -2,11 +2,10 @@ import './Mux.styl';
 import { useEffect, useState } from "react";
 import { MuxDesktop } from "./desktop/MuxDesktop";
 import { MuxProgram } from "./MuxProgram";
-import { Log, muxOs } from "./MuxOs";
+import { Log, MuxOs } from "./MuxOs";
 import React from "react";
 import { MuxBootScreen } from "./MuxBootScreen";
 import { StandardClock } from "./programs/standard-clock/StandardClock";
-import { DefaultTheme } from "./themes/default/DefaultTheme";
 import { Terminal } from './programs/terminal/Terminal';
 
 export interface MuxProps {
@@ -23,18 +22,18 @@ const DEFAULT_PROGRAMS: MuxProgram[] = [
 
 // this is a simulation of a modern retro computer operating system (whatever this means ;-)
 export const Mux = ({ programs, onShutdown, bootTime = 2000 }: MuxProps) => {
-
+  const muxOs = MuxOs.get();
   const [bootId, setBootId] = useState<string>(muxOs.bootId$.getValue());
   const [bootProcess, setBootProcess] = useState<number>(muxOs.bootProcess$.getValue());
   const [stdout, setStdout] = useState<Log[]>(muxOs.stdout$.getValue());
-  const [registeredPrograms, setRegisteredPrograms] = useState<Map<string, MuxProgram>>(muxOs.programs$.getValue());
+  const [installedPrograms, setInstalledPrograms] = useState<Map<string, MuxProgram>>(muxOs.programs$.getValue());
 
   useEffect(() => {
     const subscriptions = [
       muxOs.bootId$.subscribe(setBootId),
       muxOs.bootProcess$.subscribe(setBootProcess),
       muxOs.stdout$.subscribe(setStdout),
-      muxOs.programs$.subscribe(setRegisteredPrograms),
+      muxOs.programs$.subscribe(setInstalledPrograms),
     ];
     muxOs.boot([...DEFAULT_PROGRAMS, ...programs], bootTime, onShutdown);
 
@@ -47,9 +46,10 @@ export const Mux = ({ programs, onShutdown, bootTime = 2000 }: MuxProps) => {
 
   return (
     <div className='mux'>
-      {booting ?
-        <MuxBootScreen id={bootId} stdout={stdout} /> :
-        <MuxDesktop programs={registeredPrograms} theme={DefaultTheme} />}
+      {booting && <MuxBootScreen id={bootId} stdout={stdout} />}
+      <div style={{ display: booting ? 'none' : 'block', width: '100%', height: '100%' }}>
+        <MuxDesktop programs={installedPrograms} />
+      </div>
     </div>
   );
 }

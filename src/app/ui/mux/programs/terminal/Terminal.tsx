@@ -2,15 +2,16 @@ import React from "react";
 import { Cli } from "../../../Cli";
 import { MuxProgram } from "../../MuxProgram";
 import { MuxOs } from "../../MuxOs";
+import { MuxGui } from "../../MuxGui";
 
 interface MuxCliProps {
-  programs: { id: string, name: string, description: string }[];
-  getSelectedProgram: () => string | null;
-  setSelectedProgram: (id: string | null) => void;
-  onClose: () => void;
+  programs: MuxProgram[];
+  onStartProgram: (id: string) => void;
+  onQuitProgram: (id: string) => void;
+  onShutdownRequest: () => void;
 }
 
-const TerminalComponent = ({ programs, getSelectedProgram, setSelectedProgram, onClose }: MuxCliProps) => {
+const TerminalComponent = ({ programs, onStartProgram, onQuitProgram, onShutdownRequest }: MuxCliProps) => {
 
   const cmds: { cmd: string, description: string, exec: (arg?: string) => string }[] = [
     { cmd: 'help', exec: () => cmds.map(c => `- ${c.cmd}:\n    ${c.description}`).join('\n'), description: 'lists all commands with descriptions' },
@@ -36,21 +37,24 @@ const TerminalComponent = ({ programs, getSelectedProgram, setSelectedProgram, o
         if (!program) {
           return 'Program not found';
         }
-        setSelectedProgram(program.id);
+        onStartProgram(program.id);
         return `Opening ${program.name} ...`;
       }, description: 'opens the selected program (name or id)'
     },
     {
-      cmd: 'close', exec: () => {
-        if (!getSelectedProgram()) {
-          return 'No open program to close';
-        } else {
-          setSelectedProgram(null);
-          return `Close program ...`;
+      cmd: 'quit', exec: (arg?: string) => {
+        if (!arg) {
+          return 'Please provide a program name';
         }
-      }, description: 'closes the previously selected program'
+        const program = programs.find(p => p.id === arg || p.name === arg);
+        if (!program) {
+          return 'Program not found';
+        }
+        onQuitProgram(program.id);
+        return `Quitting ${program.name} ...`;
+      }, description: 'quits the selected program (name or id)'
     },
-    { cmd: 'quit', exec: () => { onClose(); return 'quit'; }, description: 'quits muxOS and navigates back to the main overview' },
+    { cmd: 'shutdown', exec: () => { onShutdownRequest(); return 'shutdown'; }, description: 'shuts down muxOS and navigates back to the main overview' },
   ];
 
   return <Cli
@@ -74,7 +78,12 @@ export const Terminal: MuxProgram = {
   name: 'Terminal',
   id: 'terminal',
   description: 'standard cli',
-  component: (muxOs: MuxOs) => TerminalComponent({ programs: [], getSelectedProgram: () => null, setSelectedProgram: () => {}, onClose: () => {} }), // TODO
+  component: (muxOs: MuxOs, muxGui: MuxGui) => TerminalComponent({
+    programs: [...muxOs.programs$.getValue().values()],
+    onStartProgram: (programId) => muxGui.startProgram(programId),
+    onQuitProgram: (programId) => muxGui.quitProgram(programId),
+    onShutdownRequest: () => muxOs.shutdown(),
+  }),
   about: <div>System Standard Command Line Interface</div>,
   iconPath: require('./terminal-icon.png'),
 }
