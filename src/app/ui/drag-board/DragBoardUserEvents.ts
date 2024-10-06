@@ -3,7 +3,7 @@ import { enableOverscrollBehaviour, preventOverscrollBehaviour } from "../../uti
 
 export const useUserEvents = (
   dragBoardRef: React.RefObject<HTMLDivElement>,
-  selectedItem: string | null,
+  selectedItemId: string | null,
   onMove: (e: { clientX: number, clientY: number, rect: DOMRect }) => void,
   onEnd: () => void,
   onFlipThrough: (delta: number) => void,
@@ -34,7 +34,7 @@ export const useUserEvents = (
       onEnd();
     }
 
-    if (selectedItem !== null) {
+    if (selectedItemId !== null) {
       document.addEventListener("touchmove", handleTouchMove);
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('touchend', handleEnd);
@@ -52,7 +52,7 @@ export const useUserEvents = (
       document.removeEventListener('touchend', handleEnd);
       document.removeEventListener('mouseup', handleEnd);
     };
-  }, [selectedItem, onMove, onEnd]);
+  }, [selectedItemId, onMove, onEnd]);
 
   // flip through
   useEffect(() => {
