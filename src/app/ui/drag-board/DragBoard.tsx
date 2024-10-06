@@ -16,6 +16,7 @@ export interface DragBoardProps {
 
 const SMOOTHNESS = 10;
 const PLACEMENT_PATTERN = [{ x: 0, y: 0, rotation: 0 }];
+
 const mapChildrenToIds = (children: React.ReactNode): string[] => {
   return React.Children.map(children, (child, i) => ((child as React.ReactElement).key ?? i).toString()) ?? [];
 }
@@ -25,9 +26,9 @@ export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PA
   const boardRef = useRef<HTMLDivElement>(null);
 
   const { itemStates, setItemStates } = useDragBoardState(children, placementPattern, SMOOTHNESS, mapChildrenToIds);
-  const { selectedItem, setSelectedItem, handleSelectItem, handleScroll } = useDragBoardItemSelect(setItemStates);
-  const { handleDragging, handleDragEnd } = useDragEvents(setItemStates, selectedItem, setSelectedItem, boardRef);
-  useUserEvents(boardRef, selectedItem?.id ?? null, handleDragging, handleDragEnd, handleScroll);
+  const { selectedItem, setSelectedItem, updateSelectedItem, setSelectItemByDelta } = useDragBoardItemSelect(setItemStates);
+  const { handleDragging, handleDragEnd } = useDragEvents(setItemStates, selectedItem, updateSelectedItem, boardRef);
+  useUserEvents(boardRef, selectedItem?.id ?? null, handleDragging, handleDragEnd, setSelectItemByDelta);
 
   return (
     <div className={`drag-board ${className ? className : ''}`} ref={boardRef}>
@@ -39,7 +40,7 @@ export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PA
           <DragBoardItemContext.Provider value={{
             ...itemState,
             isDragging: (selectedItem?.id === itemState?.id && selectedItem?.isDragging) ?? false,
-            onPointerDown: handleSelectItem
+            onPointerDown: setSelectedItem,
           }}>
             {child}
           </DragBoardItemContext.Provider>

@@ -2,7 +2,7 @@ import './PaperFolding.styl';
 
 import React, { useRef, useState } from 'react';
 import { PaperEffect } from './PaperEffect';
-import { useDimension } from '../utils/Dimension';
+import { useDimension } from '../utils/useDimension';
 
 
 export function PaperFolding({ children, onUnfold, onInfold, title, className }: {

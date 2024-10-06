@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MuxProgram } from '../../MuxProgram';
 import { MuxOs } from '../../MuxOs';
 import { Observable } from 'rxjs';
-import { useDimension } from '../../../../utils/Dimension';
+import { useDimension } from '../../../../utils/useDimension';
 
 export const StandardClockComponent = ({ dateTime$ }: { dateTime$: Observable<Date> }) => {
   const [dateTime, setDateTime] = useState<Date>(new Date());

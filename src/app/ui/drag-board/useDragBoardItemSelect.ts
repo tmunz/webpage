@@ -23,6 +23,7 @@ export const useDragBoardItemSelect = (setItemStates: React.Dispatch<React.SetSt
           startX: e.clientX,
           startY: e.clientY,
           isDragging: false,
+          isResizing: false,
         });
 
         states.set(id, { ...itemState, current: { ...itemState.current, z: maxZ + 1 } });
@@ -31,7 +32,7 @@ export const useDragBoardItemSelect = (setItemStates: React.Dispatch<React.SetSt
     });
   }, []);
 
-  const handleScroll = useCallback((delta: number) => {
+  const setSelectItemByDelta = useCallback((delta: number) => {
     setItemStates((prevStates) => {
       const sortedStates = Array.from(prevStates.values()).sort((a, b) => a.current.z - b.current.z);
       const minZ = sortedStates[0]?.current.z;
@@ -60,5 +61,5 @@ export const useDragBoardItemSelect = (setItemStates: React.Dispatch<React.SetSt
     });
   }, []);
 
-  return { selectedItem, setSelectedItem, handleSelectItem, handleScroll };
+  return { selectedItem, setSelectedItem: handleSelectItem, updateSelectedItem: setSelectedItem, setSelectItemByDelta };
 };

@@ -7,4 +7,5 @@ export interface SelectedDragBoardItem {
   width: number;
   height: number;
   isDragging: boolean;
+  isResizing: boolean;
 }

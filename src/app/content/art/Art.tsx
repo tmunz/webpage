@@ -2,7 +2,7 @@ import './Art.styl';
 import React from 'react';
 import { DragBoard } from '../../ui/drag-board/DragBoard';
 import { PaintDragBoardItem } from './create-your-own/PaintDragBoardItem';
-import { useDimension } from '../../utils/Dimension';
+import { useDimension } from '../../utils/useDimension';
 import { DragBoardItem } from '../../ui/drag-board/DragBoardItem';
 import { CitroenDsLamp } from './citroen-ds-lamp/CitroenDsLamp';
 import { Mb300slPainting } from './mb300sl/Mb300slPainting';

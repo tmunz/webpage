@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDimension } from '../../utils/Dimension';
+import { useDimension } from '../../utils/useDimension';
 import { ObjectFit, DEFAULT_FRAGMENT_SHADER, DEFAULT_IMAGE, getScale, ShaderImageProps } from './ShaderImageUtils';
 
 type Uniforms = Record<string, { value: any, type: '1f' | '1i' | '2f' | '2i' | '3f' | '3i' | '4f' | '4i' | 'matrix4fv' | 'sampler2D' }>;

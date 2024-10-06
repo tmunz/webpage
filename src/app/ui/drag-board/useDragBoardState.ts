@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, ReactNode } from 'react';
 import { DragBoardItemState } from './DragBoardItem';
-import { SelectedDragBoardItem } from './SelectedDragBoardItem';
 
 
 export const useDragBoardState = (

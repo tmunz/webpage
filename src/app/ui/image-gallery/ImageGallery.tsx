@@ -5,7 +5,7 @@ import { ImageEntry, ImageData } from './ImageEntry';
 import { GridEntryImage, generateGrid } from './ImageGalleryGridGenerator';
 import { Icon } from '../icon/Icon';
 import { IconName } from '../icon/IconName';
-import { useDimension } from '../../utils/Dimension';
+import { useDimension } from '../../utils/useDimension';
 
 interface ImageGalleryProps {
   sections: {
