@@ -3,7 +3,7 @@ import { enableOverscrollBehaviour, preventOverscrollBehaviour } from "../../uti
 
 export const useUserEvents = (
   dragBoardRef: React.RefObject<HTMLDivElement>,
-  selectedItem: number | null,
+  selectedItem: string | null,
   onMove: (e: { clientX: number, clientY: number, rect: DOMRect }) => void,
   onEnd: () => void,
   onFlipThrough: (delta: number) => void,
@@ -11,7 +11,6 @@ export const useUserEvents = (
 
   const scrollRef = useRef<number>(0);
 
-  // item dragging
   useEffect(() => {
     const handleTouchMove = (e: TouchEvent) => {
       const touch = e.touches[0];

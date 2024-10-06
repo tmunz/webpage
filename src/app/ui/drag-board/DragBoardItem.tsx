@@ -6,11 +6,11 @@ import { handleStart } from './DragBoardUserEvents';
 
 export interface DragBoardItemConsuming extends DragBoardItemState {
   isDragging: boolean;
-  onPointerDown: (id: number, e: { clientX: number, clientY: number, rect: DOMRect }) => void;
+  onPointerDown: (id: string, e: { clientX: number, clientY: number, rect: DOMRect }) => void;
 }
 
 export interface DragBoardItemState {
-  id: number;
+  id: string;
   current: DragBoardItemCurrentState;
   target: { x?: number; y?: number; rotation?: number };
 }
@@ -29,10 +29,10 @@ export const DragBoardItem = (props: Partial<DragBoardItemCurrentState> & { chil
     <DragBoardItemContext.Consumer>
       {(value: DragBoardItemConsuming | null) => {
         if (!value) return null;
-        const x = props?.x ?? value.current.x;
-        const y = props?.y ?? value.current.y;
-        const z = props?.z ?? value.current.z;
-        const rotation = props?.rotation ?? value.current.rotation;
+        const x = props?.x ?? value.current?.x ?? 0;
+        const y = props?.y ?? value.current?.y ?? 0;
+        const z = props?.z ?? value.current?.z ?? 0;
+        const rotation = props?.rotation ?? value.current?.rotation ?? 0;
 
         return <div
           key={value.id}

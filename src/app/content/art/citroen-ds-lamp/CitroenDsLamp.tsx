@@ -40,14 +40,14 @@ export function CitroenDsLamp(props: { width: number, height: number }) {
               './citroen_ds_indicatortrumpet.png',
               './citroen_ds_steering_wheel_1.png',
 
-            ].map(img => <img {...require(`${img}`)} draggable={false} />)}
+            ].map(img => <img key={img} {...require(`${img}`)} draggable={false} />)}
           </div>
         </ProjectDocument>
         <div className='citroen-ds-lamp-backside'>
           {[
             './citroen_ds_lamp_detail_1.jpg',
             './citroen_ds_lamp_detail_2.jpg',
-          ].map((img, i) => <Taped className='detail-image' tapes={(i % 4 + 1)} type={i === 0 ? EDGE : CORNER}><img {...require(`${img}`)} draggable={false} /></Taped>)}
+          ].map((img, i) => <Taped key={img} className='detail-image' tapes={(i % 4 + 1)} type={i === 0 ? EDGE : CORNER}><img {...require(`${img}`)} draggable={false} /></Taped>)}
         </div>
       </FlipCard>
     </div>

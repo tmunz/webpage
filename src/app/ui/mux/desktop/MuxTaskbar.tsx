@@ -1,18 +1,17 @@
 import './MuxTaskbar.styl';
 import React from 'react';
-import { MuxTheme } from '../MuxTheme';
 import { MuxProgram } from '../MuxProgram';
 import { MuxOs } from '../MuxOs';
 
 interface MuxTaskBarProps {
   programs: Map<string, MuxProgram>;
   onOpen: (programId: string) => void;
-  theme: MuxTheme;
+  clock?: MuxProgram
 }
 
-export const MuxTaskbar = ({ programs, theme, onOpen }: MuxTaskBarProps) => {
+export const MuxTaskbar = ({ programs, clock, onOpen }: MuxTaskBarProps) => {
 
-  const sortedProgramStates = Array.from(programs.values()).sort((a, b) => a.name.localeCompare(b.name));
+  const sortedProgramStates = [...programs.values()].sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <div className='mux-taskbar'>
@@ -25,7 +24,7 @@ export const MuxTaskbar = ({ programs, theme, onOpen }: MuxTaskBarProps) => {
             </button>
           </li>)}
       </ul>
-      {MuxOs.get().getProgramsBySlot('clock')[0]?.component(MuxOs.get())}
+      {clock && clock.component(MuxOs.get())}
     </div>
   );
 };

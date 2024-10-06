@@ -6,12 +6,16 @@ import { MuxMenu } from './MuxMenu';
 import { DefaultTheme } from '../themes/default/DefaultTheme';
 import { MuxOs } from '../MuxOs';
 import { MuxProgramWindow } from './MuxProgramWindow';
+import { DragBoard } from '../../drag-board/DragBoard';
+import { DragBoardItem } from '../../drag-board/DragBoardItem';
 
 export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) => {
 
   const muxOs = MuxOs.get();
 
   const [programStates, setProgramStates] = useState<Map<string, MuxProgramState>>(muxOs.programStates$.getValue());
+ 
+  // TODO
   const theme = DefaultTheme;
 
   useEffect(() => {
@@ -26,15 +30,17 @@ export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) 
 
   return (
     <div className='mux-desktop'>
-      <MuxMenu theme={theme} onOpen={(programId) => muxOs.startProgram(programId)} programs={programs} />
-      <div className='mux-main-window'>
-        {[...programStates.values()].map(programState => <MuxProgramWindow
-          key={programState.program.id}
-          program={programState.program}
-          rect={programState.window}
-        />)}
-      </div>
-      <MuxTaskbar theme={theme} onOpen={(programId) => muxOs.startProgram(programId)} programs={programs} />
+      <MuxMenu />
+      <DragBoard className='mux-main-window'>
+        {[...programStates.values()].map(programState => (
+          <DragBoardItem key={programState.program.id}>
+            <MuxProgramWindow
+              program={programState.program}
+            />
+          </DragBoardItem>
+        ))}
+      </DragBoard>
+      <MuxTaskbar onOpen={(programId) => muxOs.startProgram(programId)} programs={programs} clock={muxOs.getProgramsBySlot('clock')[0]} />
     </div >
   );
 }

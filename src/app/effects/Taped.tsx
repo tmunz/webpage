@@ -11,6 +11,7 @@ export interface TapedProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function Taped({ tapes = 2, type = CORNER, children, ...props }: TapedProps) {
+  
   const tapePositions = Array.from({ length: tapes }, (_, i) => {
     const k = (i + type) % 8;
     return <div key={i} className={`tape tape-${k}`} />;

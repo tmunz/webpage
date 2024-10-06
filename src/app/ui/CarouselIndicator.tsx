@@ -24,10 +24,10 @@ export const CarouselIndicator = ({ total, activeIndex, onSelect, radius = 10, g
             onClick={() => onSelect(index)}
           />
         ))}
-        <div
+        {total > 0 && <div
           className='dot active-dot'
           style={{ left: -gap / 2 + activeIndex * (radius * 2 + gap), top: -gap / 2, width: radius * 2 + gap, height: radius * 2 + gap }}
-        />
+        />}
         <svg xmlns='http://www.w3.org/2000/svg' version='1.1' style={{ display: 'none' }}>
           <defs>
             <filter id='blob'>

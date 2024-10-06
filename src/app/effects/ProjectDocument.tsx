@@ -54,8 +54,8 @@ export function ProjectDocument({ titleBlock, children }: ProjectDocumentProps) 
             <svg width="110" height="50" xmlns="http://www.w3.org/2000/svg">
               <circle cx="25" cy="25" r="5" stroke="black" fill="none" />
               <circle cx="25" cy="25" r="10" stroke="black" fill="none" />
-              <line x1="25" y1="10" x2="25" y2="40" stroke="black" stroke-dasharray="2" />
-              <line x1="10" y1="25" x2="100" y2="25" stroke="black" stroke-dasharray="2" />
+              <line x1="25" y1="10" x2="25" y2="40" stroke="black" strokeDasharray="2" />
+              <line x1="10" y1="25" x2="100" y2="25" stroke="black" strokeDasharray="2" />
               <polygon points="55,20 85,10 85,40 55,30" stroke="black" fill="none" />
             </svg>
           </div>

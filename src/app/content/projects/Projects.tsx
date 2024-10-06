@@ -28,7 +28,7 @@ export function Projects(props: { onClose: () => void }) {
         </div>
       }
     </div>,
-    component: () => project.component
+    component: () => <div>{project.component}</div>
   })));
 
   return <div className='projects'>
