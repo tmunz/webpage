@@ -5,7 +5,7 @@ import { Object3D } from "three";
 import { Brick } from "./Brick";
 import { useTransformationAnimator, Transformations } from "../../../utils/TransformationAnimator";
 
-export function BrickScroll({transformations}: {transformations: Transformations}) {
+export function BrickScroll({ transformations, onLoadComplete }: { transformations: Transformations, onLoadComplete: () => void }) {
   const ref = useRef<Object3D>(null!);
   const scroll = useScroll();
   const transformationAnimator = useTransformationAnimator(transformations);
@@ -16,5 +16,8 @@ export function BrickScroll({transformations}: {transformations: Transformations
     }
   });
 
-  return <Brick onLoadComplete={(model) => (ref.current = model)} />;
+  return <Brick onLoadComplete={(model) => {
+    ref.current = model;
+    onLoadComplete();
+  }} />;
 }

@@ -5,7 +5,7 @@ import { useLoader } from '@react-three/fiber';
 import { SpotLight } from '@react-three/drei';
 import { CarShowModelProps } from '../../../three/car-show/CarShowModelProps';
 
-export function Mb300Ssl({ onLoadComplete }: CarShowModelProps) {
+export function Mb300sl({ onLoadComplete }: CarShowModelProps) {
   const modelRef = useRef<Group>(null);
   const headlightTargetRef = useRef<Mesh>(null);
 

@@ -14,9 +14,10 @@ interface CarShowProps {
   quality?: Quality;
   Model: FC<CarShowModelProps>;
   controls?: boolean;
+  onLoadComplete?: () => void;
 }
 
-export const CarShow = ({ animate, debug, Model, quality = Quality.LOW, controls = true }: CarShowProps) => {
+export const CarShow = ({ animate, debug, Model, quality = Quality.LOW, controls = true, onLoadComplete }: CarShowProps) => {
   const [model, setModel] = useState<Object3D | null>(null);
   const cameraRef = useRef<Camera>(null);
   const { current: center } = useRef(new Vector3(0, 1.5, 0));
@@ -43,7 +44,10 @@ export const CarShow = ({ animate, debug, Model, quality = Quality.LOW, controls
       <color args={[0, 0, 0]} attach="background" />
       <Ground />
 
-      <Model onLoadComplete={setModel} />
+      <Model onLoadComplete={(model) => {
+        setModel(model);
+        onLoadComplete?.();
+      }} />
       <ModelMovement model={model} animate={animate} showPath={debug} />
       
       <OrbitControls

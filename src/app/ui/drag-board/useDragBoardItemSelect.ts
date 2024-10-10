@@ -57,6 +57,12 @@ export const useDragBoardItemSelect = (setItemStates: React.Dispatch<React.SetSt
         }
       }
 
+      states.forEach((item, id) => {
+        if (item.current.z !== undefined) {
+          states.set(id, { ...item, current: { ...item.current, z: item.current.z - minZ } });
+        }
+      });
+
       return states;
     });
   }, []);

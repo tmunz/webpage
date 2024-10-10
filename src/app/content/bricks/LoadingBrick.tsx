@@ -44,6 +44,7 @@ export const LoadingBrick = ({ dimension = 200, studs = [2, 4], duration = 300 }
       {[...Array(4)].map((_, i) => {
         const brickSides = [brickX, brickZ];
         return <div
+          key={i}
           className='brick-face'
           style={{
             width: brickSides[i % 2],

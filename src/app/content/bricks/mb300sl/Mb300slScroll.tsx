@@ -2,13 +2,13 @@ import React, { useRef } from 'react';
 import { Transformations, useTransformationAnimator } from '../../../utils/TransformationAnimator';
 import { RenderTexture, useScroll } from '@react-three/drei';
 import { CarShow } from '../../../three/car-show/CarShow';
-import { Mb300Ssl } from './Mb300sl';
+import { Mb300sl } from './Mb300sl';
 import { Quality } from '../../../three/QualityProvider';
 import { useFrame } from '@react-three/fiber';
 import { Mesh } from 'three';
 import { FullscreenPlane } from '../../../three/FullscreenPlane';
 
-export function Mb300slScroll({ transformations }: { transformations: Transformations }) {
+export function Mb300slScroll({ transformations, onLoadComplete }: { transformations: Transformations, onLoadComplete: () => void }) {
   const ref = useRef<Mesh | null>(null);
   const scroll = useScroll();
   const transformationAnimator = useTransformationAnimator(transformations);
@@ -34,7 +34,7 @@ export function Mb300slScroll({ transformations }: { transformations: Transforma
     <FullscreenPlane ref={ref}>
       <meshStandardMaterial>
         <RenderTexture attach='map'>
-          <CarShow Model={Mb300Ssl} animate={animate} quality={Quality.HIGH} />
+          <CarShow Model={Mb300sl} animate={animate} quality={Quality.HIGH} onLoadComplete={onLoadComplete} />
         </RenderTexture>
       </meshStandardMaterial>
     </FullscreenPlane>

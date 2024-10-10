@@ -6,11 +6,10 @@ import { MuxOs } from '../MuxOs';
 interface MuxTaskBarProps {
   programs: Map<string, MuxProgram>;
   onOpen: (programId: string) => void;
-  clock?: MuxProgram
+  clock?: MuxProgram;
 }
 
 export const MuxTaskbar = ({ programs, clock, onOpen }: MuxTaskBarProps) => {
-
   const sortedProgramStates = [...programs.values()].sort((a, b) => a.name.localeCompare(b.name));
 
   return (
@@ -18,13 +17,16 @@ export const MuxTaskbar = ({ programs, clock, onOpen }: MuxTaskBarProps) => {
       <ul className='mux-taskbar-pinned-programs'>
         {sortedProgramStates
           /* TODO .filter(p => p.pinned)*/
-          .map(p => <li key={p.id}>
-            <button onClick={() => { onOpen(p.id); }}>
-              <img src={p.iconPath} />
-            </button>
-          </li>)}
+          .map(p => (
+            <li key={p.id}>
+              <button onClick={() => { onOpen(p.id); }}>
+                <img src={p.iconPath} alt={p.name} />
+              </button>
+            </li>
+          ))}
       </ul>
       {clock && clock.component(MuxOs.get())}
     </div>
   );
 };
+

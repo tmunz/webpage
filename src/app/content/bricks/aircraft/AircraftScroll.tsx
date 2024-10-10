@@ -6,7 +6,7 @@ import { useTransformationAnimator, Transformations } from "../../../utils/Trans
 import { FlightSimulator } from "./flightsimulator/FlightSimulator";
 import { FullscreenPlane } from "../../../three/FullscreenPlane";
 
-export function AircraftScroll({ transformations }: { transformations: Transformations }) {
+export function AircraftScroll({ transformations, onLoadComplete }: { transformations: Transformations, onLoadComplete: () => void }) {
   const ref = useRef<Mesh>(null!);
   const scroll = useScroll();
   const transformationAnimator = useTransformationAnimator(transformations);
@@ -21,7 +21,7 @@ export function AircraftScroll({ transformations }: { transformations: Transform
     <meshStandardMaterial>
       <RenderTexture attach='map'>
         <group scale={[0.1, 0.1, 0.1]}>
-          <FlightSimulator />
+          <FlightSimulator onLoadComplete={onLoadComplete} />
         </group>
       </RenderTexture>
     </meshStandardMaterial>

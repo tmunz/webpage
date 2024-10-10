@@ -2,19 +2,35 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 var(--muxGapSize);
+  padding: var(--muxGapSize) var(--muxGapSize) 0;
   background-color: var(--muxBarColor);
+  overflow: hidden;
 
   .mux-taskbar-pinned-programs {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     list-style: none;
     padding-inline-start: 0;
+    overflow-y: auto;
+    max-height: 100%;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
 
-    img {
-      width: 32px;
-      height: 32px;
-      cursor: pointer;
-    }
+  .mux-taskbar-pinned-programs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mux-taskbar-pinned-programs li {
+    scroll-snap-align: start;
+  }
+
+  img {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
   }
 }

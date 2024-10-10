@@ -2,7 +2,7 @@ import './Aircraft.styl';
 import React from 'react';
 
 
-export function Aircraft({ width, scrollRatio }: { width: number, scrollRatio: number }) {
+export function Aircraft({ width, scrollRatio, onLoaded }: { width: number, scrollRatio: number, onLoaded: () => void }) {
 
   const brickMultiplier = 1.2;
   const brickX = width * brickMultiplier;

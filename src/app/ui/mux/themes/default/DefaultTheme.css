@@ -4,4 +4,6 @@
   --muxMenuColor: rgba(62, 62, 62, 0.8);
   --muxCloseColor: #dd0100;
   --muxBarColor: rgba(62, 62, 62, 0.8);
+  --muxBorderColor: rgba(62, 62, 62, 0.8);
+  --muxBorderRadius: 2px
 }

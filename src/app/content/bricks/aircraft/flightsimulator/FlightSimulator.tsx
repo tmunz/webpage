@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Environment, PerspectiveCamera } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Object3D } from 'three';
@@ -6,14 +6,22 @@ import { Dc3Buffalo } from '../Dc3Buffalo';
 import { clamp } from 'three/src/math/MathUtils';
 import { Part, Particles } from './Particles';
 
-export function FlightSimulator() {
+export function FlightSimulator({ onLoadComplete }: { onLoadComplete: () => void }) {
   const SMOOTHNESS = 10;
 
   const { pointer } = useThree();
+  const loadedCompletedRef = useRef<boolean>(false);
   const particlesRef = useRef<Part[]>([]);
   const airplaneRef = useRef<{ model: Object3D, movingParts: Object3D[] }>(null);
 
   const { scene } = useThree();
+
+  useEffect(() => {
+    if (!loadedCompletedRef.current && airplaneRef.current && particlesRef.current.length > 0) {
+      loadedCompletedRef.current = true;
+      onLoadComplete();
+    }
+  }, [airplaneRef.current, particlesRef.current]);
 
   useFrame(() => {
     const speed = 1 + (pointer.x + 1) * 3;

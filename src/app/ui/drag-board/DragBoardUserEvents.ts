@@ -57,6 +57,7 @@ export const useUserEvents = (
   // flip through
   useEffect(() => {
     const handleScroll = (e: WheelEvent) => {
+      if (e.target !== dragBoardRef.current) return;
       const startPosition = scrollRef.current;
       scrollRef.current += e.deltaY / 6;
       const delta = Math.round(startPosition - scrollRef.current)

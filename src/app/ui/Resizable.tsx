@@ -6,18 +6,20 @@ export interface ResizableProps {
   children: React.ReactNode;
 }
 
-const THRESHOLD = 10;
+const THRESHOLD = 20;
+const MAX = Number.MAX_SAFE_INTEGER;
+const R = MAX / 2;
 
 export const Resizable = ({ width, height, children }: ResizableProps) => {
   const [size, setSize] = useState({ width, height });
+  const [resizingCursor, setResizingCursor] = useState<string | null>(null);
   const elementRef = useRef<HTMLDivElement>(null);
-  const isResizing = useRef(false);
   const directionRef = useRef('');
 
-  const handleMouseDown = (e: React.MouseEvent, resizeDirection: string) => {
+  const handleMouseDown = (e: React.MouseEvent, resizeDirection: string, cursor: string) => {
     e.preventDefault();
     e.stopPropagation();
-    isResizing.current = true;
+    setResizingCursor(cursor);
     directionRef.current = resizeDirection;
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
@@ -26,7 +28,7 @@ export const Resizable = ({ width, height, children }: ResizableProps) => {
   const handleMouseMove = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!isResizing.current || !elementRef.current) return;
+    if (!elementRef.current) return;
 
     const rect = elementRef.current.getBoundingClientRect();
     let nextWidth = size.width;
@@ -54,24 +56,22 @@ export const Resizable = ({ width, height, children }: ResizableProps) => {
   const handleMouseUp = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    isResizing.current = false;
+    setResizingCursor(null);
     directionRef.current = '';
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
   };
 
-
-  const setCursorStyle = (e: React.MouseEvent) => {
-    if (!elementRef.current) return;
-
-    const rect = elementRef.current.getBoundingClientRect();
-    const { clientX, clientY } = e;
-    const directionX = clientX - rect.left < THRESHOLD ? 'left' : clientX > rect.right - THRESHOLD ? 'right' : '';
-    const directionY = clientY - rect.top < THRESHOLD ? 'top' : clientY > rect.bottom - THRESHOLD ? 'bottom' : '';
-    const cursorStyle = `${directionY}${directionX ? '-' : ''}${directionX}`;
-
-    elementRef.current.style.cursor = cursorStyle ? `${cursorStyle}-resize` : 'default';
-  };
+  const directions = [
+    { position: { top: -THRESHOLD / 2, left: -THRESHOLD / 2, width: '100%', height: THRESHOLD }, cursor: 'n-resize', direction: 'top' },
+    { position: { top: -THRESHOLD / 2, right: -THRESHOLD / 2, width: THRESHOLD, height: '100%' }, cursor: 'e-resize', direction: 'right' },
+    { position: { bottom: -THRESHOLD / 2, left: -THRESHOLD / 2, width: '100%', height: THRESHOLD }, cursor: 's-resize', direction: 'bottom' },
+    { position: { top: -THRESHOLD / 2, left: -THRESHOLD / 2, width: THRESHOLD, height: '100%' }, cursor: 'w-resize', direction: 'left' },
+    { position: { top: -THRESHOLD / 2, left: -THRESHOLD / 2, width: THRESHOLD, height: THRESHOLD }, cursor: 'nw-resize', direction: 'top-left' },
+    { position: { top: -THRESHOLD / 2, right: -THRESHOLD / 2, width: THRESHOLD, height: THRESHOLD }, cursor: 'ne-resize', direction: 'top-right' },
+    { position: { bottom: -THRESHOLD / 2, right: -THRESHOLD / 2, width: THRESHOLD, height: THRESHOLD }, cursor: 'se-resize', direction: 'bottom-right' },
+    { position: { bottom: -THRESHOLD / 2, left: -THRESHOLD / 2, width: THRESHOLD, height: THRESHOLD }, cursor: 'sw-resize', direction: 'bottom-left' },
+  ];
 
   return (
     <div
@@ -84,54 +84,16 @@ export const Resizable = ({ width, height, children }: ResizableProps) => {
         boxSizing: 'border-box',
         userSelect: 'none',
       }}
-      onMouseMove={setCursorStyle}
     >
+      {resizingCursor && <div style={{ position: 'fixed', zIndex: MAX, top: -R, left: -R, width: MAX, height: MAX, cursor: resizingCursor }} />}
       {children}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          border: `${THRESHOLD}px solid green`,
-          pointerEvents: 'none',
-        }}
-      >
+      {directions.map(({ position, cursor, direction }) => (
         <div
-          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: `${THRESHOLD}px`, cursor: 'n-resize', pointerEvents: 'auto' }}
-          onMouseDown={(e) => handleMouseDown(e, 'top')}
+          key={direction}
+          style={{ position: 'absolute', ...position, cursor, pointerEvents: 'auto' }}
+          onMouseDown={(e) => handleMouseDown(e, direction, cursor)}
         />
-        <div
-          style={{ position: 'absolute', top: 0, right: 0, width: `${THRESHOLD}px`, height: '100%', cursor: 'e-resize', pointerEvents: 'auto' }}
-          onMouseDown={(e) => handleMouseDown(e, 'right')}
-        />
-        <div
-          style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: `${THRESHOLD}px`, cursor: 's-resize', pointerEvents: 'auto' }}
-          onMouseDown={(e) => handleMouseDown(e, 'bottom')}
-        />
-        <div
-          style={{ position: 'absolute', top: 0, left: 0, width: `${THRESHOLD}px`, height: '100%', cursor: 'w-resize', pointerEvents: 'auto' }}
-          onMouseDown={(e) => handleMouseDown(e, 'left')}
-        />
-        <div
-          style={{ position: 'absolute', top: 0, left: 0, width: `${THRESHOLD}px`, height: `${THRESHOLD}px`, cursor: 'nw-resize', pointerEvents: 'auto' }}
-          onMouseDown={(e) => handleMouseDown(e, 'top-left')}
-        />
-        <div
-          style={{ position: 'absolute', top: 0, right: 0, width: `${THRESHOLD}px`, height: `${THRESHOLD}px`, cursor: 'ne-resize', pointerEvents: 'auto' }}
-          onMouseDown={(e) => handleMouseDown(e, 'top-right')}
-        />
-        <div
-          style={{ position: 'absolute', bottom: 0, right: 0, width: `${THRESHOLD}px`, height: `${THRESHOLD}px`, cursor: 'se-resize', pointerEvents: 'auto' }}
-
-          onMouseDown={(e) => handleMouseDown(e, 'bottom-right')}
-        />
-        <div
-          style={{ position: 'absolute', bottom: 0, left: 0, width: `${THRESHOLD}px`, height: `${THRESHOLD}px`, cursor: 'sw-resize', pointerEvents: 'auto' }}
-          onMouseDown={(e) => handleMouseDown(e, 'bottom-left')}
-        />
-      </div>
+      ))}
     </div>
   );
 };
