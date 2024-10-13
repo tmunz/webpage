@@ -7,8 +7,8 @@ export interface ResizableProps {
 }
 
 const THRESHOLD = 20;
-const MAX = Number.MAX_SAFE_INTEGER;
-const R = MAX / 2;
+const MAX = 9999999;
+const R = MAX / -2;
 
 export const Resizable = ({ width, height, children }: ResizableProps) => {
   const [size, setSize] = useState({ width, height });
@@ -85,7 +85,7 @@ export const Resizable = ({ width, height, children }: ResizableProps) => {
         userSelect: 'none',
       }}
     >
-      {resizingCursor && <div style={{ position: 'fixed', zIndex: MAX, top: -R, left: -R, width: MAX, height: MAX, cursor: resizingCursor }} />}
+      {resizingCursor && <div style={{ position: 'fixed', zIndex: MAX, top: R, left: R, width: MAX, height: MAX, cursor: resizingCursor }} />}
       {children}
       {directions.map(({ position, cursor, direction }) => (
         <div

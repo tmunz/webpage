@@ -1,4 +1,7 @@
 .mux-taskbar {
+  --gap: 10px;
+  --imgSize: 32px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,29 +11,40 @@
 
   .mux-taskbar-pinned-programs {
     display: flex;
+    height: 100%;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: var(--gap);
     list-style: none;
     padding-inline-start: 0;
     overflow-y: auto;
-    max-height: 100%;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
 
-  .mux-taskbar-pinned-programs::-webkit-scrollbar {
-    display: none;
-  }
-
   .mux-taskbar-pinned-programs li {
-    scroll-snap-align: start;
+    padding: var(--gap) 0;
+    scroll-snap-align: center;
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr 2px;
+
+    .program-indicator {
+      width: 100%;
+      height: 100%;
+      background-color: var(--muxBackgroundColor);
+      border-radius: var(--muxBorderRadius);
+
+      &.program-indicator-active {
+        background-color: var(--muxActiveColor);
+      }
+    }
   }
 
   img {
-    width: 32px;
-    height: 32px;
+    width: var(--imgSize);
+    height: var(--imgSize);
     cursor: pointer;
   }
 }

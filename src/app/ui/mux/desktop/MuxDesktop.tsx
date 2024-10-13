@@ -33,7 +33,10 @@ export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) 
 
   return (
     <div className='mux-desktop' ref={elementRef}>
-      <MuxMenu />
+      <MuxMenu
+        programs={programs}
+        onOpen={(programId) => muxOs.startProgram(programId)}
+      />
       <DragBoard className='mux-main-window'>
         {[...programStates.values()].map(programState => (
           <DragBoardItem key={programState.program.id}>
@@ -46,7 +49,12 @@ export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) 
           </DragBoardItem>
         ))}
       </DragBoard>
-      <MuxTaskbar onOpen={(programId) => muxOs.startProgram(programId)} programs={programs} clock={muxOs.getProgramsBySlot('clock')[0]} />
+      <MuxTaskbar
+        programStates={programStates}
+        programs={programs}
+        onOpen={(programId) => muxOs.startProgram(programId)}
+        clock={muxOs.getProgramsBySlot('clock')[0]}
+      />
     </div >
   );
 }

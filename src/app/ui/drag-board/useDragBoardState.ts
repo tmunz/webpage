@@ -28,7 +28,7 @@ export const useDragBoardState = (
         states.set(key, {
           id: key,
           current: {
-            ...placement, z: i
+            ...placement, z: [...prevStates.values()].reduce((maxZ, itemState) => Math.max(maxZ, itemState.current.z), 0) + 1,
           },
           target: {},
         });
