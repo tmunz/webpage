@@ -32,6 +32,7 @@ export function Photo() {
 
   const elementRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState(Number.MAX_VALUE);
+  const [active, setActive] = useState<string | null>(null)
   const [sections, setSections] = useState<(Section & { completlyLoaded?: boolean })[]>([mainElement]);
 
   useEffect(() => {
@@ -84,23 +85,28 @@ export function Photo() {
             <h3 className='photo-section-header'>{section.title}</h3>
           </header>
           <table className='photo-section-content'>
-            {section.data.map((photo, j) => (
-              <tr key={photo.name + j}>
-                <td className='label'>
-                  {`[${(j + 1).toString().padStart(3, '0')}]`}<br />
-                  {photo.name}<br />
-                  {photo.location}<br />
-                </td>
-                <td className='image'>
-                  {photo.src ? (
-                    // <ShaderImage imageUrls={{ 'image': photo.src }} shaderDisabled={!filter} type={ShaderImageType.NATIVE} />
-                    <PhotoEntry photo={photo} />
-                  ) : (
-                    <div className='photo-image-placeholder' />
-                  )}
-                </td>
-              </tr>
-            ))}
+            <tbody>
+              {section.data.map((photo, j) => (
+                <tr key={photo.src} >
+                  <td className='label'>
+                    {`[${(j + 1).toString().padStart(3, '0')}]`}<br />
+                    {photo.name}<br />
+                    {photo.location}<br />
+                  </td>
+                  <td className='image'>
+                    {photo.src ? (
+                      <PhotoEntry photo={photo}
+                        active={active === photo.src}
+                        onClick={(b) => setActive(b ? photo.src! : null)}
+                      />
+                    ) : (
+                      <div className='photo-image-placeholder' />
+                    )}
+                  </td>
+                </tr>
+
+              ))}
+            </tbody>
           </table>
         </section>
       ))}

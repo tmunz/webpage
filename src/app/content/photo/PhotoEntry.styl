@@ -1,11 +1,23 @@
 .photo-entry {
   position: relative;
+  transition: margin 0.4s ease-in-out 0.6s;
+  margin: 0;
 
   img {
     width: auto;
     max-width: 100%;
     height: 300px;
     object-fit: cover;
+  }
+
+  .photo-entry-main {
+    display: inline-block;
+    position: relative;
+
+    img {
+      opacity: 1;
+      animation: mainAnimation_ 0.6s ease-in forwards;
+    }
   }
 
   .filter {
@@ -24,40 +36,197 @@
       height: 100%;
       top: 0;
       left: 0;
-      transition: width 0.6s ease-in-out;
+      transition: width 0.4s ease-in-out 0.4s;
     }
 
     .rgba-image {
-      transition: transform 0.6s ease-in-out, opacity 0.6s linear 0.3s;
+      transition: opacity 0.4s linear 0.8s;
       opacity: 0;
       left: 0;
       top: var(--filmStripSize);
       position: absolute;
       mix-blend-mode: lighten;
       pointer-events: none;
+      animation: _ 0.8s ease-in forwards;
+
+      &.r {
+        animation-name: rgbaAnimationR_;
+      }
+
+      &.g {
+        animation-name: rgbaAnimationG_;
+      }
+
+      &.b {
+        animation-name: rgbaAnimationB_;
+      }
     }
   }
 
-  &:hover {
+  &.active {
+    margin: var(--filmStripSize) 0;
+    transition-delay: 0s;
+
     .film-strip {
       width: 100%;
+      transition-delay: 0s;
+    }
+
+    .photo-entry-main img {
+      opacity: 0;
+      animation: mainAnimation 0.6s ease-in forwards;
     }
 
     .rgba-image {
       opacity: 1;
-      transition-delay: 0s;
+      transition: opacity 0.8s linear;
+
+      animation: _ 0.8s ease-in forwards;
 
       &.r {
-        transform: translate(33.3%, 1px);
+        animation-name: rgbaAnimationR;
       }
 
       &.g {
-        transform: translate(66.6%, 1px);
+        animation-name: rgbaAnimationG;
       }
 
       &.b {
-        transform: translate(100%, 1px);
+        animation-name: rgbaAnimationB;
       }
     }
+  }
+}
+
+@keyframes mainAnimation {
+  0% {
+    opacity: 1;
+    height: 300px;
+  }
+
+  20% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+    height: 600px;
+  }
+}
+
+@keyframes mainAnimation_ {
+  0% {
+    height: 600px;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    height: 300px;
+    opacity: 1;
+  }
+}
+
+@keyframes rgbaAnimationR {
+  0% {
+    transform: translate(0, 0);
+    height: 300px;
+  }
+
+  50% {
+    transform: translate(33.3%, 25%);
+    height: 300px;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    height: 600px;
+  }
+}
+
+@keyframes rgbaAnimationG {
+  0% {
+    transform: translate(0, 0);
+    height: 300px;
+  }
+
+  50% {
+    transform: translate(66.6%, 25%);
+    height: 300px;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    height: 600px;
+  }
+}
+
+@keyframes rgbaAnimationB {
+  0% {
+    transform: translate(0, 0);
+    height: 300px;
+  }
+
+  50% {
+    transform: translate(100%, 25%);
+    height: 300px;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    height: 600px;
+  }
+}
+
+@keyframes rgbaAnimationR_ {
+  0% {
+    transform: translate(0, 0);
+    height: 600px;
+  }
+
+  50% {
+    transform: translate(33.3%, 25%);
+    height: 300px;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    height: 300px;
+  }
+}
+
+@keyframes rgbaAnimationG_ {
+  0% {
+    transform: translate(0, 0);
+    height: 600px;
+  }
+
+  50% {
+    transform: translate(66.6%, 25%);
+    height: 300px;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    height: 300px;
+  }
+}
+
+@keyframes rgbaAnimationB_ {
+  0% {
+    transform: translate(0, 0);
+    height: 600px;
+  }
+
+  50% {
+    transform: translate(100%,  25%);
+    height: 300px;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    height: 300px;
   }
 }
