@@ -12,6 +12,8 @@
   left: 0;
   width: 300px;
   padding: 16px;
+  max-height: 400px;
+  display: flex;
   background-color: rgba(0, 0, 0, 0.85);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
@@ -28,6 +30,14 @@
     &:last-child {
       margin-bottom: 0;
     }
+  }
+
+  .programs {
+    overflow: auto;
+  }
+
+  .controls {
+    align-content: end;
   }
 
   button {

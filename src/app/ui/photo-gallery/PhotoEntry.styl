@@ -1,22 +1,29 @@
 .photo-entry {
+  --height: 300px;
+  @media screen and (max-width: 800px) {
+    --height: 200px;   
+  }
+  --heightExpanded: calc(2 * var(--height));
+  --filmStripSize: 40px;
+
   position: relative;
-  transition: margin 0.4s ease-in-out 0.6s;
+  transition: margin 0.1s ease-in-out 0.2s;
   margin: 0;
 
   img {
     width: auto;
     max-width: 100%;
-    height: 300px;
+    height: var(--height);
     object-fit: cover;
   }
 
   .photo-entry-main {
     display: inline-block;
     position: relative;
+    z-index: 1;
 
     img {
-      opacity: 1;
-      animation: mainAnimation_ 0.6s ease-in forwards;
+      animation: mainAnimation_ 0.3s ease-in forwards;
     }
   }
 
@@ -36,18 +43,25 @@
       height: 100%;
       top: 0;
       left: 0;
-      transition: width 0.4s ease-in-out 0.4s;
+      transition: width 0.4s ease-in-out 0.2s;
+
+      .world-map {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(-50%, -50%);
+      }
     }
 
     .rgba-image {
-      transition: opacity 0.4s linear 0.8s;
+      transition: opacity 0.2s linear 0.4s;
       opacity: 0;
       left: 0;
       top: var(--filmStripSize);
       position: absolute;
       mix-blend-mode: lighten;
       pointer-events: none;
-      animation: _ 0.8s ease-in forwards;
+      animation: _ 0.4s ease-in forwards;
 
       &.r {
         animation-name: rgbaAnimationR_;
@@ -65,7 +79,7 @@
 
   &.active {
     margin: var(--filmStripSize) 0;
-    transition-delay: 0s;
+    transition: margin 0.3s ease-in-out;
 
     .film-strip {
       width: 100%;
@@ -73,15 +87,13 @@
     }
 
     .photo-entry-main img {
-      opacity: 0;
-      animation: mainAnimation 0.6s ease-in forwards;
+      animation: mainAnimation 0.4s ease-in forwards;
     }
 
     .rgba-image {
       opacity: 1;
-      transition: opacity 0.8s linear;
-
-      animation: _ 0.8s ease-in forwards;
+      transition: opacity 0.4s linear;
+      animation: _ 0.4s ease-in forwards;
 
       &.r {
         animation-name: rgbaAnimationR;
@@ -101,30 +113,40 @@
 @keyframes mainAnimation {
   0% {
     opacity: 1;
-    height: 300px;
+    height: var(--height);
   }
 
-  20% {
+  10% {
     opacity: 0;
+  }
+
+  90% {
+    opacity: 0;
+    height: var(--heightExpanded);
   }
 
   100% {
-    opacity: 0;
-    height: 600px;
+    opacity: 1;
+    height: var(--heightExpanded);
   }
 }
 
 @keyframes mainAnimation_ {
   0% {
-    height: 600px;
+    opacity: 1;
+    height: var(--heightExpanded);
   }
 
-  80% {
+  10% {
+    opacity: 0;
+  }
+
+  90% {
     opacity: 0;
   }
 
   100% {
-    height: 300px;
+    height: var(--height);
     opacity: 1;
   }
 }
@@ -132,101 +154,101 @@
 @keyframes rgbaAnimationR {
   0% {
     transform: translate(0, 0);
-    height: 300px;
+    height: var(--height);
   }
 
   50% {
-    transform: translate(33.3%, 25%);
-    height: 300px;
+    transform: translate(10%, 25%);
+    height: var(--height);
   }
 
   100% {
     transform: translate(0, 0);
-    height: 600px;
+    height: var(--heightExpanded);
   }
 }
 
 @keyframes rgbaAnimationG {
   0% {
     transform: translate(0, 0);
-    height: 300px;
+    height: var(--height);
   }
 
   50% {
-    transform: translate(66.6%, 25%);
-    height: 300px;
+    transform: translate(30%, 25%);
+    height: var(--height);
   }
 
   100% {
     transform: translate(0, 0);
-    height: 600px;
+    height: var(--heightExpanded);
   }
 }
 
 @keyframes rgbaAnimationB {
   0% {
     transform: translate(0, 0);
-    height: 300px;
+    height: var(--height);
   }
 
   50% {
-    transform: translate(100%, 25%);
-    height: 300px;
+    transform: translate(50%, 25%);
+    height: var(--height);
   }
 
   100% {
     transform: translate(0, 0);
-    height: 600px;
+    height: var(--heightExpanded);
   }
 }
 
 @keyframes rgbaAnimationR_ {
   0% {
     transform: translate(0, 0);
-    height: 600px;
+    height: var(--heightExpanded);
   }
 
   50% {
-    transform: translate(33.3%, 25%);
-    height: 300px;
+    transform: translate(10%, 25%);
+    height: var(--height);
   }
 
   100% {
     transform: translate(0, 0);
-    height: 300px;
+    height: var(--height);
   }
 }
 
 @keyframes rgbaAnimationG_ {
   0% {
     transform: translate(0, 0);
-    height: 600px;
+    height: var(--heightExpanded);
   }
 
   50% {
-    transform: translate(66.6%, 25%);
-    height: 300px;
+    transform: translate(30%, 25%);
+    height: var(--height);
   }
 
   100% {
     transform: translate(0, 0);
-    height: 300px;
+    height: var(--height);
   }
 }
 
 @keyframes rgbaAnimationB_ {
   0% {
     transform: translate(0, 0);
-    height: 600px;
+    height: var(--heightExpanded);
   }
 
   50% {
-    transform: translate(100%,  25%);
-    height: 300px;
+    transform: translate(50%,  25%);
+    height: var(--height);
   }
 
   100% {
     transform: translate(0, 0);
-    height: 300px;
+    height: var(--height);
   }
 }

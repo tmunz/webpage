@@ -150,6 +150,7 @@ export const OilPainting = forwardRef(
     };
 
     const endPaint = () => {
+      if (!paintMode) return;
       saveState();
       stopPaint();
     };

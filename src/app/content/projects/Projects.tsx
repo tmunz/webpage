@@ -17,7 +17,7 @@ export function Projects(props: { onClose: () => void }) {
     pinned: project.highlight,
     slots: project.slots,
     about: <div className='project-about'>
-      <p className='info'>{project.description}</p>
+      <div className='info'>{project.description}</div>
       {
         project.githubLink &&
         <div className="github-link">
@@ -32,6 +32,6 @@ export function Projects(props: { onClose: () => void }) {
   })));
 
   return <div className='projects'>
-    <Mux programs={programs} onShutdown={props.onClose} />
+    <Mux programs={programs} onOff={props.onClose} />
   </div>;
 }

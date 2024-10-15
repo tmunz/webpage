@@ -10,7 +10,7 @@ import { Terminal } from './programs/terminal/Terminal';
 
 export interface MuxProps {
   programs: MuxProgram[];
-  onShutdown: () => void;
+  onOff: () => void;
   bootTime?: number;
 }
 
@@ -21,9 +21,9 @@ const DEFAULT_PROGRAMS: MuxProgram[] = [
 
 
 // this is a simulation of a modern retro computer operating system (whatever this means ;-)
-export const Mux = ({ programs, onShutdown, bootTime = 2000 }: MuxProps) => {
+export const Mux = ({ programs, onOff, bootTime = 2000 }: MuxProps) => {
   const muxOs = MuxOs.get();
-  const [bootId, setBootId] = useState<string>(muxOs.bootId$.getValue());
+  const [bootId, setBootId] = useState<string | null>(muxOs.bootId$.getValue());
   const [bootProcess, setBootProcess] = useState<number>(muxOs.bootProcess$.getValue());
   const [stdout, setStdout] = useState<Log[]>(muxOs.stdout$.getValue());
   const [installedPrograms, setInstalledPrograms] = useState<Map<string, MuxProgram>>(muxOs.programs$.getValue());
@@ -35,7 +35,7 @@ export const Mux = ({ programs, onShutdown, bootTime = 2000 }: MuxProps) => {
       muxOs.stdout$.subscribe(setStdout),
       muxOs.programs$.subscribe(setInstalledPrograms),
     ];
-    muxOs.boot([...DEFAULT_PROGRAMS, ...programs], bootTime, onShutdown);
+    muxOs.boot([...DEFAULT_PROGRAMS, ...programs], bootTime, onOff);
 
     return () => {
       subscriptions.forEach(subscription => subscription.unsubscribe());
@@ -46,10 +46,10 @@ export const Mux = ({ programs, onShutdown, bootTime = 2000 }: MuxProps) => {
 
   return (
     <div className='mux'>
-      {booting && <MuxBootScreen id={bootId} stdout={stdout} />}
-      <div style={{ display: booting ? 'none' : 'block', width: '100%', height: '100%' }}>
+      {bootId && booting && <MuxBootScreen id={bootId} stdout={stdout} />}
+      {bootId && <div style={{ display: booting ? 'none' : 'block', width: '100%', height: '100%' }}>
         <MuxDesktop programs={installedPrograms} />
-      </div>
+      </div>}
     </div>
   );
 }

@@ -2,10 +2,13 @@ import './Photo.styl';
 import React, { useRef, useEffect, useState } from 'react';
 import { CameraViewer } from '../../effects/CameraViewer';
 import { CameraViewerFocusing } from '../../effects/CameraViewerFocusing';
-import { PhotoEntry } from './PhotoEntry';
-import { PhotoMetaData } from './PhotoMetaData';
+import { PhotoMetaData } from '../../ui/photo-gallery/PhotoMetaData';
+import { useUserAction } from '../../utils/useUserActions';
+import { PhotoRow } from '../../ui/photo-gallery/PhotoRow';
 
 const SCROLL_THRESHOLD = 100;
+const SCROLL_OFFSET = 60;
+const SWITCH_ACTIVE_PHOTO_DELAY = 400;
 
 interface Section {
   title: string;
@@ -34,6 +37,7 @@ export function Photo() {
   const [scrollPosition, setScrollPosition] = useState(Number.MAX_VALUE);
   const [active, setActive] = useState<string | null>(null)
   const [sections, setSections] = useState<(Section & { completlyLoaded?: boolean })[]>([mainElement]);
+  const userAction = useUserAction();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,6 +71,39 @@ export function Photo() {
     };
   }, [allSections]);
 
+  const activatePhoto = (id: string | null) => {
+    setActive(current => {
+      if (current !== null) {
+        setTimeout(() => {
+          activatePhoto(id)
+        }, SWITCH_ACTIVE_PHOTO_DELAY);
+      }
+      return current ? null : id;
+    });
+  };
+
+  useEffect(() => {
+    if (active && elementRef.current) {
+      const activeElement = elementRef.current.querySelector(`[data-src="${active}"]`);
+      if (activeElement instanceof HTMLElement) {
+        let offsetTop = activeElement.offsetTop;
+        let currentElement = activeElement.offsetParent;
+
+        while (currentElement && currentElement instanceof HTMLElement && currentElement !== elementRef.current) {
+          offsetTop += currentElement.offsetTop;
+          currentElement = currentElement.offsetParent;
+        }
+
+        elementRef.current.scrollTo({
+          top: offsetTop - SCROLL_OFFSET,
+          behavior: 'smooth',
+        });
+
+      }
+    }
+  }, [active]);
+
+
   return (
     <div
       ref={elementRef}
@@ -86,25 +123,13 @@ export function Photo() {
           </header>
           <table className='photo-section-content'>
             <tbody>
-              {section.data.map((photo, j) => (
-                <tr key={photo.src} >
-                  <td className='label'>
-                    {`[${(j + 1).toString().padStart(3, '0')}]`}<br />
-                    {photo.name}<br />
-                    {photo.location}<br />
-                  </td>
-                  <td className='image'>
-                    {photo.src ? (
-                      <PhotoEntry photo={photo}
-                        active={active === photo.src}
-                        onClick={(b) => setActive(b ? photo.src! : null)}
-                      />
-                    ) : (
-                      <div className='photo-image-placeholder' />
-                    )}
-                  </td>
-                </tr>
-
+              {section.data.map((photo, rowInSection) => (
+                <PhotoRow
+                  photo={photo}
+                  active={active === photo.src}
+                  onActivate={(active) => activatePhoto(active && photo.src ? photo.src : null)}
+                  row={rowInSection}
+                  userAction={userAction} />
               ))}
             </tbody>
           </table>

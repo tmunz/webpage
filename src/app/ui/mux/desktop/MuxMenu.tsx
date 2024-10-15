@@ -1,3 +1,4 @@
+import { MuxOs } from '../MuxOs';
 import { MuxProgram } from '../MuxProgram';
 import './MuxMenu.styl';
 import React, { useState } from "react";
@@ -18,7 +19,7 @@ export const MuxMenu = ({ programs, onOpen }: MuxMenuProps) => {
         <div>menu</div>
       </button>
       {menuOpen && <div className='mux-menu-content'>
-        <ul>
+        <ul className='programs'>
           {[...programs.values()]
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(p => (
@@ -32,6 +33,11 @@ export const MuxMenu = ({ programs, onOpen }: MuxMenuProps) => {
                 </button>
               </li>
             ))}
+        </ul>
+        <hr/>
+        <ul className='controls'>
+          <li><button onClick={() => MuxOs.get().pause()}>pause</button></li>
+          <li><button onClick={() => MuxOs.get().shutdown()}>shutdown</button></li>
         </ul>
       </div>
       }

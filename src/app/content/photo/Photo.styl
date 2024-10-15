@@ -30,7 +30,7 @@
   }
 
   .photo-section {
-    margin: 0 30px 30px;
+    margin: 0 30px;
 
     &:first-of-type {
       .photo-section-title {
@@ -45,7 +45,7 @@
     .photo-section-title {
       position: sticky;
       top: 20px;
-      z-index: 2;
+      z-index: 3;
       display: flex;
       justify-content: space-between;
       color: #fff;
@@ -68,43 +68,19 @@
 
     .photo-section-content {
       width: 100%;
-      --filmStripSize: 40px;
-
-      tr {
-        display: grid;
-        grid-template-columns: minmax(0, 260px) minmax(300px, 1fr);
-        padding: 0;
-        align-items: end;
-        margin-top: var(--gapSize);
-        transition: padding ease-in-out 0.6s;
-
-        .photo-entry-main {
-          box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-          transition: box-shadow ease-in-out 0.6s;
-        }
-
-        /* &.active {
-          .photo-entry-main {
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
-          }
-          padding: var(--filmStripSize) 0 var(--filmStripSize) 0;
-        } */
-      }
-
-      td.label {
-        position: sticky;
-        left: 0;
-        bottom: 30px;
-        padding-right: 20px;
-        color: #888;
-        mix-blend-mode: difference;
-      }
     }
   }
 }
 
 @media screen and (max-width: 800px) {
-  .photo .photo-section .photo-section-content td.image img {
-    height: 200px;
+  .photo {
+    .camera-viewer .camera-viewer-overlay {
+      left: 0px;
+      right: 0px;
+    }
+
+    .photo-section {
+      margin: 0 10px;
+    }
   }
 }

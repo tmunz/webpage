@@ -8,9 +8,10 @@ interface MuxCliProps {
   onStartProgram: (id: string) => void;
   onQuitProgram: (id: string) => void;
   onShutdownRequest: () => void;
+  onPauseRequest: () => void;
 }
 
-const TerminalComponent = ({ programs, onStartProgram, onQuitProgram, onShutdownRequest }: MuxCliProps) => {
+const TerminalComponent = ({ programs, onStartProgram, onQuitProgram, onShutdownRequest, onPauseRequest }: MuxCliProps) => {
 
   const cmds: { cmd: string, description: string, exec: (arg?: string) => string }[] = [
     { cmd: 'help', exec: () => cmds.map(c => `- ${c.cmd}:\n    ${c.description}`).join('\n'), description: 'lists all commands with descriptions' },
@@ -28,7 +29,7 @@ const TerminalComponent = ({ programs, onStartProgram, onQuitProgram, onShutdown
       }, description: 'describes the selected program (name or id)'
     },
     {
-      cmd: 'open', exec: (arg?: string) => {
+      cmd: 'start', exec: (arg?: string) => {
         if (!arg) {
           return 'Please provide a program name';
         }
@@ -37,8 +38,8 @@ const TerminalComponent = ({ programs, onStartProgram, onQuitProgram, onShutdown
           return 'Program not found';
         }
         onStartProgram(program.id);
-        return `Opening ${program.name} ...`;
-      }, description: 'opens the selected program (name or id)'
+        return `Starting ${program.name} ...`;
+      }, description: 'Starts the selected program (name or id)'
     },
     {
       cmd: 'quit', exec: (arg?: string) => {
@@ -54,6 +55,7 @@ const TerminalComponent = ({ programs, onStartProgram, onQuitProgram, onShutdown
       }, description: 'quits the selected program (name or id)'
     },
     { cmd: 'shutdown', exec: () => { onShutdownRequest(); return 'shutdown'; }, description: 'shuts down muxOS and navigates back to the main overview' },
+    { cmd: 'pause', exec: () => { onPauseRequest(); return 'pause'; }, description: 'navigates back to the main overview but programs remain open' },
   ];
 
   return <Cli
@@ -82,6 +84,7 @@ export const Terminal: MuxProgram = {
     onStartProgram: (programId) => muxOs.startProgram(programId),
     onQuitProgram: (programId) => muxOs.quitProgram(programId),
     onShutdownRequest: () => muxOs.shutdown(),
+    onPauseRequest: () => muxOs.pause(),
   }),
   about: <div>System Standard Command Line Interface</div>,
   iconPath: require('./terminal-icon.png'),

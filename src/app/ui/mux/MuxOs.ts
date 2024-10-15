@@ -29,7 +29,7 @@ export class MuxOs {
     return MuxOs.instance;
   }
 
-  bootId$ = new BehaviorSubject<string>([...Array(10)].map(() => Math.random().toString(36)[2]).join(''));
+  bootId$ = new BehaviorSubject<string | null>(null);
   bootProcess$ = new BehaviorSubject<number>(0);
   stdout$ = new BehaviorSubject<Log[]>([]);
   programs$ = new BehaviorSubject<Map<string, MuxProgram>>(new Map<string, MuxProgram>());
@@ -46,21 +46,24 @@ export class MuxOs {
     }, 1000);
   }
 
-  shutdown = () => { };
+  private off = () => { };
 
-  async boot(programs: MuxProgram[], bootTime: number, onShutdown: () => void) {
-    this.reset();
-    this.logInfo('Booting Mux OS');
-    this.shutdown = onShutdown;
-    this.logInfo('Functions loaded');
-    this.bootProcess$.next(0.2);
-    await new Promise(resolve => setTimeout(resolve, bootTime * 0.1));
-    this.install(...programs);
-    this.bootProcess$.next(0.9);
-    await new Promise(resolve => setTimeout(resolve, bootTime * 0.8));
-    this.logInfo('Mux OS booted up');
-    await new Promise(resolve => setTimeout(resolve, bootTime * 0.1));
-    this.bootProcess$.next(1);
+  async boot(programs: MuxProgram[], bootTime: number, off: () => void) {
+    if (this.bootId$.getValue() === null) {
+      this.bootId$.next([...Array(10)].map(() => Math.random().toString(36)[2]).join(''));
+      this.bootProcess$.next(0);
+      this.logInfo('Booting Mux OS');
+      this.off = off;
+      this.logInfo('Functions loaded');
+      this.bootProcess$.next(0.2);
+      await new Promise(resolve => setTimeout(resolve, bootTime * 0.1));
+      this.install(...programs);
+      this.bootProcess$.next(0.9);
+      await new Promise(resolve => setTimeout(resolve, bootTime * 0.8));
+      this.logInfo('Mux OS booted up');
+      await new Promise(resolve => setTimeout(resolve, bootTime * 0.1));
+      this.bootProcess$.next(1);
+    }
   }
 
   getProgramsBySlot(slot: string) {
@@ -68,10 +71,20 @@ export class MuxOs {
       .filter(p => p.slots && p.slots.some(s => s === slot));
   }
 
-  reset() {
-    this.bootProcess$.next(0);
-    this.stdout$.next([]);
+  clearState() {
     this.programs$.next(new Map());
+    this.programStates$.next(new Map());
+  }
+
+  pause() {
+    this.stdout$.next([]);
+    this.bootId$.next(null);
+    this.off();
+  }
+
+  shutdown() {
+    this.clearState();
+    this.pause();
   }
 
   logInfo(message: string) {
@@ -109,7 +122,7 @@ export class MuxOs {
     if (program) {
       MuxOs.get().logInfo(`Starting program with id ${programId}`);
       const programStates = new Map(this.programStates$.getValue());
-      programStates.set(programId, { program, isRunning: true, window: { x: 0, y: 0, width: 400, height: 300 } });
+      programStates.set(programId, { program, isRunning: true });
       this.programStates$.next(programStates);
     } else {
       MuxOs.get().logError(`Tried to start program with id ${programId}, but it does not exist`);
@@ -121,16 +134,5 @@ export class MuxOs {
     const programStates = new Map(this.programStates$.getValue());
     programStates.delete(programId);
     this.programStates$.next(programStates);
-  }
-
-  changeProgramWindow(programId: string, window: MuxProgramState['window']) {
-    const programStates = new Map(this.programStates$.getValue());
-    const programState = programStates.get(programId);
-    if (programState) {
-      programStates.set(programId, { ...programState, window });
-      this.programStates$.next(programStates);
-    } else {
-      MuxOs.get().logWarn(`Could not change window for Program with id ${programId}, it has not been started`);
-    }
   }
 }
