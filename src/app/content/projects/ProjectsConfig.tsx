@@ -24,7 +24,8 @@ export const projects: Project[] = [
   {
     name: 'Magic Anagram',
     id: 'magic',
-    iconPath: 'https://github.com/tmunz/MagicAnagram/blob/main/favicon.png?raw=true',
+    iconPath: require('./assets/magic_anagram.png'),
+    iconMonoColor: true,
     description: 'Animate from a word to an anagram of it.',
     githubLink: 'https://github.com/tmunz/MagicAnagram',
     component: <iframe width='100%' height='100%' frameBorder="0" src='https://tmunz.github.io/MagicAnagram' />,
@@ -57,6 +58,7 @@ export const projects: Project[] = [
     name: 'Canvacity',
     id: 'canvacity',
     iconPath: require('./assets/canvacity.png'),
+    iconMonoColor: true,
     description: 'Concept for the "Tomorrow Talks" contest',
     component: <iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/DGJMyKJZBu8?si=3Ufo-i-X1Vk_o36w" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>,
   },

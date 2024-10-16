@@ -10,12 +10,16 @@ export function useTouchHandler({ canvas, onPositionChanged, startPaint, endPain
   if (!canvas) return () => {};
 
   const handleTouchMove = (e: TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     const touch = e.touches[0];
     const rect = canvas.getBoundingClientRect();
     onPositionChanged({ x: touch.clientX - rect.left, y: touch.clientY - rect.top });
   };
 
   const handleTouchStart = (e: TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     preventOverscrollBehaviour();
     const touch = e.touches[0];
     const rect = canvas.getBoundingClientRect();

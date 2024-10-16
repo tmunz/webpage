@@ -2,6 +2,11 @@
   --actionColor: #444;
   --activeColor: #222;
   --photoBackgroundColor: #aadbc3;
+  --sectionMargin: 20px;
+
+  @media screen and (max-width: 800px) {
+    --sectionMargin: 0px;
+  }
 
   height: 100%;
   width: 100%;
@@ -19,6 +24,11 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
+
+    .camera-viewer-overlay {
+      left: var(--sectionMargin);
+      right: var(--sectionMargin);
+    }
   }
 
   .camera-viewer-focusing {
@@ -30,7 +40,8 @@
   }
 
   .photo-section {
-    margin: 0 30px;
+    margin: 0 var(--sectionMargin);
+    padding: 0 10px;
 
     &:first-of-type {
       .photo-section-title {
@@ -68,19 +79,6 @@
 
     .photo-section-content {
       width: 100%;
-    }
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .photo {
-    .camera-viewer .camera-viewer-overlay {
-      left: 0px;
-      right: 0px;
-    }
-
-    .photo-section {
-      margin: 0 10px;
     }
   }
 }

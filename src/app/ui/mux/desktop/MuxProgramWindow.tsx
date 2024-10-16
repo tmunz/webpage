@@ -10,11 +10,7 @@ export const MuxProgramWindow = ({ program }: { program: MuxProgram }) => {
 
   return (
     <div className='mux-program-window'>
-      <MuxProgramWindowBar
-        title={program.name}
-        about={program.about}
-        onClose={() => muxOs.quitProgram(program.id)}
-      />
+      <MuxProgramWindowBar program={program} />
       <div className='mux-program-window-content'>
         {program.component(muxOs)}
       </div>

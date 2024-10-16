@@ -44,9 +44,10 @@ export const StandardClockComponent = ({ dateTime$ }: { dateTime$: Observable<Da
 export const StandardClock: MuxProgram = {
   name: 'Clock',
   id: 'standard-clock',
-  description: 'standard clock',
+  description: 'MuxOs standard clock',
   component: (muxOs: MuxOs) => StandardClockComponent({ dateTime$: muxOs.dateTime$ }),
-  about: <div>System Standard Clock</div>,
+  about: <div>MuxOs Standard Clock</div>,
   slots: ['clock'],
   iconPath: require('./standard-clock-icon.png'),
+  iconMonoColor: true,
 }

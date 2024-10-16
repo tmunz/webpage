@@ -1,7 +1,8 @@
+import './MuxMenu.styl';
 import { MuxOs } from '../MuxOs';
 import { MuxProgram } from '../MuxProgram';
-import './MuxMenu.styl';
 import React, { useState } from "react";
+import { MuxProgramIcon } from './MuxProgramIcon';
 
 interface MuxMenuProps {
   programs: Map<string, MuxProgram>;
@@ -28,13 +29,13 @@ export const MuxMenu = ({ programs, onOpen }: MuxMenuProps) => {
                   onOpen(p.id);
                   setMenuOpen(false);
                 }}>
-                  <img src={p.iconPath} alt={p.name} />
+                  <MuxProgramIcon path={p.iconPath} name={p.name} monoColor={p.iconMonoColor} />
                   <span>{p.name}</span>
                 </button>
               </li>
             ))}
         </ul>
-        <hr/>
+        <hr />
         <ul className='controls'>
           <li><button onClick={() => MuxOs.get().pause()}>pause</button></li>
           <li><button onClick={() => MuxOs.get().shutdown()}>shutdown</button></li>

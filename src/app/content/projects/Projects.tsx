@@ -10,12 +10,8 @@ import { MuxProgram } from '../../ui/mux/MuxProgram';
 export function Projects(props: { onClose: () => void }) {
 
   const { current: programs } = useRef<MuxProgram[]>(projects.map(project => ({
-    name: project.name,
-    id: project.id,
-    iconPath: project.iconPath,
-    description: project.description,
+    ...project,
     pinned: project.highlight,
-    slots: project.slots,
     about: <div className='project-about'>
       <div className='info'>{project.description}</div>
       {

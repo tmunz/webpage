@@ -1,13 +1,18 @@
-import { Polaroid } from '../../../effects/Polaroid';
-import { Taped } from '../../../effects/Taped';
 import './Mb300slPainting.styl';
 import React from 'react';
-export function Mb300slPainting() {
+import { Taped } from '../../../effects/Taped';
+import { PaintingCanvas } from '../../../effects/PaintingCanvas';
 
 
+export function Mb300slPainting({ width }: { width: number }) {
   return (
-    <Polaroid className='mb-300sl-painting' caption='300SL'>
-      <img {...require(`./300sl.jpg?{sizes:[200, 400, 720, 1200, 2000], format: 'webp'}`)} draggable={false} alt='300sl painting' />
+    <PaintingCanvas className='mb-300sl-painting'>
+      <img
+        {...require(`./300sl.jpg?{sizes:[200, 400, 720, 1200, 2000], format: 'webp'}`)}
+        style={{ width, height: 'auto' }}
+        draggable={false}
+        alt='300sl painting'
+      />
       <div className='text-container'>
         <h3>Would you like to own a unique painting like this?</h3>
         <p>Reach out to commission a personalized artwork, whether it's of your beloved pet, favorite car, or something special to you.</p>
@@ -18,6 +23,6 @@ export function Mb300slPainting() {
           </Taped>
         </div>
       </div>
-    </Polaroid>
+    </PaintingCanvas>
   );
 }

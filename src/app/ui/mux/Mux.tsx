@@ -1,12 +1,13 @@
 import './Mux.styl';
-import { useEffect, useState } from "react";
-import { MuxDesktop } from "./desktop/MuxDesktop";
-import { MuxProgram } from "./MuxProgram";
-import { Log, MuxOs } from "./MuxOs";
-import React from "react";
-import { MuxBootScreen } from "./MuxBootScreen";
-import { StandardClock } from "./programs/standard-clock/StandardClock";
+import { useEffect, useState } from 'react';
+import { MuxDesktop } from './desktop/MuxDesktop';
+import { MuxProgram } from './MuxProgram';
+import { Log, MuxOs } from './MuxOs';
+import React from 'react';
+import { MuxBootScreen } from './MuxBootScreen';
+import { StandardClock } from './programs/standard-clock/StandardClock';
 import { Terminal } from './programs/terminal/Terminal';
+import { Draw } from './programs/draw/Draw';
 
 export interface MuxProps {
   programs: MuxProgram[];
@@ -17,6 +18,7 @@ export interface MuxProps {
 const DEFAULT_PROGRAMS: MuxProgram[] = [
   StandardClock,
   Terminal,
+  Draw,
 ];
 
 

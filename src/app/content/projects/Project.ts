@@ -4,6 +4,7 @@ export interface Project {
   name: string;
   id: string;
   iconPath: string;
+  iconMonoColor?: boolean;
   pinned?: boolean;
   description: string;
   githubLink?: string;

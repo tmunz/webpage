@@ -1,6 +1,7 @@
 .mux-taskbar {
   --gap: 10px;
   --imgSize: 32px;
+  --padding: 4px;
 
   display: flex;
   justify-content: space-between;
@@ -24,11 +25,16 @@
   }
 
   .mux-taskbar-pinned-programs li {
-    padding: var(--gap) 0;
+    padding: calc(var(--gap) - var(--padding)) 0;
     scroll-snap-align: center;
     position: relative;
     display: grid;
     grid-template-rows: 1fr 2px;
+    
+    button {
+      padding: var(--padding);
+      border-radius: var(--muxBorderRadius);
+    }
 
     .program-indicator {
       width: 100%;

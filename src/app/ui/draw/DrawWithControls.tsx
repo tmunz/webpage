@@ -1,19 +1,19 @@
-import './OilPaintingWithControls.styl';
+import './DrawWithControls.styl';
 import React, { useRef, useState, MouseEvent } from 'react';
-import { OilPainting } from './OilPainting';
+import { Draw } from './Draw';
 import { PieMenu } from '../PieMenu';
 
 
 const CONTROL_SIZE = 200
 
-export const OilPaintingWithControls = ({ width, height }: { width: number, height: number }) => {
+export const DrawWithControls = ({ width, height }: { width: number, height: number }) => {
   const [color, setColor] = useState({ r: 0, g: 0, b: 0 });
   const [distribution, setDistribution] = useState(10);
   const [strokeWidth, setStrokeWidth] = useState(50);
   const [maxSprankleSize, setMaxSprankleSize] = useState(5);
   const [controlsVisible, setControlsVisible] = useState(false);
   const [controlsPosition, setControlsPosition] = useState({ x: 0, y: 0 });
-  const oilPaintingRef = useRef<{ undo: () => void; redo: () => void; reset: () => void }>(null);
+  const drawRef = useRef<{ undo: () => void; redo: () => void; reset: () => void }>(null);
 
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const hexColor = e.target.value;
@@ -37,15 +37,15 @@ export const OilPaintingWithControls = ({ width, height }: { width: number, heig
   };
 
   return (
-    <div className="oil-painting-with-controls">
+    <div className="draw-with-controls">
       {controlsVisible && (
         <div
           className="controls"
           style={{ top: controlsPosition.y, left: controlsPosition.x }}
         >
           <PieMenu size={CONTROL_SIZE} innerCircleRatio={0.3}>
-            <button onClick={() => oilPaintingRef.current?.reset()}>🗌</button>
-            <button onClick={() => oilPaintingRef.current?.redo()}>⎘</button>
+            <button onClick={() => drawRef.current?.reset()}>🗌</button>
+            <button onClick={() => drawRef.current?.redo()}>⎘</button>
             <input type="color" onChange={handleColorChange} />
             <label>
               <span>|</span>
@@ -77,14 +77,14 @@ export const OilPaintingWithControls = ({ width, height }: { width: number, heig
                 onChange={(e) => setDistribution(parseFloat(e.target.value))}
               />
             </label>
-            <button onClick={() => oilPaintingRef.current?.undo()}>⎗</button>
+            <button onClick={() => drawRef.current?.undo()}>⎗</button>
 
           </PieMenu>
           <button className="close-controls" onClick={closeControls}>✖</button>
         </div>
       )}
-      <OilPainting
-        ref={oilPaintingRef}
+      <Draw
+        ref={drawRef}
         width={width}
         height={height}
         color={color}

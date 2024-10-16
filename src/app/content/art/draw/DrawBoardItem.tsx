@@ -1,10 +1,10 @@
-import './PaintDragBoardItem.styl';
+import './DrawBoardItem.styl';
 import React, { useState } from 'react';
 import { PaperFolding } from '../../../effects/PaperFolding';
-import { OilPaintingWithControls } from '../../../ui/oil-painting/OilPaintingWithControls';
+import { DrawWithControls } from '../../../ui/draw/DrawWithControls';
 import { DragBoardItem } from '../../../ui/drag-board/DragBoardItem';
 
-export function PaintDragBoardItem({ width, height, gap = 40 }: { width: number, height: number, gap?: number }) {
+export function DrawBoardItem({ width, height, gap = 40 }: { width: number, height: number, gap?: number }) {
 
   const [active, setActive] = useState(false);
 
@@ -13,10 +13,10 @@ export function PaintDragBoardItem({ width, height, gap = 40 }: { width: number,
     x={active ? 0 : undefined}
     y={active ? 0 : undefined}
     rotation={active ? 0 : undefined}
-    className='paint-drag-board-item'
+    className='draw-board-item'
   >
     <PaperFolding onUnfold={() => setActive(true)} onInfold={() => setActive(false)} title='Paint your own Masterpiece'>
-      <OilPaintingWithControls width={width - 2 * gap} height={height - 2 * gap} />
+      <DrawWithControls width={width - 2 * gap} height={height - 2 * gap} />
     </PaperFolding>
   </DragBoardItem >;
 }

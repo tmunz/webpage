@@ -1,12 +1,12 @@
 import React, { forwardRef, MouseEvent, useEffect, useImperativeHandle, useRef } from "react";
 import { AvgCalculator } from "../../utils/AvgCalculator";
 import { HistoryManager } from "../../utils/HistoryManager";
-import { useMouseHandler } from "./OilPaintingMouseHandler";
-import { useTouchHandler } from "./OilPaintingTouchHandler";
-import { useKeyboardHandler } from "./OilPaintingKeyboardHandler";
+import { useMouseHandler } from "./DrawMouseHandler";
+import { useTouchHandler } from "./DrawTouchHandler";
+import { useKeyboardHandler } from "./DrawKeyboardHandler";
 
 
-interface OilPaintingProps {
+interface DrawProps {
   width: number,
   height: number,
   color?: { r: number, g: number, b: number };
@@ -16,8 +16,8 @@ interface OilPaintingProps {
   onControlRequest?: (event: MouseEvent, rect?: DOMRect) => void;
 }
 
-export const OilPainting = forwardRef(
-  function OilPainting({ width, height, color = { r: 0, g: 0, b: 0 }, strokeWidth = 10, maxSprankleSize = 10, distribution = 10, onControlRequest }: OilPaintingProps, ref) {
+export const Draw = forwardRef(
+  function Draw({ width, height, color = { r: 0, g: 0, b: 0 }, strokeWidth = 10, maxSprankleSize = 10, distribution = 10, onControlRequest }: DrawProps, ref) {
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const intervalRef = useRef<number | null>(null);
@@ -187,5 +187,12 @@ export const OilPainting = forwardRef(
       undo, redo, reset, canUndo: history.canUndo, canRedo: history.canRedo,
     }));
 
-    return <canvas ref={canvasRef} className="oil-painting" width={width} height={height} style={{ width, height }} onContextMenu={(e) => onControlRequest?.(e, canvasRef.current?.getBoundingClientRect())} />;
+    return <canvas
+      ref={canvasRef}
+      className="draw"
+      width={width}
+      height={height}
+      style={{ width, height, cursor: 'crosshair' }}
+      onContextMenu={(e) => onControlRequest?.(e, canvasRef.current?.getBoundingClientRect())}
+    />;
   });

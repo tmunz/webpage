@@ -1,7 +1,7 @@
-import React from "react";
-import { Cli } from "../../../Cli";
-import { MuxProgram } from "../../MuxProgram";
-import { MuxOs } from "../../MuxOs";
+import React from 'react';
+import { Cli } from '../../../Cli';
+import { MuxProgram } from '../../MuxProgram';
+import { MuxOs } from '../../MuxOs';
 
 interface MuxCliProps {
   programs: MuxProgram[];
@@ -19,11 +19,11 @@ const TerminalComponent = ({ programs, onStartProgram, onQuitProgram, onShutdown
     {
       cmd: 'describe', exec: (arg?: string) => {
         if (!arg) {
-          return 'Please provide a program name';
+          return 'please provide a program name';
         }
         const program = programs.find(p => p.id === arg || p.name === arg);
         if (!program) {
-          return 'Program not found';
+          return 'program not found';
         }
         return program?.description;
       }, description: 'describes the selected program (name or id)'
@@ -31,36 +31,36 @@ const TerminalComponent = ({ programs, onStartProgram, onQuitProgram, onShutdown
     {
       cmd: 'start', exec: (arg?: string) => {
         if (!arg) {
-          return 'Please provide a program name';
+          return 'please provide a program name';
         }
         const program = programs.find(p => p.id === arg || p.name === arg);
         if (!program) {
-          return 'Program not found';
+          return 'program not found';
         }
         onStartProgram(program.id);
-        return `Starting ${program.name} ...`;
-      }, description: 'Starts the selected program (name or id)'
+        return `starting ${program.name} ...`;
+      }, description: 'starts the selected program (name or id)'
     },
     {
       cmd: 'quit', exec: (arg?: string) => {
         if (!arg) {
-          return 'Please provide a program name';
+          return 'please provide a program name';
         }
         const program = programs.find(p => p.id === arg || p.name === arg);
         if (!program) {
-          return 'Program not found';
+          return 'program not found';
         }
         onQuitProgram(program.id);
-        return `Quitting ${program.name} ...`;
+        return `quitting ${program.name} ...`;
       }, description: 'quits the selected program (name or id)'
     },
-    { cmd: 'shutdown', exec: () => { onShutdownRequest(); return 'shutdown'; }, description: 'shuts down muxOS and navigates back to the main overview' },
-    { cmd: 'pause', exec: () => { onPauseRequest(); return 'pause'; }, description: 'navigates back to the main overview but programs remain open' },
+    { cmd: 'shutdown', exec: () => { onShutdownRequest(); return 'shutdown'; }, description: 'turns off MuxOs' },
+    { cmd: 'pause', exec: () => { onPauseRequest(); return 'pause'; }, description: 'turns off MuxOs but state remains when restarting' },
   ];
 
   return <Cli
     title='Terminal'
-    welcomeMessage={`Welcome to the Terminal, use "help" to get started\n_________________________________________________________\n`}
+    welcomeMessage={`Welcome to the Terminal, use 'help' to get started\n_________________________________________________________\n`}
     promptLabel='>>>'
     cmds={
       (input: string) => {
@@ -78,7 +78,7 @@ const TerminalComponent = ({ programs, onStartProgram, onQuitProgram, onShutdown
 export const Terminal: MuxProgram = {
   name: 'Terminal',
   id: 'terminal',
-  description: 'standard cli',
+  description: 'MuxOs standard cli',
   component: (muxOs: MuxOs) => TerminalComponent({
     programs: [...muxOs.programs$.getValue().values()],
     onStartProgram: (programId) => muxOs.startProgram(programId),
@@ -88,4 +88,6 @@ export const Terminal: MuxProgram = {
   }),
   about: <div>System Standard Command Line Interface</div>,
   iconPath: require('./terminal-icon.png'),
+  iconMonoColor: true,
+  pinned: true,
 }

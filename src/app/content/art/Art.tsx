@@ -1,7 +1,7 @@
 import './Art.styl';
 import React from 'react';
 import { DragBoard } from '../../ui/drag-board/DragBoard';
-import { PaintDragBoardItem } from './create-your-own/PaintDragBoardItem';
+import { DrawBoardItem } from './draw/DrawBoardItem';
 import { useDimension } from '../../utils/useDimension';
 import { DragBoardItem } from '../../ui/drag-board/DragBoardItem';
 import { CitroenDsLamp } from './citroen-ds-lamp/CitroenDsLamp';
@@ -15,12 +15,12 @@ export function Art() {
 
   return <div className='art' ref={elementRef}>
     <DragBoard
-      placementPattern={[{ x: -10, y: -20, rotation: -2 }, { x: 10, y: 25, rotation: 1 }, { x: 40, y: 30, rotation: -0.5 }]}
+      placementPattern={[{ x: -10, y: 0, rotation: 0.5 }, { x: 50, y: 5, rotation: -1.5 }, { x: -60, y: 10, rotation: -2 }]}
       indicator
     >
-      <DragBoardItem><CitroenDsLamp width={(dimension?.width ?? 400) * 0.6} height={(dimension?.height ?? 400) * 0.6} /></DragBoardItem>
-      <PaintDragBoardItem width={dimension?.width ?? 400} height={dimension?.height ?? 400} />
-      <DragBoardItem><Mb300slPainting /></DragBoardItem>
+      <DragBoardItem><CitroenDsLamp width={(dimension?.width ?? 600) * 0.6} height={(dimension?.height ?? 400) * 0.6} /></DragBoardItem>
+      <DrawBoardItem width={dimension?.width ?? 600} height={dimension?.height ?? 400} />
+      <DragBoardItem><Mb300slPainting width={Math.max(500, (dimension?.width ?? 500) * 0.3)}/></DragBoardItem>
     </DragBoard>
   </div>;
 }

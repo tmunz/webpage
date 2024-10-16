@@ -5,6 +5,7 @@ export interface MuxProgram {
   name: string;
   id: string;
   iconPath: string;
+  iconMonoColor?: boolean;
   description: string;
   component: (muxOs: MuxOs) => ReactNode;
   about: ReactNode

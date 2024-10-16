@@ -2,6 +2,7 @@ import './MuxTaskbar.styl';
 import React from 'react';
 import { MuxProgram, MuxProgramState } from '../MuxProgram';
 import { MuxOs } from '../MuxOs';
+import { MuxProgramIcon } from './MuxProgramIcon';
 
 interface MuxTaskBarProps {
   programStates: Map<string, MuxProgramState>;
@@ -33,7 +34,7 @@ export const MuxTaskbar = ({ programStates, programs, clock, onOpen }: MuxTaskBa
           .map(ps => (
             <li key={ps.program.id}>
               <button onClick={() => { onOpen(ps.program.id); }}>
-                <img src={ps.program.iconPath} alt={ps.program.name} />
+                <MuxProgramIcon path={ps.program.iconPath} name={ps.program.name} monoColor={ps.program.iconMonoColor} />
               </button>
               <div className={`program-indicator ${ps.isRunning ? 'program-indicator-active' : ''}`} />
             </li>

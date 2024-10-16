@@ -20,12 +20,21 @@
       padding: 19px 19px;
       width: 100%;
       height: 100%;
+
+      .polaroid-backside-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 
   .polaroid-image {
     width: 306px;
     height: 313px;
+    background-color: black;
 
     &>*,
     img {
@@ -33,7 +42,6 @@
       height: 100%;
       object-fit: cover;
       object-position: 50% 50%;
-      background-color: rgba(0, 0, 0, 1);
       pointer-events: none;
       position: relative;
     }
