@@ -55,14 +55,17 @@ export const useUserEvents = (
   }, [selectedItemId, onMove, onEnd]);
 
   // flip through
+  const lastScrollTimeRef = useRef(0);
+  const scrollDelay = 150;
   useEffect(() => {
     const handleScroll = (e: WheelEvent) => {
-      if (e.target !== dragBoardRef.current) return;
-      const startPosition = scrollRef.current;
-      scrollRef.current += e.deltaY / 6;
-      const delta = Math.round(startPosition - scrollRef.current)
-      onFlipThrough(Math.round(delta));
-    }
+      const now = Date.now();
+      if (e.target !== dragBoardRef.current || now - lastScrollTimeRef.current < scrollDelay) {
+        return;
+      }
+      lastScrollTimeRef.current = now;
+      onFlipThrough(Math.round(Math.sign(e.deltaY)));
+    };
 
     const dragBoard = dragBoardRef.current;
     if (dragBoard) {
