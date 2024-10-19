@@ -65,7 +65,7 @@ The project serves static files and a React-based front-end application. The mai
 
 ## License
 
-The code of this project is licensed under the MIT License, however all resources are licensed under (CC BY-NC 4.0)[https://creativecommons.org/licenses/by-nc/4.0/deed.en]. See the [LICENSE](LICENSE) file for details.
+The code of this project is licensed under the MIT License, however All assets such as images, graphics, or models (e.g., jpg, jpeg, png, gif, webp, svg, glb) bundled with this software remain the intellectual property of their respective creators or rights holders. See the [LICENSE](LICENSE) file for details.
 
 ---
 
