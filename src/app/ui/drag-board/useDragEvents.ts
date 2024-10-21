@@ -5,7 +5,8 @@ import { SelectedDragBoardItem } from './SelectedDragBoardItem';
 const THRESHOLD = 10;
 
 export const useDragEvents = (
-  setItemStates: React.Dispatch<React.SetStateAction<Map<string, DragBoardItemState>>>,
+  itemStates: Map<string, DragBoardItemState>,
+  updateItemState: (id: string, itemState: Partial<DragBoardItemState>) => void,
   selectedItem: SelectedDragBoardItem | null,
   setSelectedItem: React.Dispatch<React.SetStateAction<SelectedDragBoardItem | null>>,
   boardRef: React.RefObject<HTMLDivElement>
@@ -16,65 +17,43 @@ export const useDragEvents = (
     if (!selectedItem.isDragging && Math.abs(e.clientX - selectedItem.startX) + Math.abs(e.clientY - selectedItem.startY) > THRESHOLD) {
       setSelectedItem((prev) => prev && { ...prev, isDragging: true });
     }
-
-    setItemStates((prevStates) => {
-      const states = new Map(prevStates);
-      const itemState = states.get(selectedItem.id);
-
-      if (itemState) {
-        states.set(selectedItem.id, {
-          ...itemState,
-          target: {
-            x: e.clientX - selectedItem.offsetX,
-            y: e.clientY - selectedItem.offsetY,
-            rotation: itemState.current.rotation,
-          },
-        });
-      }
-      return states;
+    updateItemState(selectedItem.id, {
+      x: e.clientX - selectedItem.offsetX,
+      y: e.clientY - selectedItem.offsetY,
     });
   }, [selectedItem]);
 
   const handleDragEnd = useCallback(() => {
-    setItemStates((prevStates) => {
-      const boardRect = boardRef.current?.getBoundingClientRect();
-      setSelectedItem(null);
-      if (!selectedItem || !boardRect) return prevStates;
-      const newState = new Map(prevStates);
-      const itemState = newState.get(selectedItem.id);
+    const boardRect = boardRef.current?.getBoundingClientRect();
+    setSelectedItem(null);
+    if (!selectedItem || !boardRect) return;
+    const itemState = itemStates.get(selectedItem.id);
+    if (!itemState) return;
 
-      if (itemState) {
-        const maxX = (boardRect.width - selectedItem.width) / 2;
-        const maxY = (boardRect.height - selectedItem.height) / 2;
-        const currentItemState = itemState.current;
-        let targetX = currentItemState.x;
-        let targetY = currentItemState.y;
-        let targetRotation = currentItemState.rotation;
+    const maxX = (boardRect.width - selectedItem.width) / 2;
+    const maxY = (boardRect.height - selectedItem.height) / 2;
+    let targetX = itemState.x;
+    let targetY = itemState.y;
+    let targetRotation = itemState.rotation;
 
-        if (currentItemState.x < -maxX) {
-          targetX = -maxX;
-          targetRotation = bounceAngle(currentItemState.rotation);
-        } else if (currentItemState.x > maxX) {
-          targetX = maxX;
-          targetRotation = bounceAngle(currentItemState.rotation);
-        }
+    if (itemState.x < -maxX) {
+      targetX = -maxX;
+      targetRotation = bounceAngle(itemState.rotation);
+    } else if (itemState.x > maxX) {
+      targetX = maxX;
+      targetRotation = bounceAngle(itemState.rotation);
+    }
 
-        if (currentItemState.y < -maxY) {
-          targetY = -maxY;
-          targetRotation = bounceAngle(currentItemState.rotation);
-        } else if (currentItemState.y > maxY) {
-          targetY = maxY;
-          targetRotation = bounceAngle(currentItemState.rotation);
-        }
+    if (itemState.y < -maxY) {
+      targetY = -maxY;
+      targetRotation = bounceAngle(itemState.rotation);
+    } else if (itemState.y > maxY) {
+      targetY = maxY;
+      targetRotation = bounceAngle(itemState.rotation);
+    }
 
-        newState.set(selectedItem.id, {
-          ...itemState,
-          target: { x: targetX, y: targetY, rotation: targetRotation },
-        });
-      }
-      return newState;
-    });
-  }, [selectedItem, boardRef]);
+    updateItemState(selectedItem.id, { x: targetX, y: targetY, rotation: targetRotation });
+  }, [selectedItem, itemStates, boardRef]);
 
   const bounceAngle = (angle: number) => {
     const referenceAngle = Math.round(angle / 90) * 90;

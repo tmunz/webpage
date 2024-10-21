@@ -5,7 +5,6 @@ import { useUserEvents } from './DragBoardUserEvents';
 import { useDragBoardState } from './useDragBoardState';
 import { useDragEvents } from './useDragEvents';
 import { DragBoardIndicator } from './DragBoardIndicator';
-import { useDragBoardItemSelect } from './useDragBoardItemSelect';
 
 export interface DragBoardProps {
   children: React.ReactNode;
@@ -25,9 +24,8 @@ export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PA
 
   const boardRef = useRef<HTMLDivElement>(null);
 
-  const { itemStates, setItemStates } = useDragBoardState(children, placementPattern, SMOOTHNESS, mapChildrenToIds);
-  const { selectedItem, setSelectedItem, updateSelectedItem, setSelectItemByDelta } = useDragBoardItemSelect(setItemStates);
-  const { handleDragging, handleDragEnd } = useDragEvents(setItemStates, selectedItem, updateSelectedItem, boardRef);
+  const { itemStates, updateItemState, selectedItem, setSelectedItem, updateSelectedItem, setSelectItemByDelta } = useDragBoardState(children, placementPattern, SMOOTHNESS, mapChildrenToIds);
+  const { handleDragging, handleDragEnd } = useDragEvents(itemStates, updateItemState, selectedItem, updateSelectedItem, boardRef);
   useUserEvents(boardRef, selectedItem?.id ?? null, handleDragging, handleDragEnd, setSelectItemByDelta);
 
   return (
@@ -47,15 +45,8 @@ export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PA
         );
       })}
       {indicator && <DragBoardIndicator
-        sortedItems={mapChildrenToIds(children).map(id => ({ id, zIndex: itemStates.get(id)?.current.z ?? -1 }))}
-        onSelect={(id, zIndex) => setItemStates(prevStates => {
-          const states = new Map(prevStates);
-          const selectedState = states.get(id);
-          if (selectedState) {
-            states.set(id, { ...selectedState, current: { ...selectedState.current, z: zIndex } });
-          }
-          return states;
-        })}
+        sortedItems={mapChildrenToIds(children).map(id => ({ id, zIndex: itemStates.get(id)?.z ?? -1 }))}
+        onSelect={(id, zIndex) => updateItemState(id, { z: zIndex })}
       />}
     </div>
   );

@@ -9,8 +9,6 @@ export const useUserEvents = (
   onFlipThrough: (delta: number) => void,
 ) => {
 
-  const scrollRef = useRef<number>(0);
-
   useEffect(() => {
     const handleTouchMove = (e: TouchEvent) => {
       const touch = e.touches[0];

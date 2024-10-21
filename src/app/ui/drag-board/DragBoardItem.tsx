@@ -11,18 +11,13 @@ export interface DragBoardItemConsuming extends DragBoardItemState {
 
 export interface DragBoardItemState {
   id: string;
-  current: DragBoardItemCurrentState;
-  target: { x?: number; y?: number; rotation?: number };
-}
-
-export interface DragBoardItemCurrentState {
   x: number;
   y: number;
   z: number;
   rotation: number;
 }
 
-interface DragBoardItemProps extends Partial<DragBoardItemCurrentState> {
+interface DragBoardItemProps extends Partial<DragBoardItemState> {
   children?: ReactNode;
   disableDrag?: boolean;
   className?: string;
@@ -35,10 +30,10 @@ export const DragBoardItem = (props: DragBoardItemProps) => {
     <DragBoardItemContext.Consumer>
       {(value: DragBoardItemConsuming | null) => {
         if (!value) return null;
-        const x = props?.x ?? value.current.x;
-        const y = props?.y ?? value.current.y;
-        const z = props?.z ?? value.current.z;
-        const rotation = props?.rotation ?? value.current.rotation;
+        const x = props?.x ?? value.x;
+        const y = props?.y ?? value.y;
+        const z = props?.z ?? value.z;
+        const rotation = props?.rotation ?? value.rotation;
 
         return <div
           key={value.id}

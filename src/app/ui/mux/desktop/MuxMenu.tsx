@@ -38,6 +38,7 @@ export const MuxMenu = ({ programs, onOpen }: MuxMenuProps) => {
         <hr />
         <ul className='controls'>
           <li><button onClick={() => MuxOs.get().pause()}>pause</button></li>
+          <li><button onClick={() => MuxOs.get().sleep()}>sleep</button></li>
           <li><button onClick={() => MuxOs.get().shutdown()}>shutdown</button></li>
         </ul>
       </div>

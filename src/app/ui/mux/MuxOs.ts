@@ -51,7 +51,6 @@ export class MuxOs {
   async boot(programs: MuxProgram[], bootTime: number, off: () => void) {
     if (this.bootId$.getValue() === null) {
       this.bootId$.next([...Array(10)].map(() => Math.random().toString(36)[2]).join(''));
-      this.bootProcess$.next(0);
       this.logInfo('Booting Mux OS');
       this.off = off;
       this.logInfo('Functions loaded');
@@ -77,6 +76,10 @@ export class MuxOs {
   }
 
   pause() {
+    this.off();
+  }
+
+  sleep() {
     this.stdout$.next([]);
     this.bootId$.next(null);
     this.off();
@@ -84,7 +87,7 @@ export class MuxOs {
 
   shutdown() {
     this.clearState();
-    this.pause();
+    this.sleep();
   }
 
   logInfo(message: string) {

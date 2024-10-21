@@ -12,7 +12,7 @@ export function Brick({ onLoadComplete }: { onLoadComplete: (model: Object3D) =>
     if (file.scene && modelRef.current) {
       onLoadComplete(modelRef.current);
     }
-  }, [file, onLoadComplete, modelRef.current]);
+  }, [file, modelRef.current]);
 
   return (
     <group ref={modelRef}>

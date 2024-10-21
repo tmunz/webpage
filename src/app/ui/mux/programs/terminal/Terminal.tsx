@@ -54,8 +54,9 @@ const TerminalComponent = ({ programs, onStartProgram, onQuitProgram, onShutdown
         return `quitting ${program.name} ...`;
       }, description: 'quits the selected program (name or id)'
     },
+    { cmd: 'pause', exec: () => { onPauseRequest(); return 'pause'; }, description: 'pauses MuxOs with no reboot when reentering' },
+    { cmd: 'sleep', exec: () => { onPauseRequest(); return 'sleep'; }, description: 'turns off MuxOs but state remains when restarting' },
     { cmd: 'shutdown', exec: () => { onShutdownRequest(); return 'shutdown'; }, description: 'turns off MuxOs' },
-    { cmd: 'pause', exec: () => { onPauseRequest(); return 'pause'; }, description: 'turns off MuxOs but state remains when restarting' },
   ];
 
   return <Cli
