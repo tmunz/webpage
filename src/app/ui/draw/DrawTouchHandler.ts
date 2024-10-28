@@ -18,7 +18,6 @@ export function useTouchHandler({ canvas, onPositionChanged, startPaint, endPain
   };
 
   const handleTouchStart = (e: TouchEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     preventOverscrollBehaviour();
     const touch = e.touches[0];

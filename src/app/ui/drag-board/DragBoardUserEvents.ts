@@ -58,7 +58,7 @@ export const useUserEvents = (
   useEffect(() => {
     const handleScroll = (e: WheelEvent) => {
       const now = Date.now();
-      if (e.target !== dragBoardRef.current || now - lastScrollTimeRef.current < scrollDelay) {
+      if (now - lastScrollTimeRef.current < scrollDelay) {
         return;
       }
       lastScrollTimeRef.current = now;

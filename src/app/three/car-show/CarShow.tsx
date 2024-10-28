@@ -1,6 +1,5 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import { Object3D, PerspectiveCamera as Camera, Vector3 } from 'three';
-
 import { ContactShadows, OrbitControls, Stats, PerspectiveCamera } from '@react-three/drei';
 import { Ground } from './Ground';
 import { ModelMovement } from './ModelMovement';
@@ -17,13 +16,17 @@ interface CarShowProps {
   onLoadComplete?: () => void;
 }
 
-export const CarShow = ({ animate, debug, Model, quality = Quality.LOW, controls = true, onLoadComplete }: CarShowProps) => {
+export const CarShow = forwardRef(({ animate, debug, Model, quality = Quality.LOW, controls = true, onLoadComplete }: CarShowProps, ref) => {
   const [model, setModel] = useState<Object3D | null>(null);
   const cameraRef = useRef<Camera>(null);
+  const controlsRef = useRef(null);
   const { current: center } = useRef(new Vector3(0, 1.5, 0));
   const { current: defaultDimensions } = useRef(new Vector3(2, 2.5, 5.5));
 
-  // Setup camera properties on initial mount
+  useImperativeHandle(ref, () => ({
+    controls: controlsRef.current
+  }));
+
   useEffect(() => {
     const camera = cameraRef.current;
     if (camera) {
@@ -51,6 +54,7 @@ export const CarShow = ({ animate, debug, Model, quality = Quality.LOW, controls
       <ModelMovement model={model} animate={animate} showPath={debug} />
       
       <OrbitControls
+        ref={controlsRef}
         enableRotate={controls}
         enablePan={false}
         enableZoom={false}
@@ -68,4 +72,4 @@ export const CarShow = ({ animate, debug, Model, quality = Quality.LOW, controls
       {debug && <Stats />}
     </>
   );
-};
+});

@@ -22,9 +22,9 @@ export function App() {
   });
 
   const frames: FrameProps[] = [
-    { id: 'vita', title: 'Vita', content: <Vita />, color: '#a3dbfc', imgSrc: './content/vita/vita_title.jpg', depthImgSrc: './content/vita/vita_title_depth.jpg' },
+    { id: 'vita', title: 'Vita / About', content: <Vita />, color: '#a3dbfc', imgSrc: './content/vita/vita_title.jpg', depthImgSrc: './content/vita/vita_title_depth.jpg' },
     { id: 'photo', title: 'Photography', content: <Photo />, color: '#aadbc3', imgSrc: './content/photo/photo_title.jpg', depthImgSrc: './content/photo/photo_title_depth.jpg' },
-    { id: 'art', title: 'Art / Design', content: <Art />, color: '#e84a0c', imgSrc: './content/art/art_title.jpg', depthImgSrc: './content/art/art_title_depth.jpg' },
+    { id: 'art', title: 'Design / Art', content: <Art />, color: '#e84a0c', imgSrc: './content/art/art_title.jpg', depthImgSrc: './content/art/art_title_depth.jpg' },
     { id: 'projects', title: 'Projects / Coding', content: <Projects onClose={() => handleClick('projects')} />, color: '#222222', imgSrc: './content/projects/projects_title.svg' },
     { id: 'bricks', title: 'Bricks', content: <Bricks />, color: '#d9b77f', imgSrc: './content/bricks/bricks_title.jpg', depthImgSrc: './content/bricks/bricks_title_depth.jpg' },
     /* / Concepts / Creations */
