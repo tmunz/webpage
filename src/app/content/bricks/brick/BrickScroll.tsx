@@ -10,7 +10,7 @@ export function BrickScroll({ transformations, progress }: { transformations: Tr
 
   useFrame(() => {
     if (ref.current) {
-      transformationAnimator.apply(ref.current, progress, 0.92);
+      transformationAnimator.apply(ref.current, progress, 0.82, 0.92);
     }
   });
 

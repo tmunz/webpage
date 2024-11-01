@@ -14,7 +14,8 @@ import { Mb300slContent } from './mb300sl/Mb300slContent';
 
 const SECTIONS = [
   'empty',
-  '',
+  undefined /* 300 SL  2 height*/,
+  undefined,
   < View style={{ height: 300 }}>
     <color attach="background" args={["lightblue"]} />
     <ambientLight intensity={0.5} />
@@ -86,16 +87,18 @@ export const Bricks = () => {
       }}
     >
       {SECTIONS.map((section, i) => {
-        return <section key={i} style={{ height: '100vh', overflow: 'hidden', position: 'relative' }}>{
-          (i === 1) ?
-            <>
-              <Mb300slContent />
-              <View style={{ height: '100%', width: '100vw', position: 'absolute', top: 0, left: 0 }}>
-                <Mb300slScroll transformations={SCROLL_STATES.mb300sl} progress={scroll} animationTrigger={[MB_300SL_TRIGGER[0] - 1 / L, MB_300SL_TRIGGER[1] + 1 / L]} />
-              </View>
-            </>
-            : section
-        }</section>
+        return (i === 1) ?
+          <section key={i} style={{ height: '200vh', overflow: 'hidden' }}>
+            <View style={{ width: '100vw', height: '100vh', position: 'sticky', top: 0 }}>
+              <Mb300slScroll transformations={SCROLL_STATES.mb300sl} progress={scroll} animationTrigger={[MB_300SL_TRIGGER[0] - 1 / L, MB_300SL_TRIGGER[1] + 1 / L]} />
+            </View>
+            {/* <Mb300slContent /> */}
+          </section>
+          :
+          (i === 2) ? null :
+            <section key={i} style={{ height: '100vh' }}>{
+              section
+            }</section>
       })}
 
       {/**************************************** overlay *******************************************/}

@@ -30,6 +30,6 @@ export function Mb300slScroll({ transformations, progress, animationTrigger }: {
 
 
   return (
-    <CarShow ref={carShowRef} Model={Mb300sl} animate={animate} quality={Quality.HIGH} controls={true} />
+    <CarShow ref={carShowRef} Model={Mb300sl} animate={animate} quality={Quality.HIGH} controls={false} />
   );
 };
