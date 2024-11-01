@@ -1,5 +1,5 @@
 import './Art.styl';
-import React from 'react';
+import React, { useRef } from 'react';
 import { DragBoard } from '../../ui/drag-board/DragBoard';
 import { DrawBoardItem } from './draw/DrawBoardItem';
 import { useDimension } from '../../utils/useDimension';
@@ -10,7 +10,7 @@ import { Mb300slPainting } from './mb300sl/Mb300slPainting';
 
 export function Art() {
 
-  const elementRef = React.useRef<HTMLDivElement>(null);
+  const elementRef = useRef<HTMLDivElement>(null);
   const dimension = useDimension(elementRef, 40);
 
   return <div className='art' ref={elementRef}>
@@ -20,7 +20,7 @@ export function Art() {
     >
       <DragBoardItem><CitroenDsLamp width={(dimension?.width ?? 600) * 0.6} height={(dimension?.height ?? 400) * 0.6} /></DragBoardItem>
       <DrawBoardItem width={dimension?.width ?? 600} height={dimension?.height ?? 400} />
-      <DragBoardItem><Mb300slPainting width={Math.max(500, (dimension?.width ?? 500) * 0.3)}/></DragBoardItem>
+      <DragBoardItem><Mb300slPainting width={Math.max(500, (dimension?.width ?? 500) * 0.3)} /></DragBoardItem>
     </DragBoard>
   </div>;
 }

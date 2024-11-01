@@ -17,6 +17,10 @@ export type TransformationMap = Map<number, Transformation>;
 
 export function useTransformationAnimator(transformations: Transformations | TransformationMap) {
 
+  const lerp = (start: number, end: number, factor: number) => {
+    return start + (end - start) * factor;
+  };
+
   const convertToTransformationMap = (raw: Transformations): TransformationMap => {
     const fullTransformation = (
       curr: Partial<Transformation>,
@@ -60,10 +64,6 @@ export function useTransformationAnimator(transformations: Transformations | Tra
       return transformationsMap.get(keys[keys.length - 1]) ?? neutralTransformation;
     }
 
-    const lerp = (start: number, end: number, factor: number) => {
-      return start + (end - start) * factor;
-    };
-
     for (let i = 0; i < keys.length - 1; i++) {
       const startKey = keys[i];
       const endKey = keys[i + 1];
@@ -84,13 +84,26 @@ export function useTransformationAnimator(transformations: Transformations | Tra
   const transformationsMap: TransformationMap = convertToTransformationMap(transformations);
 
   return {
-    get: (t: number) => get(t),
+    get: (t?: number) => get(t),
     getTransformationsMap: () => transformationsMap,
-    apply: (obj: Object3D, t: number) => {
-      const state = get(t);
-      obj.rotation.set(state.rotateX, state.rotateY, state.rotateZ);
-      obj.scale.set(state.scaleX, state.scaleY, state.scaleZ);
-      obj.position.set(state.positionX, state.positionY, state.positionZ);
+    apply: (obj: Object3D, t: number, damping: number = 0, fadeIn: number = damping) => {
+      const targetState = get(t);
+      const factor = Math.min((1 - (t === 0 ? fadeIn : damping)), 1);
+      obj.rotation.set(
+        lerp(obj.rotation.x, targetState.rotateX, factor),
+        lerp(obj.rotation.y, targetState.rotateY, factor),
+        lerp(obj.rotation.z, targetState.rotateZ, factor)
+      );
+      obj.scale.set(
+        lerp(obj.scale.x, targetState.scaleX, factor),
+        lerp(obj.scale.y, targetState.scaleY, factor),
+        lerp(obj.scale.z, targetState.scaleZ, factor)
+      );
+      obj.position.set(
+        lerp(obj.position.x, targetState.positionX, factor),
+        lerp(obj.position.y, targetState.positionY, factor),
+        lerp(obj.position.z, targetState.positionZ, factor)
+      );
     }
   };
 }
