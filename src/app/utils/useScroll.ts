@@ -1,7 +1,8 @@
-import { useState, useEffect, RefObject } from 'react';
+import { useEffect, RefObject, useRef } from 'react';
+import { BehaviorSubject } from 'rxjs';
 
 export const useScroll = (elementRef: RefObject<HTMLElement>) => {
-  const [offset, setOffset] = useState(0);
+  const scrollRef = useRef<BehaviorSubject<number>>(new BehaviorSubject(0));
 
   useEffect(() => {
     const element = elementRef.current;
@@ -12,7 +13,7 @@ export const useScroll = (elementRef: RefObject<HTMLElement>) => {
       const totalScrollHeight = element.scrollHeight - element.clientHeight;
       const offset = (scrollPosition / totalScrollHeight);
 
-      setOffset(offset);
+      scrollRef.current.next(offset);
     };
 
     element.addEventListener('scroll', handleScroll);
@@ -23,5 +24,5 @@ export const useScroll = (elementRef: RefObject<HTMLElement>) => {
     };
   }, [elementRef]);
 
-  return offset;
-}
+  return scrollRef.current;
+};
