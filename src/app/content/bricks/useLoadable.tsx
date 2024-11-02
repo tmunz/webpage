@@ -1,9 +1,9 @@
 import { useProgress } from "@react-three/drei";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
-export type Loadable = (onLoadComplete: () => void) => React.ReactElement<{ onLoadComplete: () => void }>
+export type Loadable = (onLoadComplete: () => void) => any;
 
-export function useLoadable(loadables: Loadable[]): [React.ReactElement[], boolean] {
+export function useLoadable(loadables: Loadable[]): [any, boolean] {
 
   const { active, progress } = useProgress();
   const [loaded, setLoaded] = useState(loadables.length === 0 ? true : false);
@@ -17,5 +17,5 @@ export function useLoadable(loadables: Loadable[]): [React.ReactElement[], boole
     }
   }
 
-  return [loadablesRef.current, loaded];
+  return [loadablesRef.current, loaded && !active && progress === 100];
 }

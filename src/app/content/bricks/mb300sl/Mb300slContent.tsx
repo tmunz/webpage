@@ -5,7 +5,7 @@ export function Mb300slContent() {
 
 
   return (
-    <div className='mb-300sl-content'>
+    <div className='mb-300sl-content bricks-content'>
       300SL
     </div>
   );

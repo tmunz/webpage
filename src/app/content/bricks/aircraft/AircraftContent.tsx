@@ -12,8 +12,9 @@ export const AircraftContent = () => {
   // const [gameId, setGameId] = useState<string | null>(null);
 
   return <>
-    <div className='aircraft-content'>
-      <div className='aircraft-images'>
+    <div className='aircraft-content bricks-content'>
+      <div className='aircraft-grid'>
+        <h1>Ultimate Air- & Spacecraft Collection</h1>
         {[...Array(3)].map((_, i) => <img key={i} className='aircraft-image' src={require(`./aircraft_${i}.jpg`)} />)}
       </div>
       {/* <button onClick={() => setGameId(cur => cur ? null : '1')}>Play</button> */}

@@ -5,7 +5,7 @@ import { Brick } from "./Brick";
 import { useTransformationAnimator, Transformations } from "../../../utils/TransformationAnimator";
 
 export function BrickScroll({ transformations, progress }: { transformations: Transformations, progress: number }) {
-  const ref = useRef<Object3D>(null!);
+  const ref = useRef<Object3D | null>(null);
   const transformationAnimator = useTransformationAnimator(transformations);
 
   useFrame(() => {
@@ -14,7 +14,5 @@ export function BrickScroll({ transformations, progress }: { transformations: Tr
     }
   });
 
-  return <Brick onLoadComplete={(model) => {
-    ref.current = model;
-  }} />;
+  return <Brick onLoadComplete={(model) => { ref.current = model; }} />;
 }
