@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { Suspense, useRef } from 'react';
 import { CarShow } from '../../../three/car-show/CarShow';
 import { Mb300sl } from './Mb300sl';
 import { Quality } from '../../../three/QualityProvider';
@@ -29,6 +29,8 @@ export function Mb300slScroll({ progress$, animationTrigger, onLoadComplete }: {
 
 
   return (
-    <CarShow ref={carShowRef} Model={Mb300sl} animate={animate} quality={Quality.HIGH} controls={false} onLoadComplete={onLoadComplete} />
+    <Suspense fallback={null}>
+      <CarShow ref={carShowRef} Model={Mb300sl} animate={animate} quality={Quality.HIGH} controls={false} onLoadComplete={onLoadComplete} />
+    </Suspense>
   );
 };

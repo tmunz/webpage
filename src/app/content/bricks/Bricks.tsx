@@ -11,12 +11,15 @@ import { useDimension } from '../../utils/useDimension';
 import { useScroll } from '../../utils/useScroll';
 import { Mb300slContent } from './mb300sl/Mb300slContent';
 import { AircraftContent } from './aircraft/AircraftContent';
+import { Muybridge } from './horse/Muybridge';
+import { usePointer } from '../../utils/usePointer';
 
 export const Bricks = () => {
 
   const elementRef = useRef<HTMLDivElement>(null);
   const dimension = useDimension(elementRef);
   const scrollState$ = useScroll(elementRef);
+  const canvasPointer$ = usePointer(elementRef);
 
   const sections = [
     { height: 1, content: null },
@@ -38,7 +41,18 @@ export const Bricks = () => {
         </div>
       </>
     },
-    { height: 1, content: null },
+    {
+      height: 1, content: <>
+        <div className='bricks-content' style={{ paddingTop: '40px' }}>
+          <h2>Horse Galopping</h2>
+        </div>
+        <div style={{ left: 0, top: 0, right: 0, bottom: 0, overflow: 'hidden', position: 'absolute' }}>
+          <View style={{ height: '100%', marginRight: -20 }}>
+            <Muybridge pointer$={canvasPointer$} />
+          </View>
+        </div>
+      </>
+    },
   ];
   const pages = sections.reduce((acc, { height }) => acc + height, 0);
   const mb300slTriggers: [number, number] = [1.3 / pages, 3.6 / pages];

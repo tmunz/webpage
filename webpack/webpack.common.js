@@ -38,10 +38,10 @@ module.exports = (env) => ({
         }
       }],
     }, {
-      test: /\.(ttf|eot|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      test: /\.(ttf|eot|otf|woff2?)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       type: 'asset/resource',
     }, {
-      test: /\.glb$|\.hdr$|\.ldr$|\.cube$/,
+      test: /\.glb$|\.hdr$|\.ldr$|\.cube$|\.mp4$/,
       type: 'asset/resource',
     }, {
       test: /\.jpe?g$|\.gif$|\.png$|\.webp$/i,
