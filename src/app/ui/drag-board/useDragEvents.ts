@@ -5,11 +5,11 @@ import { SelectedDragBoardItem } from './SelectedDragBoardItem';
 const THRESHOLD = 10;
 
 export const useDragEvents = (
+  boardRef: React.RefObject<HTMLDivElement>,
   itemStates: Map<string, DragBoardItemState>,
   updateItemState: (id: string, itemState: Partial<DragBoardItemState>) => void,
   selectedItem: SelectedDragBoardItem | null,
   setSelectedItem: React.Dispatch<React.SetStateAction<SelectedDragBoardItem | null>>,
-  boardRef: React.RefObject<HTMLDivElement>
 ) => {
 
   const handleDragging = useCallback((e: { clientX: number, clientY: number }) => {
@@ -36,6 +36,12 @@ export const useDragEvents = (
     let targetY = itemState.y;
     let targetRotation = itemState.rotation;
 
+    const bounceAngle = (angle: number) => {
+      const referenceAngle = Math.round(angle / 90) * 90;
+      const offAngle = angle - referenceAngle;
+      return referenceAngle - offAngle;
+    };
+
     if (itemState.x < -maxX) {
       targetX = -maxX;
       targetRotation = bounceAngle(itemState.rotation);
@@ -54,12 +60,6 @@ export const useDragEvents = (
 
     updateItemState(selectedItem.id, { x: targetX, y: targetY, rotation: targetRotation });
   }, [selectedItem, itemStates, boardRef]);
-
-  const bounceAngle = (angle: number) => {
-    const referenceAngle = Math.round(angle / 90) * 90;
-    const offAngle = angle - referenceAngle;
-    return referenceAngle - offAngle;
-  };
 
   return { handleDragging, handleDragEnd };
 };

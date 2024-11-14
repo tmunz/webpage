@@ -12,7 +12,7 @@ export const Muybridge = ({ pointer$ }: { pointer$: BehaviorSubject<{ x: number,
   const { current: vec } = useRef(new THREE.Vector3());
   useFrame((state) => {
     const p = pointer$.getValue();
-    state.camera.position.lerp(vec.set(-1 + p.x * -1, 0 + p.y * 1, 7), 0.05);
+    state.camera.position.lerp(vec.set(-1 + p.x * -1, 1 + p.y * 1, 7), 0.05);
     state.camera.lookAt(0, 0, 0);
   });
 

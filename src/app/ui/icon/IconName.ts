@@ -6,6 +6,7 @@ export enum IconName {
   CLI = 'cli',
   LIST = 'list',
   GRID = 'grid',
+  BRING_TO_BACK = 'bring-to-back',
   
   FLICKR = 'flickr',
   GITHUB = 'github',

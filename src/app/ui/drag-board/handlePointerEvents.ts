@@ -1,12 +1,10 @@
-import { useEffect, MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent, useRef } from "react";
+import { useEffect, MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent } from "react";
 import { enableOverscrollBehaviour, preventOverscrollBehaviour } from "../../utils/EventUtils";
 
-export const useUserEvents = (
-  dragBoardRef: React.RefObject<HTMLDivElement>,
+export const handlePointerEvents = (
   selectedItemId: string | null,
-  onMove: (e: { clientX: number, clientY: number, rect: DOMRect }) => void,
+  onMove: (e: { clientX: number, clientY: number }) => void,
   onEnd: () => void,
-  onFlipThrough: (delta: number) => void,
 ) => {
 
   useEffect(() => {
@@ -15,7 +13,6 @@ export const useUserEvents = (
       onMove({
         clientX: touch.clientX,
         clientY: touch.clientY,
-        rect: (e.target as HTMLElement)?.getBoundingClientRect(),
       });
     };
 
@@ -23,7 +20,6 @@ export const useUserEvents = (
       onMove({
         clientX: e.clientX,
         clientY: e.clientY,
-        rect: (e.target as HTMLElement)?.getBoundingClientRect(),
       });
     };
 
@@ -51,30 +47,6 @@ export const useUserEvents = (
       document.removeEventListener('mouseup', handleEnd);
     };
   }, [selectedItemId, onMove, onEnd]);
-
-  // flip through
-  const lastScrollTimeRef = useRef(0);
-  const scrollDelay = 150;
-  useEffect(() => {
-    const handleScroll = (e: WheelEvent) => {
-      const now = Date.now();
-      if (now - lastScrollTimeRef.current < scrollDelay) {
-        return;
-      }
-      lastScrollTimeRef.current = now;
-      onFlipThrough(Math.round(Math.sign(e.deltaY)));
-    };
-
-    const dragBoard = dragBoardRef.current;
-    if (dragBoard) {
-      dragBoard.addEventListener('wheel', handleScroll);
-    }
-
-    return () => {
-      dragBoardRef.current?.removeEventListener('wheel', handleScroll);
-    };
-
-  }, [dragBoardRef.current, onFlipThrough]);
 }
 
 

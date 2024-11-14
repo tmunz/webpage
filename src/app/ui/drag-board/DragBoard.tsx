@@ -1,10 +1,13 @@
 import './DragBoard.styl';
 import React, { useRef } from 'react';
 import { DragBoardItemContext } from './DragBoardItem';
-import { useUserEvents } from './DragBoardUserEvents';
+import { handlePointerEvents } from './handlePointerEvents';
 import { useDragBoardState } from './useDragBoardState';
 import { useDragEvents } from './useDragEvents';
 import { DragBoardIndicator } from './DragBoardIndicator';
+import { useFlipThrough } from './useFlipThrough';
+import { useDragSwipe } from './useDragSwipe';
+import { DragSwipeIndicator } from './DragSwipeIndicator';
 
 export interface DragBoardProps {
   children: React.ReactNode;
@@ -24,9 +27,15 @@ export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PA
 
   const boardRef = useRef<HTMLDivElement>(null);
 
-  const { itemStates, updateItemState, selectedItem, setSelectedItem, updateSelectedItem, setSelectItemByDelta } = useDragBoardState(children, placementPattern, SMOOTHNESS, mapChildrenToIds);
-  const { handleDragging, handleDragEnd } = useDragEvents(itemStates, updateItemState, selectedItem, updateSelectedItem, boardRef);
-  useUserEvents(boardRef, selectedItem?.id ?? null, handleDragging, handleDragEnd, setSelectItemByDelta);
+  const { itemStates, updateItemState, selectedItem, setSelectedItem, updateSelectedItem, bringToBack, updateItemOrder, lastSelectedItemPosition } = useDragBoardState(children, placementPattern, SMOOTHNESS, mapChildrenToIds);
+  const { handleDragging, handleDragEnd } = useDragEvents(boardRef, itemStates, updateItemState, selectedItem, updateSelectedItem);
+  const { dragSwipeProgress, handleDragSwiping, handleDragSwipeEnd } = useDragSwipe(boardRef, selectedItem, bringToBack);
+  useFlipThrough(boardRef, updateItemOrder);
+  handlePointerEvents(
+    selectedItem?.id ?? null,
+    (e) => { handleDragging(e); handleDragSwiping(e); },
+    () => { handleDragEnd(); handleDragSwipeEnd(); },
+  );
 
   return (
     <div className={`drag-board ${className ? className : ''}`} ref={boardRef}>
@@ -44,6 +53,7 @@ export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PA
           </DragBoardItemContext.Provider>
         );
       })}
+      {dragSwipeProgress && <DragSwipeIndicator overflow={dragSwipeProgress} position={lastSelectedItemPosition} />}
       {indicator && <DragBoardIndicator
         sortedItems={mapChildrenToIds(children).map(id => ({ id, zIndex: itemStates.get(id)?.z ?? -1 }))}
         onSelect={(id, zIndex) => updateItemState(id, { z: zIndex })}

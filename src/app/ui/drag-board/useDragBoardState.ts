@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
+import { useState, useEffect, useRef, ReactNode } from 'react';
 import { DragBoardItemState } from './DragBoardItem';
 import { SelectedDragBoardItem } from './SelectedDragBoardItem';
 
@@ -13,6 +13,7 @@ export const useDragBoardState = (
   const [selectedItem, setSelectedItem] = useState<SelectedDragBoardItem | null>(null);
   const [itemStates, setItemStates] = useState<Map<string, DragBoardItemState>>(new Map());
   const [targetStates, setTargetStates] = useState<Map<string, DragBoardItemState>>(new Map());
+  const lastSelectedItemPositionRef = useRef<{ x: number, y: number }>({ x: 0, y: 0 });
   const animationFrameId = useRef<number | null>(null);
 
   useEffect(() => {
@@ -36,10 +37,48 @@ export const useDragBoardState = (
     });
   }, [children, placementPattern]);
 
+  useEffect(() => {
+    if (selectedItem) {
+      const item = itemStates.get(selectedItem.id);
+      if (item) {
+        lastSelectedItemPositionRef.current = { x: item.x, y: item.y };
+      }
+    }
+  }, [itemStates, selectedItem]);
+
   const bringToFront = (id: string) => {
-    const maxZ = Math.max(...Array.from(itemStates.values()).map((item) => item.z));
-    updateItemState(id, { z: maxZ + 1 });
+    updateItemOrder(1, id);
   }
+
+  const bringToBack = (id: string) => {
+    updateItemOrder(-1, id);
+  }
+
+  const updateItemOrder = (direction: -1 | 1, id?: string) => {
+    const sortedStates = Array.from(itemStates.values()).filter(v => v.id !== id).sort((a, b) => a.z - b.z);
+
+    let itemState: DragBoardItemState | undefined;
+    if (id !== undefined) {
+      itemState = itemStates.get(id);
+    } else {
+      if (direction === -1) {
+        itemState = sortedStates.pop();
+      } else if (direction === 1) {
+        itemState = sortedStates.shift();
+      }
+    }
+    if (!itemState) return;
+
+    direction === -1 ? sortedStates.unshift(itemState) : sortedStates.push(itemState);
+
+    setTargetStates((prevStates) => {
+      const updatedStates = new Map(prevStates);
+      sortedStates.forEach((state, z) => {
+        updatedStates.set(state.id, { ...state, ...prevStates.get(state.id), z });
+      });
+      return updatedStates;
+    });
+  };
 
   const handleSelectItem = (id: string, e: { clientX: number, clientY: number, rect: DOMRect }) => {
     const itemState = itemStates.get(id);
@@ -57,20 +96,6 @@ export const useDragBoardState = (
       });
       bringToFront(id);
     }
-  };
-
-  const setSelectItemByDelta = (delta: number) => {
-    const sortedStates = Array.from(itemStates.values()).sort((a, b) => a.z - b.z);
-    const min = sortedStates[0];
-    const max = sortedStates[sortedStates.length - 1];
-
-    itemStates.forEach((state) => {
-      if (delta < 0) {
-        updateItemState(state.id, { z: (min.id === state.id) ? max.z : state.z - 1 });
-      } else {
-        updateItemState(state.id, { z: (max.id === state.id) ? min.z : state.z + 1 });
-      }
-    });
   };
 
   const updateItemState = (id: string, target: Partial<DragBoardItemState>) => {
@@ -121,8 +146,6 @@ export const useDragBoardState = (
       }
     };
 
-    console.log('useEffect updateItemState');
-
     if (animationFrameId.current === null) {
       animationFrameId.current = requestAnimationFrame(update);
     }
@@ -136,5 +159,15 @@ export const useDragBoardState = (
   }, [targetStates, smoothness]);
 
 
-  return { itemStates, updateItemState, selectedItem, setSelectedItem: handleSelectItem, updateSelectedItem: setSelectedItem, setSelectItemByDelta };
+  return {
+    itemStates,
+    selectedItem,
+    updateItemState,
+    setSelectedItem: handleSelectItem,
+    updateSelectedItem: setSelectedItem,
+    bringToFront,
+    bringToBack,
+    updateItemOrder,
+    lastSelectedItemPosition: lastSelectedItemPositionRef.current,
+  };
 };

@@ -1,7 +1,10 @@
 import React from 'react';
 import { CarouselIndicator } from '../CarouselIndicator';
 
-export const DragBoardIndicator = ({ sortedItems, onSelect }: { sortedItems: { id: string, zIndex: number }[], onSelect: (id: string, zIndex: number) => void }) => {
+export const DragBoardIndicator = ({ sortedItems, onSelect }: {
+  sortedItems: { id: string, zIndex: number }[],
+  onSelect: (id: string, zIndex: number) => void
+}) => {
 
   const maxZ = Math.max(...sortedItems.map(item => item.zIndex))
 

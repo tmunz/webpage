@@ -1,7 +1,7 @@
 import './DragBoardItem.styl';
 
 import React, { createContext, ReactNode } from "react";
-import { handleStart } from './DragBoardUserEvents';
+import { handleStart } from './handlePointerEvents';
 
 
 export interface DragBoardItemConsuming extends DragBoardItemState {
