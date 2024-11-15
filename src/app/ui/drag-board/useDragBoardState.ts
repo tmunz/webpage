@@ -80,15 +80,15 @@ export const useDragBoardState = (
     });
   };
 
-  const handleSelectItem = (id: string, e: { clientX: number, clientY: number, rect: DOMRect }) => {
+  const handleSelectItem = (id: string, dragBoardItemRect: DOMRect | null, e: { clientX: number, clientY: number }) => {
     const itemState = itemStates.get(id);
     if (itemState) {
       setSelectedItem({
         id,
         offsetX: e.clientX - itemState.x,
         offsetY: e.clientY - itemState.y,
-        width: e.rect.width,
-        height: e.rect.height,
+        width: dragBoardItemRect?.width ?? 0,
+        height: dragBoardItemRect?.height ?? 0,
         startX: e.clientX,
         startY: e.clientY,
         isDragging: false,

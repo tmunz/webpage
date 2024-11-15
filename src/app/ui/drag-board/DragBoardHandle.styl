@@ -1,0 +1,14 @@
+.drag-board-handle {
+  box-sizing: border-box;
+  &:not(.drag-board-handle-drag-disabled) {
+    cursor: grab;
+
+    &.drag-board-handle-dragging {
+      cursor: grabbing;
+
+      &>* {
+        pointer-events: none;
+      }
+    }
+  }
+}

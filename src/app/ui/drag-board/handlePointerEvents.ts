@@ -51,7 +51,7 @@ export const handlePointerEvents = (
 
 
 // called by the item itself
-export const handleStart = (position: { clientX: number, clientY: number }, e: ReactMouseEvent | ReactTouchEvent) => {
+export const handleStart = (position: { clientX: number, clientY: number }) => {
   preventOverscrollBehaviour();
-  return { clientX: position.clientX, clientY: position.clientY, rect: e.currentTarget.getBoundingClientRect() };
+  return { clientX: position.clientX, clientY: position.clientY };
 }

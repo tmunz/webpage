@@ -3,6 +3,7 @@ import { MuxOs } from '../MuxOs';
 import { MuxProgram } from '../MuxProgram';
 import React, { useState } from 'react';
 import { MuxProgramIcon } from './MuxProgramIcon';
+import { DragBoardHandle } from '../../drag-board/DragBoardHandle';
 
 const ABOUT = '🛈';
 const CLOSE = '✕';
@@ -17,18 +18,20 @@ export const MuxProgramWindowBar = ({ program }: MuxProgramWindowBarProps) => {
   const toggleInfo = () => setShowInfo(!showInfo);
 
   return (
-    <div className='mux-program-window-bar'>
-      <div className='window-title'>
-        <MuxProgramIcon path={program.iconPath} name={program.name} monoColor={program.iconMonoColor} />
-        {program.name}
-      </div>
-      <button className='info-button' onClick={toggleInfo}>
-        {ABOUT}
-      </button>
-      <button className='close-button' onClick={() => MuxOs.get().quitProgram(program.id)}>
-        {CLOSE}
-      </button>
+    <>
+      <DragBoardHandle className='mux-program-window-bar'>
+        <div className='window-title'>
+          <MuxProgramIcon path={program.iconPath} name={program.name} monoColor={program.iconMonoColor} />
+          {program.name}
+        </div>
+        <button className='info-button' onClick={toggleInfo}>
+          {ABOUT}
+        </button>
+        <button className='close-button' onClick={() => MuxOs.get().quitProgram(program.id)}>
+          {CLOSE}
+        </button>
+      </DragBoardHandle>
       {showInfo && <div className='window-about'>{program.about}</div>}
-    </div>
+    </>
   );
 };

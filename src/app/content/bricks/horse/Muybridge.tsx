@@ -12,7 +12,7 @@ export const Muybridge = ({ pointer$ }: { pointer$: BehaviorSubject<{ x: number,
   const { current: vec } = useRef(new THREE.Vector3());
   useFrame((state) => {
     const p = pointer$.getValue();
-    state.camera.position.lerp(vec.set(-1 + p.x * -1, 1 + p.y * 1, 7), 0.05);
+    state.camera.position.lerp(vec.set(-1 + p.x * -1, 1 + p.y * 1, 8), 0.05);
     state.camera.lookAt(0, 0, 0);
   });
 
@@ -22,7 +22,7 @@ export const Muybridge = ({ pointer$ }: { pointer$: BehaviorSubject<{ x: number,
       <fog attach='fog' args={['black', 10, 12]} />
       <PerspectiveCamera makeDefault fov={15} position={[0, 3, 100]} />
       <Suspense fallback={null}>
-        <group position={[0, -1.2, 0]}>
+        <group position={[-0.5, -1.2, 0]}>
           <Carla position={[-0.5, 0, 0]} rotation={[0, Math.PI - 0.4, 0]} scale={[0.2, 0.2, 0.2]} />
           <Screen position={[1, 1.1, -2]} rotation={[0, -0.2, 0]} scale={[0.2, 0.2, 0.2]} />
           <Ground />

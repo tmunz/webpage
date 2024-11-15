@@ -8,6 +8,7 @@ import { DragBoardIndicator } from './DragBoardIndicator';
 import { useFlipThrough } from './useFlipThrough';
 import { useDragSwipe } from './useDragSwipe';
 import { DragSwipeIndicator } from './DragSwipeIndicator';
+import { DragBoardHandleContext } from './DragBoardHandle';
 
 export interface DragBoardProps {
   children: React.ReactNode;

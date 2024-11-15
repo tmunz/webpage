@@ -6,6 +6,7 @@ import { useDimension } from '../../utils/useDimension';
 import { DragBoardItem } from '../../ui/drag-board/DragBoardItem';
 import { CitroenDsLamp } from './citroen-ds-lamp/CitroenDsLamp';
 import { Mb300slPainting } from './mb300sl/Mb300slPainting';
+import { DragBoardHandle } from '../../ui/drag-board/DragBoardHandle';
 
 
 export function Art() {
@@ -18,9 +19,9 @@ export function Art() {
       placementPattern={[{ x: -10, y: 0, rotation: 0.5 }, { x: 50, y: 5, rotation: -1.5 }, { x: -60, y: 10, rotation: -2 }]}
       indicator
     >
-      <DragBoardItem><CitroenDsLamp width={(dimension?.width ?? 600) * 0.6} height={(dimension?.height ?? 400) * 0.6} /></DragBoardItem>
+      <DragBoardItem><DragBoardHandle><CitroenDsLamp width={(dimension?.width ?? 600) * 0.6} height={(dimension?.height ?? 400) * 0.6} /></DragBoardHandle></DragBoardItem>
       <DrawBoardItem width={dimension?.width ?? 600} height={dimension?.height ?? 400} />
-      <DragBoardItem><Mb300slPainting width={Math.max(500, (dimension?.width ?? 500) * 0.3)} /></DragBoardItem>
+      <DragBoardItem><DragBoardHandle><Mb300slPainting width={Math.max(500, (dimension?.width ?? 500) * 0.3)} /></DragBoardHandle></DragBoardItem>
     </DragBoard>
   </div>;
 }
