@@ -10,8 +10,8 @@
     --c2: #f4f2e3;
     --c3: #f8f7e3;
     --gap: 1px;
-    --border: 80px;
-    --cornerSize: calc(1.35 * var(--border));
+    --border: 60px;
+    --cornerSize: calc(1.2 * var(--border));
     --cornerWidth: 1px;
 
     background:
@@ -47,25 +47,25 @@
         &:nth-child(1) {
           top: 0;
           left: 0;
-          transform: translate(calc(var(--border) / 2 - 2px), -12px) rotate(-45deg);
+          transform: translate(calc(var(--border) / 2 - 1px), -8px) rotate(-45deg);
         }
 
         &:nth-child(2) {
           top: 0;
           right: 0;
-          transform: translate(calc(var(--border) / -2 - 4px), -16px) rotate(45deg);
+          transform: translate(calc(var(--border) / -2 - 4px), -8px) rotate(45deg);
         }
 
         &:nth-child(3) {
           bottom: 0;
           left: 0;
-          transform: translate(calc(var(--border) / 2 - 2px), 12px) rotate(45deg);
+          transform: translate(calc(var(--border) / 2 - 1px), 4px) rotate(45deg);
         }
 
         &:nth-child(4) {
           bottom: 0;
           right: 0;
-          transform: translate(calc(var(--border) / -2 - 4px), 16px) rotate(-45deg);
+          transform: translate(calc(var(--border) / -2 - 4px), 8px) rotate(-45deg);
         }
       }
     }

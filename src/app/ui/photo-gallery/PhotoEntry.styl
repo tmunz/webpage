@@ -1,8 +1,10 @@
 .photo-entry {
   --height: 300px;
-  @media screen and (max-width: 800px) {
-    --height: 200px;   
+
+  @media (max-width: 800px) {
+    --height: 200px;
   }
+
   --heightExpanded: calc(2 * var(--height));
   --filmStripSize: 40px;
 
@@ -243,7 +245,7 @@
   }
 
   50% {
-    transform: translate(50%,  25%);
+    transform: translate(50%, 25%);
     height: var(--height);
   }
 

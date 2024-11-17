@@ -60,6 +60,9 @@
       border: 1px solid var(--_projectDocumentBorderColor);
       border-width: 1px 0 0 1px;
       z-index: 1;
+      container-name: project-document-title-block; 
+      container-type: inline-size;
+
 
       &>* {
         border: 1px solid var(--_projectDocumentBorderColor);
@@ -158,6 +161,19 @@
     .project-document-content {
       box-sizing: border-box;
       overflow: hidden;
+    }
+  }
+}
+
+@container project-document-title-block (width < 500px) {
+  .project-document .project-document-container .project-document-title-block .project-document-field {
+
+    &>label {
+      font-size: 0.4rem;
+    }
+  
+    &>.value {
+      font-size: 0.7rem;
     }
   }
 }

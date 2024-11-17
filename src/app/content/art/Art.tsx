@@ -21,7 +21,7 @@ export function Art() {
     >
       <DragBoardItem><DragBoardHandle><CitroenDsLamp width={(dimension?.width ?? 600) * 0.6} height={(dimension?.height ?? 400) * 0.6} /></DragBoardHandle></DragBoardItem>
       <DrawBoardItem width={dimension?.width ?? 600} height={dimension?.height ?? 400} />
-      <DragBoardItem><DragBoardHandle><Mb300slPainting width={Math.max(500, (dimension?.width ?? 500) * 0.3)} /></DragBoardHandle></DragBoardItem>
+      <DragBoardItem><DragBoardHandle><Mb300slPainting width={Math.max(420, (dimension?.width ?? 420) * 0.4)} /></DragBoardHandle></DragBoardItem>
     </DragBoard>
   </div>;
 }

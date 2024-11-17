@@ -13,7 +13,7 @@ export function DrawBoardItem({ width, height, gap = 40 }: { width: number, heig
     x={active ? 0 : undefined}
     y={active ? 0 : undefined}
     rotation={active ? 0 : undefined}
-    className='draw-board-item'
+    className={`draw-board-item ${active ? 'draw-board-item-active' : ''}`}
   >
     <DragBoardHandle disableDrag={active}>
       <PaperFolding onUnfold={() => setActive(true)} onInfold={() => setActive(false)} title='Paint your own Masterpiece'>

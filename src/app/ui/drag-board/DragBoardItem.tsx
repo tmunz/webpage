@@ -26,7 +26,7 @@ export const DragBoardItemContext = createContext<DragBoardItemConsuming | null>
 
 export const DragBoardItem = (props: DragBoardItemProps) => {
   const elementRef = React.useRef<HTMLDivElement>(null);
-  
+
   return (
     <DragBoardItemContext.Consumer>
       {(value: DragBoardItemConsuming | null) => {
@@ -35,7 +35,6 @@ export const DragBoardItem = (props: DragBoardItemProps) => {
         const y = props?.y ?? value.y;
         const z = props?.z ?? value.z;
         const rotation = props?.rotation ?? value.rotation;
-
         return <div
           key={value.id}
           ref={elementRef}
@@ -44,7 +43,7 @@ export const DragBoardItem = (props: DragBoardItemProps) => {
             left: `calc(50% + ${x}px)`,
             top: `calc(50% + ${y}px)`,
             transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
-            zIndex: z + 1,
+            zIndex: z,
           }}
         >
           <DragBoardHandleContext.Provider value={{

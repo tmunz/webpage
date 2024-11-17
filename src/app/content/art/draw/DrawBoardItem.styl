@@ -19,12 +19,12 @@
 
 .draw-board-item {
 
-  &.drag-board-item-drag-disabled {
+  &.draw-board-item-active {
     transition: left 0.5s ease-in-out, top 0.5s ease-in-out;
     animation: translateAnimation 0.5s ease-in-out forwards;
   }
 
-  &:not(.drag-board-item-drag-disabled) {
+  &:not(.draw-board-item-active) {
     animation: translateAnimationReverse 0.5s ease-in-out forwards;
   }
 
@@ -34,7 +34,7 @@
     transform: rotate(-5deg);
     margin: 0 auto;
     font-family: kristi, sans-serif;
-    font-size: 4em;
+    font-size: clamp(1rem, 4vw, 4rem);
     max-width: 200px;
     color: #68461a;
   }

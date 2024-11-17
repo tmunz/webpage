@@ -1,4 +1,8 @@
 .photo-row {
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
+
   display: grid;
   grid-template-columns: minmax(0, 160px) minmax(300px, 1fr);
   padding: 0;
@@ -11,7 +15,7 @@
     left: 0;
     bottom: 30px;
     z-index: 2;
-    padding-right: 20px;
+    padding-right: 10px;
     color: #888;
     mix-blend-mode: difference;
   }
