@@ -1,24 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { MuxProgram } from '../../MuxProgram';
 import { MuxOs } from '../../MuxOs';
-import { Observable } from 'rxjs';
 import { useDimension } from '../../../../utils/useDimension';
 
-export const StandardClockComponent = ({ dateTime$ }: { dateTime$: Observable<Date> }) => {
-  const [dateTime, setDateTime] = useState<Date>(new Date());
+export const StandardClockComponent = ({ dateTime }: { dateTime: Date }) => {
   const elementRef = React.useRef<HTMLDivElement>(null);
-
   const size = useDimension(elementRef);
-
-  useEffect(() => {
-    const subscription = dateTime$.subscribe((newDateTime) => {
-      setDateTime(newDateTime);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [dateTime$]);
 
   return (
     <div
@@ -30,13 +17,11 @@ export const StandardClockComponent = ({ dateTime$ }: { dateTime$: Observable<Da
         hour: '2-digit',
         minute: '2-digit',
       })}</div>
-      <div className='date'>{dateTime.toLocaleDateString(
-        undefined, {
+      <div className='date'>{dateTime.toLocaleDateString(undefined, {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
-      }
-      )}</div>
+      })}</div>
     </div>
   );
 };
@@ -45,7 +30,16 @@ export const StandardClock: MuxProgram = {
   name: 'Clock',
   id: 'standard-clock',
   description: 'MuxOs standard clock',
-  component: (muxOs: MuxOs) => StandardClockComponent({ dateTime$: muxOs.dateTime$ }),
+  component: (muxOs: MuxOs) => {
+    const [dateTime, setDateTime] = useState<Date>(new Date());
+    useEffect(() => {
+      const subscription = muxOs.dateTime$.subscribe((newDateTime) => {
+        setDateTime(newDateTime);
+      });
+      return () => subscription.unsubscribe();
+    }, []);
+    return <StandardClockComponent dateTime={dateTime} />;
+  },
   about: <div>MuxOs Standard Clock</div>,
   slots: ['clock'],
   iconPath: require('./standard-clock-icon.png'),

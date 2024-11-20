@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Observable } from 'rxjs';
+import React from 'react';
 import { useDimension } from '../utils/useDimension';
 
-export interface AlphaBinaryClockProps {
-  dateTime$: Observable<Date>,
+export interface AlphaBinaryClockConfig {
   windowWidth?: number;
   windowHeight?: number;
   windowPadding?: number;
@@ -20,13 +18,17 @@ export interface AlphaBinaryClockProps {
   is24hStyle?: boolean;
 }
 
+export interface AlphaBinaryClockProps extends AlphaBinaryClockConfig {
+  dateTime: Date,
+}
+
 enum DatePart {
   DATE,
   TIME,
 }
 
 export function AlphaBinaryClock({
-  dateTime$,
+  dateTime,
   windowWidth,
   windowHeight,
   windowPadding = 2,
@@ -73,20 +75,6 @@ export function AlphaBinaryClock({
   const TIME_CELL_SIZE = DATE_CELL_SIZE - (2 * (RELATIVE_BORDER_WIDTH + RELATIVE_BORDER_PADDING));
   const HORIZONTAL_WINDOW_PADDING = (windowWidth - (COLS * DATE_CELL_SIZE + (COLS - 1) * RELATIVE_HORIZONTAL_SPACE)) / 2;
   const VERTICAL_WINDOW_PADDING = windowPadding;
-
-  const [dateTime, setDateTime] = useState(new Date());
-
-  console.log(dateTime.getMinutes());
-
-  useEffect(() => {
-    const subscription = dateTime$.subscribe((newDateTime) => {
-      setDateTime(newDateTime);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [dateTime$]);
 
   const getCenterPointFromCellLocation = (i: number, j: number) => {
     const x = HORIZONTAL_WINDOW_PADDING + i * (DATE_CELL_SIZE + RELATIVE_HORIZONTAL_SPACE) + DATE_CELL_SIZE / 2;
