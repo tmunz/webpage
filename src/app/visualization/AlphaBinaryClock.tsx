@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Observable } from 'rxjs';
+import { useDimension } from '../utils/useDimension';
 
 export interface AlphaBinaryClockProps {
+  dateTime$: Observable<Date>,
   windowWidth?: number;
   windowHeight?: number;
-  backgroundDark?: boolean;
+  windowPadding?: number;
+  backgroundColor?: string;
   fillColor?: string;
   borderColor?: string;
   relativeCornerRadius?: number;
@@ -21,49 +25,72 @@ enum DatePart {
   TIME,
 }
 
-const MAX_ROWS = [6, 4, 6, 5, 6, 6];
-
-const COLS = 3;
-
-const DAY_COL = 0;
-const MONTH_COL = 1;
-const YEAR_COL = 2;
-
-const HOURS_COL = 0;
-const MINUTES_COL = 1;
-const SECONDS_COL = 2;
-
 export function AlphaBinaryClock({
-  windowWidth = 144,
-  windowHeight = 168,
-  backgroundDark = true,
+  dateTime$,
+  windowWidth,
+  windowHeight,
+  windowPadding = 2,
+  backgroundColor = '#000000',
   fillColor = '#ff7403',
   borderColor = '#d3d3d3',
   relativeCornerRadius = 0.5,
   borderWidth = 2,
-  borderPadding = 1,
-  verticalSpace = 3,
-  horizontalSpace = 10,
+  borderPadding = 2,
+  verticalSpace = 4,
+  horizontalSpace = 12,
   hasBorder = true,
   isBorderDate = true,
   is24hStyle = true,
 }: AlphaBinaryClockProps) {
-  
-  const DATE_CELL_SIZE = (windowWidth - ((Math.max(...MAX_ROWS) - 1) * verticalSpace)) / Math.max(...MAX_ROWS);
-  const TIME_CELL_SIZE = DATE_CELL_SIZE - (2 * (borderWidth + borderPadding));
-  const HORIZONTAL_SIDE_PADDING = (windowWidth - (COLS * DATE_CELL_SIZE + (COLS - 1) * horizontalSpace)) / 2;
 
-  const [time, setTime] = useState(new Date());
+  const elementRef = React.useRef<HTMLDivElement>(null);
+  const size = useDimension(elementRef);
+  windowWidth = windowWidth || size?.width || 144;
+  windowHeight = windowHeight || size?.height || 168;
+  const windowSize = Math.min(windowWidth, windowHeight);
+
+  const MAX_ROWS = [6, 4, 6, is24hStyle ? 5 : 4, 6, 6];
+
+  const COLS = 3;
+
+  const DAY_COL = 0;
+  const MONTH_COL = 1;
+  const YEAR_COL = 2;
+
+  const HOURS_COL = 0;
+  const MINUTES_COL = 1;
+  const SECONDS_COL = 2;
+
+  const RELATIVE_VERTICAL_SPACE = verticalSpace * windowSize / 144;
+  const RELATIVE_HORIZONTAL_SPACE = horizontalSpace * windowSize / 144;
+
+  const DATE_CELL_SIZE = Math.min(
+    (windowHeight - 2 * windowPadding - (Math.max(...MAX_ROWS) - 1) * RELATIVE_VERTICAL_SPACE) / Math.max(...MAX_ROWS),
+    (windowWidth - 2 * windowPadding - ((COLS - 1) * RELATIVE_HORIZONTAL_SPACE)) / 3,
+  );
+  const RELATIVE_BORDER_WIDTH = borderWidth * DATE_CELL_SIZE / 32;
+  const RELATIVE_BORDER_PADDING = borderPadding * DATE_CELL_SIZE / 32;
+  const TIME_CELL_SIZE = DATE_CELL_SIZE - (2 * (RELATIVE_BORDER_WIDTH + RELATIVE_BORDER_PADDING));
+  const HORIZONTAL_WINDOW_PADDING = (windowWidth - (COLS * DATE_CELL_SIZE + (COLS - 1) * RELATIVE_HORIZONTAL_SPACE)) / 2;
+  const VERTICAL_WINDOW_PADDING = windowPadding;
+
+  const [dateTime, setDateTime] = useState(new Date());
+
+  console.log(dateTime.getMinutes());
 
   useEffect(() => {
-    const tick = () => setTime(new Date());
-    const intervalId = setInterval(tick, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
+    const subscription = dateTime$.subscribe((newDateTime) => {
+      setDateTime(newDateTime);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [dateTime$]);
 
   const getCenterPointFromCellLocation = (i: number, j: number) => {
-    const x = HORIZONTAL_SIDE_PADDING + i * (DATE_CELL_SIZE + horizontalSpace) + DATE_CELL_SIZE / 2;
-    const y = windowHeight - ((j + 0.5) * (DATE_CELL_SIZE + verticalSpace));
+    const x = HORIZONTAL_WINDOW_PADDING + i * (DATE_CELL_SIZE + RELATIVE_HORIZONTAL_SPACE) + DATE_CELL_SIZE / 2;
+    const y = windowHeight - VERTICAL_WINDOW_PADDING - ((j + 0.5) * (DATE_CELL_SIZE + RELATIVE_VERTICAL_SPACE));
     return { x, y };
   };
 
@@ -72,13 +99,13 @@ export function AlphaBinaryClock({
       return hour;
     }
     const displayHour = hour % 12;
-    return hour % 24 === 0 ? 12 : displayHour;
+    return hour % 12 === 0 ? 12 : displayHour;
   };
 
   const drawDateCell = (center: { x: number; y: number }, filled: boolean) => {
     if (filled) {
       const d = DATE_CELL_SIZE / 2;
-      const innerD = DATE_CELL_SIZE / 2 - borderWidth;
+      const innerD = DATE_CELL_SIZE / 2 - RELATIVE_BORDER_WIDTH;
       return (
         <>
           <rect
@@ -93,11 +120,11 @@ export function AlphaBinaryClock({
           <rect
             x={center.x - innerD}
             y={center.y - innerD}
-            width={DATE_CELL_SIZE - 2 * borderWidth}
-            height={DATE_CELL_SIZE - 2 * borderWidth}
+            width={DATE_CELL_SIZE - 2 * RELATIVE_BORDER_WIDTH}
+            height={DATE_CELL_SIZE - 2 * RELATIVE_BORDER_WIDTH}
             rx={innerD * relativeCornerRadius}
             ry={innerD * relativeCornerRadius}
-            fill={backgroundDark ? '#000000' : '#FFFFFF'}
+            fill={backgroundColor}
           />
         </>
       );
@@ -107,7 +134,7 @@ export function AlphaBinaryClock({
 
   const drawTimeCell = (center: { x: number; y: number }, filled: boolean) => {
     const d = TIME_CELL_SIZE / 2;
-    const fill = filled ? fillColor : backgroundDark ? '#000000' : '#FFFFFF';
+    const fill = filled ? fillColor : backgroundColor;
     return (
       <rect
         x={center.x - d}
@@ -123,7 +150,7 @@ export function AlphaBinaryClock({
 
   const drawCol = (digit: number, type: DatePart, col: number) => {
     const cells = [];
-    for (let row = 0; row < MAX_ROWS[isBorderDate ? col : (col + 3)]; row++) {
+    for (let row = 0; row < (isBorderDate ? Math.max(...MAX_ROWS) : MAX_ROWS[col + COLS]); row++) {
       const center = getCenterPointFromCellLocation(col, row);
       const filled = (digit >> row) & 0x1 ? true : false;
       cells.push(
@@ -136,13 +163,15 @@ export function AlphaBinaryClock({
   };
 
   return (
-    <svg width={windowWidth} height={windowHeight} style={{ backgroundColor: backgroundDark ? 'black' : 'white' }}>
-      {drawCol(time.getFullYear() % 100, DatePart.DATE, YEAR_COL)}
-      {drawCol(time.getMonth() + 1, DatePart.DATE, MONTH_COL)}
-      {drawCol(time.getDate(), DatePart.DATE, DAY_COL)}
-      {drawCol(getDisplayHour(time.getHours()), DatePart.TIME, HOURS_COL)}
-      {drawCol(time.getMinutes(), DatePart.TIME, MINUTES_COL)}
-      {drawCol(time.getSeconds(), DatePart.TIME, SECONDS_COL)}
-    </svg>
+    <div ref={elementRef} style={{ width: '100%', height: '100%' }}>
+      <svg width={windowWidth} height={windowHeight} style={{ backgroundColor }}>
+        {drawCol(dateTime.getFullYear() % 100, DatePart.DATE, YEAR_COL)}
+        {drawCol(dateTime.getMonth() + 1, DatePart.DATE, MONTH_COL)}
+        {drawCol(dateTime.getDate(), DatePart.DATE, DAY_COL)}
+        {drawCol(getDisplayHour(dateTime.getHours()), DatePart.TIME, HOURS_COL)}
+        {drawCol(dateTime.getMinutes(), DatePart.TIME, MINUTES_COL)}
+        {drawCol(dateTime.getSeconds(), DatePart.TIME, SECONDS_COL)}
+      </svg>
+    </div>
   );
 };
