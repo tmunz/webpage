@@ -1,26 +1,14 @@
 .mux-desktop {
-  display: grid;
-  grid-template-rows: 62px 1fr 62px;
-  grid-template-columns: 62px 1fr 62px;
-  grid-template-areas: "main main main" "main main main" "menu taskbar taskbar";
   height: 100%;
   width: 100%;
-  gap: 4px;
 
-  .mux-menu {
-    grid-area: menu;
-  }
-
-  .mux-taskbar {
-    grid-area: taskbar;
-  }
-
-  .mux-main-window {
-    grid-area: main;
-    overflow: hidden;
-  }
-
-  .mux-program-selection {
-    grid-area: selection;
+  .mux-desktop-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
   }
 }

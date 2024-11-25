@@ -1,15 +1,15 @@
 import './MuxDesktop.styl';
 import React, { useEffect, useState } from "react";
-import { MuxTaskbar } from "./MuxTaskbar";
+import { MuxTaskbar } from "./taskbar/MuxTaskbar";
 import { MuxProgram, MuxProgramState } from '../MuxProgram';
-import { MuxMenu } from './MuxMenu';
 import { DefaultTheme } from '../themes/default/DefaultTheme';
 import { MuxOs } from '../MuxOs';
-import { MuxProgramWindow } from './MuxProgramWindow';
+import { MuxProgramWindow } from './window/MuxProgramWindow';
 import { DragBoard } from '../../drag-board/DragBoard';
 import { DragBoardItem } from '../../drag-board/DragBoardItem';
 import { useDimension } from '../../../utils/useDimension';
 import { Resizable } from '../../Resizable';
+import { usePointer } from '../../../utils/usePointer';
 
 export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) => {
 
@@ -17,6 +17,7 @@ export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) 
   const muxOs = MuxOs.get();
   const [programStates, setProgramStates] = useState<Map<string, MuxProgramState>>(muxOs.programStates$.getValue());
   const dimensions = useDimension(elementRef);
+  const pointer$ = usePointer(elementRef);
 
   // TODO
   const theme = DefaultTheme;
@@ -33,10 +34,7 @@ export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) 
 
   return (
     <div className='mux-desktop' ref={elementRef}>
-      <MuxMenu
-        programs={programs}
-        onOpen={(programId) => muxOs.startProgram(programId)}
-      />
+      <img className='mux-desktop-background' src={theme.wallpaper} />
       <DragBoard className='mux-main-window'>
         {[...programStates.values()].map(programState => (
           <DragBoardItem key={programState.program.id}>
@@ -53,7 +51,7 @@ export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) 
         programStates={programStates}
         programs={programs}
         onOpen={(programId) => muxOs.startProgram(programId)}
-        clock={muxOs.getProgramsBySlot('clock')[0]}
+        pointer$={pointer$}
       />
     </div >
   );

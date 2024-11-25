@@ -1,9 +1,9 @@
 import './MuxProgramWindowBar.styl';
-import { MuxOs } from '../MuxOs';
-import { MuxProgram } from '../MuxProgram';
+import { MuxOs } from '../../MuxOs';
+import { MuxProgram } from '../../MuxProgram';
 import React, { useState } from 'react';
-import { MuxProgramIcon } from './MuxProgramIcon';
-import { DragBoardHandle } from '../../drag-board/DragBoardHandle';
+import { MuxProgramIcon } from '../MuxProgramIcon';
+import { DragBoardHandle } from '../../../drag-board/DragBoardHandle';
 
 const ABOUT = '🛈';
 const CLOSE = '✕';

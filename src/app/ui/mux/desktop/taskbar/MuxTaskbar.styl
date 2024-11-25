@@ -1,0 +1,75 @@
+.mux-taskbar {
+  --gap: 10px;
+  --imgSize: 32px;
+  --padding: 10px;
+
+  z-index: 999999;
+  position: absolute;
+  bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  .mux-taskbar-dock {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    background-color: var(--muxBarColor);
+    border-radius: calc(4 * var(--muxBorderRadius));
+    gap: var(--gap);
+    list-style: none;
+    padding-inline-start: 0;
+    padding: 0 var(--muxGapSize);
+    height: 46px;
+
+    li {
+      padding: calc(var(--gap) - var(--padding)) 0;
+      scroll-snap-align: center;
+
+      &#divider {
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          border-left: 1px solid white;
+          aspect-ratio: 1 / 30;
+          box-sizing: border-box;
+          margin-bottom: 10px;
+        }
+      }
+
+      img {
+        aspect-ratio: 1 / 1;
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .program-indicator {
+        width: 100%;
+        height: 100%;
+        background-color: var(--muxBackgroundColor);
+        border-radius: var(--muxBorderRadius);
+
+        &.program-indicator-active {
+          background-color: var(--muxActiveColor);
+        }
+      }
+    }
+
+    /* &>*:first-child .mux-dock-item-button-container button {
+        border-right: 4px solid white;
+      } */
+    /* 
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      */
+  }
+}

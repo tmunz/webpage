@@ -1,7 +1,7 @@
 import './MuxProgramWindow.styl';
 import React from 'react';
-import { MuxProgram } from '../MuxProgram';
-import { MuxOs } from '../MuxOs';
+import { MuxProgram } from '../../MuxProgram';
+import { MuxOs } from '../../MuxOs';
 import { MuxProgramWindowBar } from './MuxProgramWindowBar';
 
 export const MuxProgramWindow = ({ program }: { program: MuxProgram }) => {

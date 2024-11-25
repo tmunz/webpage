@@ -4,8 +4,8 @@ import React, { createContext, ReactNode } from 'react';
 import { handleStart } from './handlePointerEvents';
 
 
-// const MAX = 9999999;
-// const R = MAX / -2;
+const MAX = 9999999;
+const R = MAX / -2;
 
 export interface DragBoardHandleConsuming {
   isDragging: boolean;
@@ -26,14 +26,15 @@ export const DragBoardHandle = (props: DragBoardHandleProps) => {
     <DragBoardHandleContext.Consumer>
       {(value: DragBoardHandleConsuming | null) => {
         if (!value) return null;
-        return <div
+        return <><div
           className={`${props.className ?? ''} drag-board-handle ${value.isDragging ? 'drag-board-handle-dragging' : ''} ${props.disableDrag ? 'drag-board-handle-drag-disabled' : ''}`}
           onTouchStart={(e) => !props.disableDrag && value.onPointerDown(handleStart(e.touches[0]))}
           onMouseDown={(e) => !props.disableDrag && value.onPointerDown(handleStart(e))}
         >
-          {/* TODO {value.isDragging && <div style={{ position: 'fixed', background: 'rgba(255, 0, 0, 0.5)', zIndex: MAX, top: R, left: R, width: MAX, height: MAX }} />} */}
           {props.children}
         </div>
+          {value.isDragging && <div style={{ position: 'fixed', zIndex: MAX, top: R, left: R, width: MAX, height: MAX }} />}
+        </>
       }}
     </DragBoardHandleContext.Consumer >
   );

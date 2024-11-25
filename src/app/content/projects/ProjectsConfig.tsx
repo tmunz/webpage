@@ -24,7 +24,7 @@ export const projects: Project[] = [
   {
     name: 'Magic Anagram',
     id: 'magic',
-    iconPath: require('./assets/magic_anagram.png'),
+    iconPath: require('./assets/magic-anagram.png'),
     iconMonoColor: true,
     description: 'Animate from a word to an anagram of it.',
     githubLink: 'https://github.com/tmunz/MagicAnagram',
@@ -34,7 +34,7 @@ export const projects: Project[] = [
   {
     name: 'Pebble Alpha Binary',
     id: 'alpha',
-    iconPath: 'https://github.com/tmunz/PebbleAlphaBinary/blob/master/alpha_binary_clock/resources/images/pebble-binary-clock-logo.png?raw=true',
+    iconPath: require('./assets/pebble-alpha-binary.png'),
     description: 'Binary Watchface for Pebble.',
     githubLink: 'https://github.com/tmunz/PebbleAlphaBinary',
     component: <PebbleAlphaBinary />,

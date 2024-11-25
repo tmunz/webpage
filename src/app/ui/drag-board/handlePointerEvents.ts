@@ -1,4 +1,4 @@
-import { useEffect, MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent } from "react";
+import { useEffect } from "react";
 import { enableOverscrollBehaviour, preventOverscrollBehaviour } from "../../utils/EventUtils";
 
 export const handlePointerEvents = (

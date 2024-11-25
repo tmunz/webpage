@@ -9,15 +9,11 @@ export function useMouseHandler({ canvas, onPositionChanged, startPaint, endPain
   if (!canvas) return () => { };
 
   const handleMouseMove = (e: MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
     const rect = canvas.getBoundingClientRect();
     onPositionChanged({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
   const handleMouseDown = (e: MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
     if (e.button === 0) {
       const rect = canvas.getBoundingClientRect();
       startPaint({ x: e.clientX - rect.left, y: e.clientY - rect.top });

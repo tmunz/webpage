@@ -4,15 +4,16 @@ import { PerspectiveCamera, MeshReflectorMaterial, useGLTF } from '@react-three/
 import { Object3D, RepeatWrapping, TextureLoader, Vector2 } from 'three';
 import { Object3DProps, useFrame, useLoader } from '@react-three/fiber';
 import { BehaviorSubject } from 'rxjs';
+import { Pointer } from '../../../utils/usePointer';
 
 const CAMERA_POSITION = new THREE.Vector3(-1, 0, 7);
 
-export const Muybridge = ({ pointer$ }: { pointer$: BehaviorSubject<{ x: number, y: number }> }) => {
+export const Muybridge = ({ pointer$ }: { pointer$: BehaviorSubject<Pointer> }) => {
 
   const { current: vec } = useRef(new THREE.Vector3());
   useFrame((state) => {
-    const p = pointer$.getValue();
-    state.camera.position.lerp(vec.set(-1 + p.x * -1, 1 + p.y * 1, 8), 0.05);
+    const {cx, cy } = pointer$.getValue();
+    state.camera.position.lerp(vec.set(-1 + cx * -1, 1 + cy * 1, 8), 0.05);
     state.camera.lookAt(0, 0, 0);
   });
 
