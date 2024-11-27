@@ -18,7 +18,6 @@ export const MuxTaskbar = ({ programStates, programs, onOpen, pointer$ }: MuxTas
 
   const [launcherOpen, setLauncherOpen] = useState(false);
 
-  // clock={muxOs.getProgramsBySlot('clock')[0]}
   const taskBarProgramsPinned: MuxProgramState[] = [...programs.values()]
     .filter(p => p.pinned)
     .map(p => {
@@ -35,23 +34,18 @@ export const MuxTaskbar = ({ programStates, programs, onOpen, pointer$ }: MuxTas
 
   return (
     <>
-      <div className='mux-taskbar'>
-        <div />
-        <ul className='mux-taskbar-dock'>
-          <MuxDockItem id='launcher' pointer$={pointer$} onOpen={() => setLauncherOpen(s => !s)}>
-            <MuxProgramIcon path={require('./launcher.png')} name='launcher' />
-          </MuxDockItem>
-          <MuxDockItem id='divider' pointer$={pointer$} width={1} />
-          {[...taskBarProgramsPinned, ...taskBarProgramsRunning]
-            .map(ps => <MuxDockItem id={ps.program.id} pointer$={pointer$} onOpen={() => onOpen(ps.program.id)}>
-              <MuxProgramIcon path={ps.program.iconPath} name={ps.program.name} monoColor={ps.program.iconMonoColor ?? false} />
-              <div className={`program-indicator ${ps.isRunning ? 'program-indicator-active' : ''}`} />
-            </MuxDockItem>)}
-        </ul>
-        <div />
-        {/* {clock && clock.component(MuxOs.get())} */}
-      </div>
-      {launcherOpen && <MuxLauncher programs={programs} onOpen={onOpen} onCloseLauncher={() => setLauncherOpen(false)} />}
+      <ul className={`mux-taskbar ${launcherOpen ? 'mux-taskbar-hidden' : ''}`}>
+        <MuxDockItem id='launcher' pointer$={pointer$} onOpen={() => setLauncherOpen(s => !s)}>
+          <MuxProgramIcon path={require('./launcher.png')} name='launcher' />
+        </MuxDockItem>
+        <MuxDockItem id='divider' pointer$={pointer$} width={1} />
+        {[...taskBarProgramsPinned, ...taskBarProgramsRunning]
+          .map(ps => <MuxDockItem id={ps.program.id} pointer$={pointer$} onOpen={() => onOpen(ps.program.id)}>
+            <MuxProgramIcon path={ps.program.iconPath} name={ps.program.name} monoColor={ps.program.iconMonoColor ?? false} />
+            <div className={`program-indicator ${ps.isRunning ? 'program-indicator-active' : ''}`} />
+          </MuxDockItem>)}
+      </ul>
+      <MuxLauncher className={`${!launcherOpen ? 'mux-launcher-hidden' : ''}`} programs={programs} onOpen={onOpen} onCloseLauncher={() => setLauncherOpen(false)} />
     </>
   );
 };

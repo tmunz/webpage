@@ -55,7 +55,7 @@ export function PebbleAlphaBinary() {
     { label: 'horizontal space', type: InputType.NUMBER, name: 'horizontalSpace', value: config.horizontalSpace },
     { label: 'fill color', type: InputType.COLOR, name: 'fillColor', value: config.fillColor },
     { label: 'border color', type: InputType.COLOR, name: 'borderColor', value: config.borderColor },
-    { label: 'background dark', type: InputType.COLOR, name: 'backgroundColor', value: config.backgroundColor },
+    { label: 'background color', type: InputType.COLOR, name: 'backgroundColor', value: config.backgroundColor },
     { label: 'has border', type: InputType.BOOLEAN, name: 'hasBorder', value: config.hasBorder },
     { label: 'is border date', type: InputType.BOOLEAN, name: 'isBorderDate', value: config.isBorderDate },
     { label: 'is 24h style', type: InputType.BOOLEAN, name: 'is24hStyle', value: config.is24hStyle }

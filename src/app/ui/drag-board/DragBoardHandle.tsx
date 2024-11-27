@@ -1,5 +1,3 @@
-import './DragBoardHandle.styl';
-
 import React, { createContext, ReactNode } from 'react';
 import { handleStart } from './handlePointerEvents';
 
@@ -28,12 +26,13 @@ export const DragBoardHandle = (props: DragBoardHandleProps) => {
         if (!value) return null;
         return <><div
           className={`${props.className ?? ''} drag-board-handle ${value.isDragging ? 'drag-board-handle-dragging' : ''} ${props.disableDrag ? 'drag-board-handle-drag-disabled' : ''}`}
+          style={{ boxSizing: 'border-box', cursor: props.disableDrag ? 'normal' : 'grab' }}
           onTouchStart={(e) => !props.disableDrag && value.onPointerDown(handleStart(e.touches[0]))}
           onMouseDown={(e) => !props.disableDrag && value.onPointerDown(handleStart(e))}
         >
           {props.children}
-        </div>
-          {value.isDragging && <div style={{ position: 'fixed', zIndex: MAX, top: R, left: R, width: MAX, height: MAX }} />}
+        </div >
+          {value.isDragging && <div style={{ position: 'fixed', cursor: 'grabbing', zIndex: MAX, top: R, left: R, width: MAX, height: MAX }} />}
         </>
       }}
     </DragBoardHandleContext.Consumer >

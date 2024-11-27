@@ -4,8 +4,8 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 0;  
-  top: 0;
+  right: 0;
+  height: 100%;
   padding: 16px;
   display: flex;
   background-color: rgba(0, 0, 0, 0.7);
@@ -13,6 +13,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
   border-radius: var(--muxBorderRadius);
+  box-sizing: border-box;
 
   ul {
     list-style: none;
@@ -32,8 +33,19 @@
     overflow: auto;
   }
 
-  .controls {
-    align-content: end;
+  .system-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .controls {
+      align-content: end;
+
+      button {
+        justify-content: end;
+      }
+
+    }
   }
 
   button {

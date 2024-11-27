@@ -8,7 +8,7 @@ import { DragBoardIndicator } from './DragBoardIndicator';
 import { useFlipThrough } from './useFlipThrough';
 import { useDragSwipe } from './useDragSwipe';
 import { DragSwipeIndicator } from './DragSwipeIndicator';
-import { DragBoardHandleContext } from './DragBoardHandle';
+
 
 export interface DragBoardProps {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ export interface DragBoardProps {
   indicator?: boolean;
 }
 
-const SMOOTHNESS = 10;
+const SMOOTHNESS = 5;
 const PLACEMENT_PATTERN = [{ x: 0, y: 0, rotation: 0 }];
 
 const mapChildrenToIds = (children: React.ReactNode): string[] => {

@@ -7,12 +7,15 @@ import { MuxProgramIcon } from '../MuxProgramIcon';
 interface MuxLauncherProps {
   programs: Map<string, MuxProgram>;
   onOpen: (programId: string) => void;
-  onCloseLauncher: () => void
+  onCloseLauncher: () => void;
+  className?: string;
 }
 
-export const MuxLauncher = ({ programs, onOpen, onCloseLauncher }: MuxLauncherProps) => {
+export const MuxLauncher = ({ programs, onOpen, onCloseLauncher, className }: MuxLauncherProps) => {
+  const clock = MuxOs.get().getProgramsBySlot('clock')[0]; // TODO
+
   return (
-    <div className='mux-launcher' onClick={() => onCloseLauncher()}>
+    <div className={`mux-launcher ${className ? className : ''}`} onClick={() => onCloseLauncher()}>
       <ul className='programs'>
         {[...programs.values()]
           .sort((a, b) => a.name.localeCompare(b.name))
@@ -28,11 +31,14 @@ export const MuxLauncher = ({ programs, onOpen, onCloseLauncher }: MuxLauncherPr
           ))}
       </ul>
       <hr />
-      <ul className='controls'>
-        <li><button onClick={() => MuxOs.get().pause()}>pause</button></li>
-        <li><button onClick={() => MuxOs.get().sleep()}>sleep</button></li>
-        <li><button onClick={() => MuxOs.get().shutdown()}>shutdown</button></li>
-      </ul>
+      <div className='system-container'>
+        {clock && clock.component && clock.component(MuxOs.get())}
+        <ul className='controls'>
+          <li><button onClick={() => MuxOs.get().pause()}>pause</button></li>
+          <li><button onClick={() => MuxOs.get().sleep()}>sleep</button></li>
+          <li><button onClick={() => MuxOs.get().shutdown()}>shutdown</button></li>
+        </ul>
+      </div>
     </div>
   );
 }
