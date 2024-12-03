@@ -125,6 +125,7 @@ export function Photo() {
             <tbody>
               {section.data.map((photo, rowInSection) => (
                 <PhotoRow
+                  key={photo.src ?? rowInSection}
                   photo={photo}
                   active={active === photo.src}
                   onActivate={(active) => activatePhoto(active && photo.src ? photo.src : null)}

@@ -12,7 +12,7 @@ interface PhotoRowProps {
 
 export const PhotoRow = ({ photo, active, onActivate, row, userAction }: PhotoRowProps) => {
 
-  return <tr className='photo-row' key={photo.src} data-src={photo.src}>
+  return <tr className='photo-row' data-src={photo.src}>
     <td className='label'>
       {`[${(row + 1).toString().padStart(3, '0')}]`}<br />
       {photo.name}<br />

@@ -40,7 +40,7 @@ export const MuxTaskbar = ({ programStates, programs, onOpen, pointer$ }: MuxTas
         </MuxDockItem>
         <MuxDockItem id='divider' pointer$={pointer$} width={1} />
         {[...taskBarProgramsPinned, ...taskBarProgramsRunning]
-          .map(ps => <MuxDockItem id={ps.program.id} pointer$={pointer$} onOpen={() => onOpen(ps.program.id)}>
+          .map(ps => <MuxDockItem key={ps.program.id} id={ps.program.id} pointer$={pointer$} onOpen={() => onOpen(ps.program.id)}>
             <MuxProgramIcon path={ps.program.iconPath} name={ps.program.name} monoColor={ps.program.iconMonoColor ?? false} />
             <div className={`program-indicator ${ps.isRunning ? 'program-indicator-active' : ''}`} />
           </MuxDockItem>)}

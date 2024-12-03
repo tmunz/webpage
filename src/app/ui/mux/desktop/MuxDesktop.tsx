@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { MuxTaskbar } from "./taskbar/MuxTaskbar";
 import { MuxProgram, MuxProgramState } from '../MuxProgram';
 import { DefaultTheme } from '../themes/default/DefaultTheme';
-import { MuxOs } from '../MuxOs';
+import { useMuxOs } from '../MuxOs';
 import { MuxProgramWindow } from './window/MuxProgramWindow';
 import { DragBoard } from '../../drag-board/DragBoard';
 import { DragBoardItem } from '../../drag-board/DragBoardItem';
@@ -14,7 +14,7 @@ import { usePointer } from '../../../utils/usePointer';
 export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) => {
 
   const elementRef = React.useRef<HTMLDivElement>(null);
-  const muxOs = MuxOs.get();
+  const muxOs = useMuxOs();
   const [programStates, setProgramStates] = useState<Map<string, MuxProgramState>>(muxOs.programStates$.getValue());
   const dimensions = useDimension(elementRef);
   const pointer$ = usePointer(elementRef);

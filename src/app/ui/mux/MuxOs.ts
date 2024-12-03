@@ -18,6 +18,10 @@ export interface MuxOsState {
   programs: Map<string, MuxProgram>;
 }
 
+export const useMuxOs = () => {
+  	return MuxOs.get();
+}
+
 export class MuxOs {
 
   private static instance = new MuxOs();
@@ -121,19 +125,19 @@ export class MuxOs {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   startProgram(programId: string) {
-    const program = MuxOs.get().programs$.getValue().get(programId);
+    const program = this.programs$.getValue().get(programId);
     if (program) {
-      MuxOs.get().logInfo(`Starting program with id ${programId}`);
+      this.logInfo(`Starting program with id ${programId}`);
       const programStates = new Map(this.programStates$.getValue());
       programStates.set(programId, { program, isRunning: true });
       this.programStates$.next(programStates);
     } else {
-      MuxOs.get().logError(`Tried to start program with id ${programId}, but it does not exist`);
+      this.logError(`Tried to start program with id ${programId}, but it does not exist`);
     }
   }
 
   quitProgram(programId: string) {
-    MuxOs.get().logInfo(`Quitting program with id ${programId}`);
+    this.logInfo(`Quitting program with id ${programId}`);
     const programStates = new Map(this.programStates$.getValue());
     programStates.delete(programId);
     this.programStates$.next(programStates);

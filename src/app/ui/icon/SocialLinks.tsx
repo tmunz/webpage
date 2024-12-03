@@ -13,7 +13,7 @@ export function SocialLinks() {
     { name: IconName.REBRICKABLE, title: 'Rebrickable', link: 'https://rebrickable.com/users/tmunz/mocs/' },
     { name: IconName.LEGO_IDEAS, title: 'Lego Ideas', link: 'https://ideas.lego.com/profile/3e194015-f5c0-46e1-b14b-275d593dc998' },
     { name: IconName.FLICKR, title: 'Flickr', link: 'https://www.flickr.com/photos/101562535@N03/' },
-    // {id: 'thingiverse', title: 'Thingiverse', link: ''},
+    { name: IconName.THINGIVERSE, id: 'thingiverse', title: 'Thingiverse', link: 'https://www.thingiverse.com/tmunz/designs'},
     // {id: 'buildamoc', title: 'Builda MOC', link: 'https://buildamoc.com/products/flower-selection'}, 
     // linkedin
   ];

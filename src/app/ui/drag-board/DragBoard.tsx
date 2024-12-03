@@ -21,7 +21,7 @@ const SMOOTHNESS = 5;
 const PLACEMENT_PATTERN = [{ x: 0, y: 0, rotation: 0 }];
 
 const mapChildrenToIds = (children: React.ReactNode): string[] => {
-  return React.Children.map(children, (child, i) => ((child as React.ReactElement).key ?? i).toString()) ?? [];
+  return React.Children.map(children, (child, i) => (`${(child as React.ReactElement).key ?? i}`)) ?? [];
 }
 
 export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PATTERN, indicator = false }: DragBoardProps) => {
@@ -41,7 +41,7 @@ export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PA
   return (
     <div className={`drag-board ${className ? className : ''}`} ref={boardRef}>
       {React.Children.map(children, (child, i) => {
-        const itemState = itemStates.get(((child as React.ReactElement).key ?? i).toString()) ?? null;
+        const itemState = itemStates.get(`${((child as React.ReactElement).key ?? i)}`) ?? null;
         if (!itemState) return null;
 
         return (

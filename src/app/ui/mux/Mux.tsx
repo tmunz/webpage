@@ -2,7 +2,7 @@ import './Mux.styl';
 import { useEffect, useState } from 'react';
 import { MuxDesktop } from './desktop/MuxDesktop';
 import { MuxProgram } from './MuxProgram';
-import { Log, MuxOs } from './MuxOs';
+import { Log, MuxOs, useMuxOs } from './MuxOs';
 import React from 'react';
 import { MuxBootScreen } from './MuxBootScreen';
 import { StandardClock } from './programs/standard-clock/StandardClock';
@@ -24,7 +24,7 @@ const DEFAULT_PROGRAMS: MuxProgram[] = [
 
 // this is a simulation of a modern retro computer operating system (whatever this means ;-)
 export const Mux = ({ programs, onOff, bootTime = 2000 }: MuxProps) => {
-  const muxOs = MuxOs.get();
+  const muxOs = useMuxOs();
   const [bootId, setBootId] = useState<string | null>(muxOs.bootId$.getValue());
   const [bootProcess, setBootProcess] = useState<number>(muxOs.bootProcess$.getValue());
   const [stdout, setStdout] = useState<Log[]>(muxOs.stdout$.getValue());

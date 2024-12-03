@@ -1,7 +1,7 @@
 import './MuxLauncher.styl';
-import { MuxOs } from '../../MuxOs';
+import { useMuxOs } from '../../MuxOs';
 import { MuxProgram } from '../../MuxProgram';
-import React from "react";
+import React from 'react';
 import { MuxProgramIcon } from '../MuxProgramIcon';
 
 interface MuxLauncherProps {
@@ -12,7 +12,8 @@ interface MuxLauncherProps {
 }
 
 export const MuxLauncher = ({ programs, onOpen, onCloseLauncher, className }: MuxLauncherProps) => {
-  const clock = MuxOs.get().getProgramsBySlot('clock')[0]; // TODO
+  const muxOs = useMuxOs();
+  const clock = muxOs.getProgramsBySlot('clock')[0];
 
   return (
     <div className={`mux-launcher ${className ? className : ''}`} onClick={() => onCloseLauncher()}>
@@ -32,11 +33,11 @@ export const MuxLauncher = ({ programs, onOpen, onCloseLauncher, className }: Mu
       </ul>
       <hr />
       <div className='system-container'>
-        {clock && clock.component && clock.component(MuxOs.get())}
+        {clock && clock.component(muxOs)}
         <ul className='controls'>
-          <li><button onClick={() => MuxOs.get().pause()}>pause</button></li>
-          <li><button onClick={() => MuxOs.get().sleep()}>sleep</button></li>
-          <li><button onClick={() => MuxOs.get().shutdown()}>shutdown</button></li>
+          <li><button onClick={() => muxOs.pause()}>pause</button></li>
+          <li><button onClick={() => muxOs.sleep()}>sleep</button></li>
+          <li><button onClick={() => muxOs.shutdown()}>shutdown</button></li>
         </ul>
       </div>
     </div>

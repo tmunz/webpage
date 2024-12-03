@@ -16,7 +16,7 @@ export function PaintingCanvas({ children, className, ...props }: PaintingCanvas
         {childrenArray[0]}
       </div>
       <div className='painting-canvas-backside'>
-        {new Array(4).fill(null).map(() => <div className='corner' />)}
+        {new Array(4).fill(null).map((_, i) => <div key={i} className='corner' />)}
         <div className='painting-canvas-backside-content'>
           {childrenArray[1]}
         </div>

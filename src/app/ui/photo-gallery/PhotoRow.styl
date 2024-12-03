@@ -1,8 +1,4 @@
 .photo-row {
-  @media (max-width: 500px) {
-    grid-template-columns: 1fr;
-  }
-
   display: grid;
   grid-template-columns: minmax(0, 160px) minmax(300px, 1fr);
   padding: 0;
@@ -18,5 +14,19 @@
     padding-right: 10px;
     color: #888;
     mix-blend-mode: difference;
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+
+    td.image {
+      z-index: 1;
+      background-color: var(--photoBackgroundColor);
+    }
+
+    td.label {
+      z-index: 0;
+      order: 1;
+    }
   }
 }
