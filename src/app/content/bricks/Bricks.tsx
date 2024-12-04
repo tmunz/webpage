@@ -85,7 +85,7 @@ export const Bricks = () => {
   };
 
   return <div className='bricks'>
-    <DelaySuspense fallback={<LoadingBrick />} renderDelay={1000} minVisibilityDelay={5000}>
+    <DelaySuspense fallback={<LoadingBrick />} renderDelay={1000} minVisibilityDelay={3000}>
       <div
         ref={elementRef}
         style={{ overflow: 'auto', height: '100%' }}
