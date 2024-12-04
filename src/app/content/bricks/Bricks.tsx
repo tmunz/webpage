@@ -6,13 +6,13 @@ import { BrickScroll } from './brick/BrickScroll';
 import { Transformations } from '../../utils/TransformationAnimator';
 import { Mb300slScroll } from './mb300sl/Mb300slScroll';
 import { LoadingBrick } from './LoadingBrick';
-import { useLoadable } from '../../three/useLoadable';
 import { useDimension } from '../../utils/useDimension';
 import { useScroll } from '../../utils/useScroll';
 import { Mb300slContent } from './mb300sl/Mb300slContent';
 import { AircraftContent } from './aircraft/AircraftContent';
 import { Muybridge } from './horse/Muybridge';
 import { usePointer } from '../../utils/usePointer';
+import { DelaySuspense } from '../../utils/DelaySuspense';
 
 export const Bricks = () => {
 
@@ -57,11 +57,6 @@ export const Bricks = () => {
   const pages = sections.reduce((acc, { height }) => acc + height, 0);
   const mb300slTriggers: [number, number] = [1.3 / pages, 3.6 / pages];
 
-  const [loadables, loaded] = useLoadable([(onLoadComplete) => (<Mb300slScroll
-    progress$={scrollState$}
-    animationTrigger={[mb300slTriggers[0] - 1 / pages, mb300slTriggers[1] + 1 / pages]}
-    onLoadComplete={onLoadComplete}
-  />)]);
 
   sections[1].content = <>
     <div style={{ position: 'absolute', top: '50vh' }}>
@@ -69,7 +64,10 @@ export const Bricks = () => {
     </div>
     <div style={{ height: '100vh', position: 'sticky', top: 0, overflow: 'hidden', pointerEvents: 'none' }}>
       <View style={{ height: '100vh', position: 'absolute', top: 0, left: 0, right: -20 }}>
-        {loadables[0]}
+        <Mb300slScroll
+          progress$={scrollState$}
+          animationTrigger={[mb300slTriggers[0] - 1 / pages, mb300slTriggers[1] + 1 / pages]}
+        />
       </View>
     </div>
   </>;
@@ -87,37 +85,32 @@ export const Bricks = () => {
   };
 
   return <div className='bricks'>
-    {!loaded && <LoadingBrick />}
+    <DelaySuspense fallback={<LoadingBrick />} fallbackMinDurationMs={2000}>
 
-    <div
-      ref={elementRef}
-      style={{
-        overflow: 'auto',
-        opacity: loaded ? 1 : 0,
-        transition: 'opacity 0.5s ease-in-out',
-        width: '100%',
-        height: '100%',
-      }}
-    >
-      {sections.map((section, i) => {
-        return <section key={i} style={{ minHeight: `${section.height * 100}vh`, top: 0, position: 'relative' }}>
-          {section.content}
-        </section>
-      })}
+      <div
+        ref={elementRef}
+        style={{ overflow: 'auto', height: '100%' }}
+      >
+        {sections.map((section, i) => {
+          return <section key={i} style={{ minHeight: `${section.height * 100}vh`, top: 0, position: 'relative' }}>
+            {section.content}
+          </section>
+        })}
 
-      {/**************************************** brick overlay *******************************************/}
-      <View style={{ width: dimension?.width ?? 600, height: dimension?.height ?? 800, position: 'absolute', top: 0, left: 0, zIndex: -1 }}>
-        <PerspectiveCamera makeDefault fov={12} position={[0, 0, 5]} />
-        <BrickScroll transformations={scrollStates.brick} progress$={scrollState$} />
-        <Environment preset='lobby' />
-      </View>
-    </div>
+        {/**************************************** brick overlay *******************************************/}
+        <View style={{ width: dimension?.width ?? 600, height: dimension?.height ?? 800, position: 'absolute', top: 0, left: 0, zIndex: -1 }}>
+          <PerspectiveCamera makeDefault fov={12} position={[0, 0, 5]} />
+          <BrickScroll transformations={scrollStates.brick} progress$={scrollState$} />
+          <Environment preset='lobby' />
+        </View>
+      </div>
 
-    <Canvas
-      style={{ position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, overflow: 'hidden', zIndex: -1 }}
-      eventSource={document.getElementById('poc')!}>
-      <View.Port />
-      <Preload all />
-    </Canvas>
+      <Canvas
+        style={{ position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, overflow: 'hidden', zIndex: -1 }}
+        eventSource={document.getElementById('poc')!}>
+        <View.Port />
+        <Preload all />
+      </Canvas>
+    </DelaySuspense >
   </div >;
 };

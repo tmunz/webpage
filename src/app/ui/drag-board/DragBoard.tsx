@@ -28,7 +28,7 @@ export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PA
 
   const boardRef = useRef<HTMLDivElement>(null);
 
-  const { itemStates, updateItemState, selectedItem, setSelectedItem, updateSelectedItem, bringToBack, updateItemOrder, lastSelectedItemPosition } = useDragBoardState(children, placementPattern, SMOOTHNESS, mapChildrenToIds);
+  const { itemStates, updateItemState, selectedItem, setSelectedItem, updateSelectedItem, bringToBack, bringToFront, updateItemOrder, lastSelectedItemPosition } = useDragBoardState(children, placementPattern, SMOOTHNESS, mapChildrenToIds);
   const { handleDragging, handleDragEnd } = useDragEvents(boardRef, itemStates, updateItemState, selectedItem, updateSelectedItem);
   const { dragSwipeProgress, handleDragSwiping, handleDragSwipeEnd } = useDragSwipe(boardRef, selectedItem, bringToBack);
   useFlipThrough(boardRef, updateItemOrder);
@@ -56,8 +56,8 @@ export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PA
       })}
       {dragSwipeProgress && <DragSwipeIndicator overflow={dragSwipeProgress} position={lastSelectedItemPosition} />}
       {indicator && <DragBoardIndicator
-        sortedItems={mapChildrenToIds(children).map(id => ({ id, zIndex: itemStates.get(id)?.z ?? -1 }))}
-        onSelect={(id, zIndex) => updateItemState(id, { z: zIndex })}
+        sortedItems={mapChildrenToIds(children).map(id => ({ id, zIndex: itemStates.get(id)?.z ?? 0 }))}
+        onSelect={(id) => bringToFront(id)}
       />}
     </div>
   );

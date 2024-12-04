@@ -54,7 +54,7 @@ export const useDragBoardState = (
     updateItemOrder(-1, id);
   }
 
-  const updateItemOrder = (direction: -1 | 1, id?: string) => {
+  const updateItemOrder = (direction: -1 | 1, id?: string) => { 
     const sortedStates = Array.from(itemStates.values()).filter(v => v.id !== id).sort((a, b) => a.z - b.z);
 
     let itemState: DragBoardItemState | undefined;
@@ -116,9 +116,9 @@ export const useDragBoardState = (
       if (!target) return null;
       const x = current.x + (target.x !== undefined ? (target.x - current.x) / smoothness : 0);
       const y = current.y + (target.y !== undefined ? (target.y - current.y) / smoothness : 0);
-      const z = target.z ?? current.z;
+      const z = target.z !== undefined ? target.z : current.z;
       const rotation = current.rotation + (target.rotation !== undefined ? (target.rotation - current.rotation) / smoothness : 0);
-      const updateNeeded = Math.abs(x - current.x) > 0.1 || Math.abs(z - current.y) > 0.1 || Math.abs(rotation - current.rotation) > 0.1;
+      const updateNeeded = Math.abs(x - current.x) > 0.1 || Math.abs(z - current.y) > 0.1 || Math.abs(rotation - current.rotation) > 0.1 || Math.abs(z - current.z) > 0.1;
       return updateNeeded ? { ...current, x, y, z, rotation } : null;
     };
 
