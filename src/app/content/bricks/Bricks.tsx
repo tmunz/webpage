@@ -5,7 +5,7 @@ import { Environment, View, Preload, PerspectiveCamera } from '@react-three/drei
 import { BrickScroll } from './brick/BrickScroll';
 import { Transformations } from '../../utils/TransformationAnimator';
 import { Mb300slScroll } from './mb300sl/Mb300slScroll';
-import { LoadingBrick } from './LoadingBrick';
+import { LoadingBrick } from './loadingBrick/LoadingBrick';
 import { useDimension } from '../../utils/useDimension';
 import { useScroll } from '../../utils/useScroll';
 import { Mb300slContent } from './mb300sl/Mb300slContent';
@@ -85,7 +85,7 @@ export const Bricks = () => {
   };
 
   return <div className='bricks'>
-    <DelaySuspense fallback={<LoadingBrick />} renderDelay={1000} minVisibilityDelay={3000}>
+    <DelaySuspense fallback={<LoadingBrick />} renderDelay={1000} minVisibilityDelay={2500}>
       <div
         ref={elementRef}
         style={{ overflow: 'auto', height: '100%' }}

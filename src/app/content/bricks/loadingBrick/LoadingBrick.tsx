@@ -1,0 +1,39 @@
+import React, { useEffect, useState } from 'react';
+import { LoadingBrickSvg } from './LoadingBrickSvg';
+
+export const LoadingBrick = ({ dimension = 500, studs = [2, 4], duration = 300 }: { dimension?: number, studs?: [number, number], duration?: number }) => {
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    let animationFrameId: number;
+    const animate = () => {
+      setTime(prev => prev + 1);
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    animationFrameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, []);
+
+  const calcProgress = (t: number, steps = 1, step = 1, offset = 0) => {
+    const easeInOut = (x: number) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    const stepDuration = duration / steps;
+    const cycle = Math.floor(t / stepDuration);
+    const easedT = easeInOut((t % stepDuration) / stepDuration);
+    const progress = cycle + easedT;
+    return ((offset + progress) * step) % (steps * step);
+  }
+
+  return (
+    <div className='loading-brick' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+      <LoadingBrickSvg
+        width={dimension}
+        height={dimension}
+        xRotation={0.25}
+        yRotation={calcProgress(time, 4, Math.PI / 2, Math.PI / 8)}
+        light={{ x: -0.7, y: 1, z: 0.7 }}
+        minLightIntensity={127}
+        studs={studs}
+      />
+    </div>
+  );
+};

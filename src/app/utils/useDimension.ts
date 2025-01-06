@@ -7,7 +7,7 @@ export const useDimension = (elementRef: RefObject<HTMLElement>, animationThresh
   useEffect(() => {
     const resizeObserver = new ResizeObserver(entries => {
       for (let entry of entries) {
-        if (entry.target instanceof HTMLDivElement) {
+        if (entry.target instanceof HTMLElement) {
           const width = Math.floor(entry.target.offsetWidth);
           const height = Math.floor(entry.target.offsetHeight);
           if (dimension === null || dimension.width !== width || dimension.height !== height) {
