@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { LoadingBrickSvg } from './LoadingBrickSvg';
+import { useDimension } from '../../../utils/useDimension';
 
-export const LoadingBrick = ({ dimension = 500, studs = [2, 4], duration = 300 }: { dimension?: number, studs?: [number, number], duration?: number }) => {
+export const LoadingBrick = ({ studs = [2, 4], duration = 300 }: { studs?: [number, number], duration?: number }) => {
   const [time, setTime] = useState(0);
+  const elementRef = React.createRef<HTMLDivElement>();
+  const dimension = useDimension(elementRef) ?? { width: 300, height: 300 };
+  const size = Math.min(dimension.width, dimension.height, 500);
 
   useEffect(() => {
     let animationFrameId: number;
@@ -24,10 +28,10 @@ export const LoadingBrick = ({ dimension = 500, studs = [2, 4], duration = 300 }
   }
 
   return (
-    <div className='loading-brick' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+    <div className='loading-brick' ref={elementRef} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
       <LoadingBrickSvg
-        width={dimension}
-        height={dimension}
+        width={size}
+        height={size}
         xRotation={0.25}
         yRotation={calcProgress(time, 4, Math.PI / 2, Math.PI / 8)}
         light={{ x: -0.7, y: 1, z: 0.7 }}
