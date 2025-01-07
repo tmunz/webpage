@@ -1,5 +1,5 @@
-import React, { HTMLAttributes, Suspense, useMemo } from "react";
-import { IconName, loadIcon } from "./IconName";
+import React, { HTMLAttributes, Suspense, useMemo } from 'react';
+import { IconName, loadIcon } from './IconName';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   name: IconName;
@@ -12,9 +12,9 @@ export const Icon = ({ name, fill, ...args }: Props) => {
 
   return (
     SvgIcon && <div
-      className="icon"
+      className='icon'
       aria-label={name}
-      role="img"
+      role='img'
       {...args}
     >
       <Suspense fallback={null}>
