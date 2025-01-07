@@ -1,12 +1,27 @@
 .mb-300sl-content {
-  color: white; 
-  opacity: 0.9;
-  font-size: 15vw;
-  padding-top: 30px;
-  font-weight: 900;
-  height: 100%;
-  display: flex;
-  justify-content: left;
-  align-items: top;
-  mix-blend-mode: difference;
+  color: white;
+  width: clamp(200px, 50%, 500px);
+
+  .sticky-container {
+    .sticky-content {
+      top: 25vh;
+      position: sticky;
+      margin-bottom: 50px;
+    }
+    &::after {
+      content: '';
+      display: block;
+      height: 250px;
+    }
+  }
+
+  h1 {
+    opacity: 0.9;
+    font-size: 15vw;
+    font-weight: 900;
+    display: flex;
+    justify-content: left;
+    align-items: top;
+    mix-blend-mode: difference;
+  }
 }

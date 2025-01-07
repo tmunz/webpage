@@ -59,7 +59,7 @@ export const Bricks = () => {
 
 
   sections[1].content = <>
-    <div style={{ position: 'absolute', top: '50vh' }}>
+    <div style={{ position: 'absolute', top: 0 }}>
       <Mb300slContent />
     </div>
     <div style={{ height: '100vh', position: 'sticky', top: 0, overflow: 'hidden', pointerEvents: 'none' }}>
