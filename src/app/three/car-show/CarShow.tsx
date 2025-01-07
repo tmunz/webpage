@@ -31,8 +31,7 @@ export const CarShow = forwardRef(({ animate, debug, Model, quality = Quality.LO
     const camera = cameraRef.current;
     if (camera) {
       camera.position.set(-10, 2, -12);
-      camera.fov = 50;
-      camera.setFocalLength(50);
+      camera.setFocalLength(40);
       camera.lookAt(center);
     }
   }, [animate]);

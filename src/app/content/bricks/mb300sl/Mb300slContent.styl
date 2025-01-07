@@ -1,10 +1,11 @@
 .mb-300sl-content {
+  padding-top: 50vh;
   color: white;
 
   .sticky-container {
     .sticky-content {
       width: clamp(150px, 100%, 400px);
-      top: 25vh;
+      top: calc(13px + var(--frame-close-button-size));
       position: sticky;
       margin-bottom: 50px;
 
@@ -22,10 +23,11 @@
   h1 {
     opacity: 0.9;
     font-size: 15vw;
+    vertical-align: middle;
+    line-height: 0.7em;
+    margin-block: 0;
     font-weight: 900;
-    display: flex;
-    justify-content: left;
-    align-items: top;
+    display: inline-block;
     mix-blend-mode: difference;
   }
 }

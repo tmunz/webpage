@@ -21,7 +21,7 @@ export function Mb300slContent() {
       <StickyContainer>
         <h2>Instructions</h2>
         <p>
-          Probably one of the most beautiful cars in history is now available in Creator Expert Car scale (1/13): the Mercedes-Benz 300SL Coupé (1955) from 1955.
+          Probably one of the most beautiful cars in history is now available in Creator Expert Car scale (1/13): the Mercedes-Benz 300SL Coupé from 1955.
         </p>
         <p>
           Besides the openable hood and trunk, the model features the iconic gullwing doors of the original.
