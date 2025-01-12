@@ -14,7 +14,7 @@ export const Muybridge = ({ pointer$ }: { pointer$: BehaviorSubject<Pointer> }) 
   useFrame((state) => {
     const {cx, cy } = pointer$.getValue();
     state.camera.position.lerp(vec.set(-1 + cx * -1, 1 + cy * 1, 8), 0.05);
-    state.camera.lookAt(0, 0, 0);
+    state.camera.lookAt(0, -0.5, 0);
   });
 
   return (

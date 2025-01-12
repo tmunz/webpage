@@ -10,20 +10,18 @@ import { useDimension } from '../../utils/useDimension';
 import { useScroll } from '../../utils/useScroll';
 import { Mb300slContent } from './mb300sl/Mb300slContent';
 import { AircraftContent } from './aircraft/AircraftContent';
-import { Muybridge } from './horse/Muybridge';
-import { usePointer } from '../../utils/usePointer';
 import { DelaySuspense } from '../../utils/DelaySuspense';
+import { HorseGalloping } from './horse/HorseGalloping';
 
 export const Bricks = () => {
 
   const elementRef = useRef<HTMLDivElement>(null);
   const dimension = useDimension(elementRef);
   const scrollState$ = useScroll(elementRef);
-  const canvasPointer$ = usePointer(elementRef);
 
   const sections = [
     { height: 1, content: null },
-    { height: 3, content: undefined }, // Placeholder for the 300 SL,
+    { height: 4, content: undefined }, // Placeholder for the 300 SL,
     {
       height: 1, content: <>
         <div style={{ paddingTop: '40px' }}>
@@ -42,20 +40,11 @@ export const Bricks = () => {
       </>
     },
     {
-      height: 1, content: <>
-        <div className='bricks-content' style={{ paddingTop: '40px' }}>
-          <h2>Horse Galopping</h2>
-        </div>
-        <div style={{ left: 0, top: 0, right: 0, bottom: 0, overflow: 'hidden', position: 'absolute' }}>
-          <View style={{ height: '100%', marginRight: -20 }}>
-            <Muybridge pointer$={canvasPointer$} />
-          </View>
-        </div>
-      </>
+      height: 1, content: <HorseGalloping />
     },
   ];
   const pages = sections.reduce((acc, { height }) => acc + height, 0);
-  const mb300slTriggers: [number, number] = [1.3 / pages, 3.6 / pages];
+  const mb300slTriggers: [number, number] = [1.3 / pages, 4.6 / pages];
 
 
   sections[1].content = <>
@@ -75,12 +64,12 @@ export const Bricks = () => {
 
   const scrollStates: Record<string, Transformations> = {
     brick: new Map([
-      [0, { rotateX: 0.25, rotateY: Math.PI / 5, scaleX: 2.5, scaleY: 2.5, scaleZ: 2.5, positionX: 0.05, positionY: -1, positionZ: 0 }],
+      [0, { rotateX: 0.25, rotateY: Math.PI / 5, scaleX: 2.2, scaleY: 2.2, scaleZ: 2.2, positionX: 0.05, positionY: -0.9, positionZ: 1 }],
       [1 / pages, { rotateX: 0, rotateY: 0, positionY: 0 }],
       [1.3 / pages, { positionY: 0.9 }],
-      [3.5 / pages, { positionY: 0.9 }],
-      [4.5 / pages, { rotateX: Math.PI / 2, rotateY: Math.PI, positionY: 0 }],
-      [Math.max(0.9, 5 / pages), { rotateX: 0, rotateY: Math.PI * 2, positionX: 0, positionY: -1 }],
+      [4.5 / pages, { positionY: 0.9 }],
+      [5.5 / pages, { rotateX: Math.PI / 2, rotateY: Math.PI, positionY: 0 }],
+      [Math.max(0.9, 6 / pages), { rotateX: 0, rotateY: Math.PI * 2, positionX: 0, positionY: -0.85 }],
     ]),
   };
 
@@ -91,7 +80,7 @@ export const Bricks = () => {
         style={{ overflow: 'auto', height: '100%' }}
       >
         {sections.map((section, i) => {
-          return <section key={i} style={{ minHeight: `${section.height * 100}vh`, top: 0, position: 'relative' }}>
+          return <section key={i} style={{ minHeight: `${section.height * 100}vh`, height: 1, top: 0, position: 'relative' }}>
             {section.content}
           </section>
         })}
