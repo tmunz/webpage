@@ -24,8 +24,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.25.1",
     "rxjs": "^6.6.7",
-    "three": "^0.166.1",
-    "three-forcegraph": "^1.41.14"
+    "three": "^0.166.1"
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",

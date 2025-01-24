@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useMemo } from 'react';
-import { AdditiveBlending, CatmullRomCurve3, Color, DoubleSide, Plane, ShaderMaterial, Vector3 } from 'three';
+import { AdditiveBlending, CatmullRomCurve3, Color, DoubleSide, ShaderMaterial, Vector3 } from 'three';
 import { Object3DNode, extend, useFrame } from '@react-three/fiber';
 import { shaderMaterial } from '@react-three/drei';
 import { calculateTransformationMatrix, noiseGlsl } from './NetworkGraphCalculator';
@@ -127,7 +127,7 @@ interface PathMaterialProps {
   wiggleSeed?: number,
   wiggleSpeed?: number,
   wiggleAmplitude?: number,
-};
+}
 
 interface PathParticleMaterialProps {
   size?: number,
