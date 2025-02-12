@@ -17,16 +17,14 @@ export const Bricks = () => {
 
   const elementRef = useRef<HTMLDivElement>(null);
   const dimension = useDimension(elementRef);
-  const scrollState$ = useScroll(elementRef);
+  const [scrollPosition$, scrollNormalized$] = useScroll(elementRef);
 
   const sections = [
     { height: 1, content: null },
     { height: 4, content: undefined }, // Placeholder for the 300 SL,
     {
       height: 1, content: <>
-        <div style={{ paddingTop: '40px' }}>
-          <AircraftContent />
-        </div>
+        <AircraftContent scrollPosition$={scrollPosition$} />
         <div style={{ left: 0, top: 0, right: 0, bottom: 0, overflow: 'hidden', pointerEvents: 'none', position: 'absolute' }}>
           <View style={{ height: '100%', marginRight: -20 }}>
             <color attach='background' args={['rgb(255, 0, 0)']} />
@@ -54,7 +52,7 @@ export const Bricks = () => {
     <div style={{ height: '100vh', position: 'sticky', top: 0, overflow: 'hidden', pointerEvents: 'none' }}>
       <View style={{ height: '100vh', position: 'absolute', top: 0, left: 0, right: -20 }}>
         <Mb300slScroll
-          progress$={scrollState$}
+          progress$={scrollNormalized$}
           animationTrigger={[mb300slTriggers[0] - 1 / pages, mb300slTriggers[1] + 1 / pages]}
         />
       </View>
@@ -80,7 +78,7 @@ export const Bricks = () => {
         style={{ overflow: 'auto', height: '100%' }}
       >
         {sections.map((section, i) => {
-          return <section key={i} style={{ minHeight: `${section.height * 100}vh`, height: 1, top: 0, position: 'relative' }}>
+          return <section key={i} style={{ height: `${section.height * 100}vh`, top: 0, position: 'relative' }}>
             {section.content}
           </section>
         })}
@@ -88,7 +86,7 @@ export const Bricks = () => {
         {/**************************************** brick overlay *******************************************/}
         <View style={{ width: dimension?.width ?? 600, height: dimension?.height ?? 800, position: 'absolute', top: 0, left: 0, zIndex: -1 }}>
           <PerspectiveCamera makeDefault fov={12} position={[0, 0, 5]} />
-          <BrickScroll transformations={scrollStates.brick} progress$={scrollState$} />
+          <BrickScroll transformations={scrollStates.brick} progress$={scrollNormalized$} />
           <Environment preset='lobby' />
         </View>
       </div>

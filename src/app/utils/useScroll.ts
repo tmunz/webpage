@@ -2,7 +2,8 @@ import { useEffect, RefObject, useRef } from 'react';
 import { BehaviorSubject } from 'rxjs';
 
 export const useScroll = (elementRef: RefObject<HTMLElement>) => {
-  const { current: scroll$ } = useRef<BehaviorSubject<number>>(new BehaviorSubject(0));
+  const { current: scrollPosition$ } = useRef<BehaviorSubject<number>>(new BehaviorSubject(0));
+  const { current: scrollNormalized$ } = useRef<BehaviorSubject<number>>(new BehaviorSubject(0));
 
   useEffect(() => {
     const element = elementRef.current;
@@ -11,9 +12,10 @@ export const useScroll = (elementRef: RefObject<HTMLElement>) => {
     const handleScroll = () => {
       const scrollPosition = element.scrollTop;
       const totalScrollHeight = element.scrollHeight - element.clientHeight;
-      const offset = (scrollPosition / totalScrollHeight);
+      const relativeScroll = totalScrollHeight > 0 ? scrollPosition / totalScrollHeight : 0;
 
-      scroll$.next(offset);
+      scrollPosition$.next(scrollPosition);
+      scrollNormalized$.next(relativeScroll);
     };
 
     element.addEventListener('scroll', handleScroll);
@@ -24,5 +26,5 @@ export const useScroll = (elementRef: RefObject<HTMLElement>) => {
     };
   }, [elementRef]);
 
-  return scroll$;
+  return [scrollPosition$, scrollNormalized$];
 };
