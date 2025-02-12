@@ -6,12 +6,10 @@ in this repository the source code to Tobias Munzert's personal [webpage](https:
 
 ## Table of Contents
 
-- [Security](#security)
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
 - [API](#api)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Background
