@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { CarShow } from '../../../three/car-show/CarShow';
 import { Mb300sl } from './Mb300sl';
-import { Quality } from '../../../three/QualityProvider';
 import { useFrame } from '@react-three/fiber';
 import { BehaviorSubject } from 'rxjs';
 
@@ -29,6 +28,6 @@ export function Mb300slScroll({ progress$, animationTrigger }: { progress$: Beha
 
 
   return (
-    <CarShow ref={carShowRef} Model={Mb300sl} animate={animate} quality={Quality.HIGH} controls={false} />
+    <CarShow ref={carShowRef} Model={Mb300sl} animate={animate} controls={false} />
   );
 };

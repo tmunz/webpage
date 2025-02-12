@@ -63,14 +63,14 @@ export const Resizable = ({ width, height, children }: ResizableProps) => {
   };
 
   const directions = [
-    { position: { top: -THRESHOLD / 2, left: -THRESHOLD / 2, width: '100%', height: THRESHOLD }, cursor: 'n-resize', direction: 'top' },
-    { position: { top: -THRESHOLD / 2, right: -THRESHOLD / 2, width: THRESHOLD, height: '100%' }, cursor: 'e-resize', direction: 'right' },
-    { position: { bottom: -THRESHOLD / 2, left: -THRESHOLD / 2, width: '100%', height: THRESHOLD }, cursor: 's-resize', direction: 'bottom' },
-    { position: { top: -THRESHOLD / 2, left: -THRESHOLD / 2, width: THRESHOLD, height: '100%' }, cursor: 'w-resize', direction: 'left' },
-    { position: { top: -THRESHOLD / 2, left: -THRESHOLD / 2, width: THRESHOLD, height: THRESHOLD }, cursor: 'nw-resize', direction: 'top-left' },
-    { position: { top: -THRESHOLD / 2, right: -THRESHOLD / 2, width: THRESHOLD, height: THRESHOLD }, cursor: 'ne-resize', direction: 'top-right' },
-    { position: { bottom: -THRESHOLD / 2, right: -THRESHOLD / 2, width: THRESHOLD, height: THRESHOLD }, cursor: 'se-resize', direction: 'bottom-right' },
-    { position: { bottom: -THRESHOLD / 2, left: -THRESHOLD / 2, width: THRESHOLD, height: THRESHOLD }, cursor: 'sw-resize', direction: 'bottom-left' },
+    { position: { top: -THRESHOLD, left: 0, right: 0, height: THRESHOLD }, cursor: 'n-resize', direction: 'top' },
+    { position: { top: 0, right: -THRESHOLD, width: THRESHOLD, bottom: 0 }, cursor: 'e-resize', direction: 'right' },
+    { position: { bottom: -THRESHOLD, left: 0, right: 0, height: THRESHOLD }, cursor: 's-resize', direction: 'bottom' },
+    { position: { top: 0, left: -THRESHOLD, width: THRESHOLD, bottom: 0 }, cursor: 'w-resize', direction: 'left' },
+    { position: { top: -THRESHOLD, left: -THRESHOLD, width: THRESHOLD, height: THRESHOLD }, cursor: 'nw-resize', direction: 'top-left' },
+    { position: { top: -THRESHOLD, right: -THRESHOLD, width: THRESHOLD, height: THRESHOLD }, cursor: 'ne-resize', direction: 'top-right' },
+    { position: { bottom: -THRESHOLD, right: -THRESHOLD, width: THRESHOLD, height: THRESHOLD }, cursor: 'se-resize', direction: 'bottom-right' },
+    { position: { bottom: -THRESHOLD, left: -THRESHOLD, width: THRESHOLD, height: THRESHOLD }, cursor: 'sw-resize', direction: 'bottom-left' },
   ];
 
   return (

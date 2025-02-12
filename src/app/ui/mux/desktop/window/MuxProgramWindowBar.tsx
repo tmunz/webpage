@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { MuxProgramIcon } from '../MuxProgramIcon';
 import { DragBoardHandle } from '../../../drag-board/DragBoardHandle';
 
-const ABOUT = '🛈';
+const ABOUT = 'ⓘ';
 const CLOSE = '✕';
 
 interface MuxProgramWindowBarProps {
@@ -30,8 +30,8 @@ export const MuxProgramWindowBar = ({ program }: MuxProgramWindowBarProps) => {
         <button className='close-button' onClick={() => MuxOs.get().quitProgram(program.id)}>
           {CLOSE}
         </button>
+        {showInfo && <div className='window-about'>{program.about}</div>}
       </DragBoardHandle>
-      {showInfo && <div className='window-about'>{program.about}</div>}
     </>
   );
 };

@@ -19,18 +19,6 @@ export function Mb300slContent() {
         <h1>300SL</h1>
       </StickyContainer>
       <StickyContainer>
-        <h2>Instructions</h2>
-        <p>
-          Probably one of the most beautiful cars in history is now available in Creator Expert Car scale (1/13): the Mercedes-Benz 300SL Coupé from 1955.
-        </p>
-        <p>
-          Besides the openable hood and trunk, the model features the iconic gullwing doors of the original.
-        </p>
-        <IconButton name={IconName.REBRICKABLE} href="https://rebrickable.com/mocs/MOC-59792/tmunz/mercedes-benz-300sl-gullwing-coupe-1955-300-sl" iconColor='#ffffff'>
-            More details and instructions
-        </IconButton>
-      </StickyContainer>
-      <StickyContainer>
         <h2>An Automotive Icon</h2>
         <p>
           The Mercedes-Benz 300SL Coupé, celebrated as the "Sports Car of the Century," is more than just the fastest production car of its era.
@@ -40,6 +28,18 @@ export function Mb300slContent() {
           Its striking design, highlighted by the iconic gullwing doors, became a symbol of innovation and luxury.
           Revered by car enthusiasts and immortalized by artists like Andy Warhol, the 300SL continues to inspire with its timeless allure.
         </p>
+      </StickyContainer>
+      <StickyContainer>
+        <h2>Instructions</h2>
+        <p>
+          Probably one of the most beautiful cars in history is now available in Creator Expert Car scale (1/13): the Mercedes-Benz 300SL Coupé from 1955.
+        </p>
+        <p>
+          Besides the openable hood and trunk, the model features the iconic gullwing doors of the original.
+        </p>
+        <IconButton name={IconName.REBRICKABLE} href="https://rebrickable.com/mocs/MOC-59792/tmunz/mercedes-benz-300sl-gullwing-coupe-1955-300-sl" iconColor='#ffffff'>
+          More details and instructions
+        </IconButton>
       </StickyContainer>
       <StickyContainer>
         <h2>Details</h2>

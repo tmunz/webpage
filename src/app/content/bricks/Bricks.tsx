@@ -25,14 +25,9 @@ export const Bricks = () => {
     {
       height: 1, content: <>
         <AircraftContent scrollPosition$={scrollPosition$} />
-        <div style={{ left: 0, top: 0, right: 0, bottom: 0, overflow: 'hidden', pointerEvents: 'none', position: 'absolute' }}>
+        <div style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, overflow: 'hidden', pointerEvents: 'none' }}>
           <View style={{ height: '100%', marginRight: -20 }}>
             <color attach='background' args={['rgb(255, 0, 0)']} />
-            <ambientLight intensity={0.5} />
-            <pointLight position={[20, 30, 10]} intensity={1} />
-            <pointLight position={[-10, -10, -10]} color='blue' />
-            <Environment preset='dawn' />
-            <PerspectiveCamera makeDefault fov={50} position={[0, 0, -6]} />
           </View>
         </div>
       </>
@@ -95,7 +90,7 @@ export const Bricks = () => {
         style={{ position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, overflow: 'hidden', zIndex: -1 }}
         eventSource={document.getElementById('poc')!}>
         <View.Port />
-        <Preload all />
+        <Preload />
       </Canvas>
     </DelaySuspense >
   </div >;
