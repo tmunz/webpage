@@ -2,7 +2,7 @@ import React, { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrthographicCamera } from '@react-three/drei';
 import { IUniform, Mesh, ShaderMaterial, Texture, TextureLoader } from 'three';
-import { DEFAULT_FRAGMENT_SHADER, DEFAULT_IMAGE, getScale, ObjectFit, ShaderImageProps } from './ShaderImageUtils';
+import { DEFAULT_FRAGMENT_SHADER, DEFAULT_IMAGE, getScale, ShaderImageProps } from './ShaderImageUtils';
 
 interface Props extends ShaderImageProps {
 	uniforms?: { [uniform: string]: IUniform }
@@ -21,7 +21,7 @@ export const ShaderImageThreePlane = ({
 	imageUrls,
 	vertexShader = DEFAULT_VERTEX_SHADER,
 	fragmentShader = DEFAULT_FRAGMENT_SHADER,
-	objectFit = ObjectFit.COVER,
+	objectFit = 'cover',
 	uniforms = {},
 }: Props) => {
 
@@ -68,13 +68,14 @@ export const ShaderImageThreePlane = ({
 		});
 	}, [vertexShader, fragmentShader, uniforms, textures]);
 
-	useEffect(() => {
-		const mainTexture = textures[DEFAULT_IMAGE]
-		if (ref.current && mainTexture?.loaded) {
-			const scale = getScale(mainTexture.data?.image.width / mainTexture.data?.image.height, objectFit);
-			ref.current.scale.set(size.height * scale.x, size.height * scale.y, 1);
-		}
-	}, [size, textures, ref.current]);
+  useEffect(() => {
+    const mainTexture = textures[DEFAULT_IMAGE]
+    if (ref.current && mainTexture?.loaded) {
+      const texture = mainTexture.data?.image;
+      const scale = getScale(texture, size, objectFit);
+      ref.current.scale.set(texture.width * scale.x, texture.height * scale.y, 1);
+    }
+  }, [size, textures, ref.current, objectFit]);
 
 	useFrame(() => {
 		if (materialRef.current) {

@@ -3,18 +3,15 @@ import { ShaderImageNative } from "./ShaderImageNative";
 import { ShaderImageThree } from "./ShaderImageThree";
 import { DEFAULT_IMAGE, ShaderImageProps } from "./ShaderImageUtils";
 
-export enum ShaderImageType {
-  NATIVE = 'native',
-  THREE = 'three',
-}
+export type ShaderImageType = 'native' | 'three';
 
 export const ShaderImage = (props: ShaderImageProps & { type?: ShaderImageType, color?: string, shaderDisabled?: boolean }) => {
 
   const getShaderImage = () => {
     switch (props.type) {
-      case ShaderImageType.NATIVE:
+      case 'native':
         return <ShaderImageNative {...props} />;
-      case ShaderImageType.THREE:
+      case 'three':
       default:
         return <ShaderImageThree {...props} />;
     }

@@ -1,8 +1,4 @@
-export enum ObjectFit {
-  CONTAIN = 'contain',
-  COVER = 'cover',
-  FILL = 'fill',
-}
+export type ObjectFit = 'contain' | 'cover' | 'fill';
 
 export const DEFAULT_IMAGE = 'image';
 
@@ -24,12 +20,26 @@ export interface ShaderImageProps {
 }
 
 
-export function getScale(scaleRatio: number, objectFit: ObjectFit): { x: number, y: number } {
+export function getScale(
+  texture: { width: number; height: number },
+  container: { width: number; height: number },
+  objectFit: ObjectFit
+): { x: number; y: number } {
+  const scaleX = container.width / texture.width;
+  const scaleY = container.height / texture.height;
+
   switch (objectFit) {
-    case ObjectFit.COVER:
-      return { x: scaleRatio > 1 ? scaleRatio : 1, y: scaleRatio > 1 ? 1 : 1 / scaleRatio };
-    case ObjectFit.CONTAIN:
-      return { x: scaleRatio < 1 ? scaleRatio : 1, y: scaleRatio < 1 ? 1 : 1 / scaleRatio };
+    case 'cover': {
+      const scale = Math.max(scaleX, scaleY);
+      return { x: scale, y: scale };
+    }
+    case 'contain': {
+      const scale = Math.min(scaleX, scaleY);
+      return { x: scale, y: scale };
+    }
+    case 'fill': {
+      return { x: scaleX, y: scaleY };
+    }
     default:
       return { x: 1, y: 1 };
   }

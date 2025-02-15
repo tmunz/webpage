@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { ShaderImage, ShaderImageType } from '../ui/shader-image/ShaderImage';
+import { ShaderImage } from '../ui/shader-image/ShaderImage';
 
 
 interface PerspectiveImageProps {
@@ -18,7 +18,7 @@ export const PerspectiveImage = ({ img, depthImg, effectValue = 0.5, position, c
     <ShaderImage
       shaderDisabled={perspectiveDisabled}
       color={color}
-      type={ShaderImageType.THREE}
+      type='three'
       imageUrls={imageUrls}
       uniforms={{
         effectValue: { value: [effectValue, effectValue], type: '2f' },
