@@ -22,7 +22,7 @@ export const ShaderImageNative = ({
 	imageUrls,
 	vertexShader = DEFAULT_VERTEX_SHADER,
 	fragmentShader = DEFAULT_FRAGMENT_SHADER,
-	objectFit = ObjectFit.COVER,
+	objectFit = 'cover',
 	uniforms = {},
 }: Props) => {
 	const elementRef = useRef<HTMLDivElement>(null);
@@ -150,18 +150,17 @@ function draw(gl: WebGLRenderingContext, program: WebGLProgram, uniforms: Unifor
 	gl.drawArrays(gl.TRIANGLES, 0, 6);
 }
 
-const updateVertices = (gl: WebGLRenderingContext, program: WebGLProgram, contentDimensions: { width: number, height: number }, objectFit: ObjectFit) => {
+const updateVertices = (gl: WebGLRenderingContext, program: WebGLProgram, texture: { width: number, height: number }, objectFit: ObjectFit) => {
 	if (!gl || !program) return;
 
-	const imageAspectRatio = contentDimensions.width / contentDimensions.height;
-	const canvasAspectRatio = gl.canvas.width / gl.canvas.height;
-	const scale = getScale(imageAspectRatio / canvasAspectRatio, objectFit);
+	const scale = getScale(texture, gl.canvas, objectFit);
+	console.log('scale', scale.x, scale.y, 'texture', texture.width, texture.height, 'container', gl.canvas.width, gl.canvas.height, objectFit);
 
 	// 2 triangles for the full scene
-	const x = scale.x;
-	const y = scale.y;
+	const x = texture.width / gl.canvas.width * scale.x;
+	const y = texture.height / gl.canvas.height * scale.y;
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-		// TODO inverted y input
+		// inverted y input
 		// -x, -y, x, -y, -x, y,
 		// x, -y, x, y, -x, y,
 		-x, y, x, y, -x, -y,
