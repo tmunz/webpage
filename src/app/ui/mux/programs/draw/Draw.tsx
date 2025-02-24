@@ -23,5 +23,4 @@ export const Draw: MuxProgram = {
   about: <div>MuxOs Standard Drawing Program</div>,
   iconPath: require('./draw_icon.png'),
   iconMonoColor: true,
-  pinned: true,
 }

@@ -2,7 +2,7 @@ import './Mux.styl';
 import { useEffect, useState } from 'react';
 import { MuxDesktop } from './desktop/MuxDesktop';
 import { MuxProgram } from './MuxProgram';
-import { Log, MuxOs, useMuxOs } from './MuxOs';
+import { Log, useMuxOs } from './MuxOs';
 import React from 'react';
 import { MuxBootScreen } from './MuxBootScreen';
 import { StandardClock } from './programs/standard-clock/StandardClock';

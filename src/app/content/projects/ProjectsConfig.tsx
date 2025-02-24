@@ -22,6 +22,15 @@ export const projects: Project[] = [
     highlight: true,
   },
   {
+    name: 'Musicbox (GUI)',
+    id: 'musicbox',
+    iconPath: 'https://github.com/tmunz/musicbox-gui/blob/master/public/icon-256x256.png?raw=true',
+    description: 'Web Application to visualize Music inspired by legendary Cover Art.',
+    githubLink: 'https://github.com/tmunz/musicbox-gui',
+    component: <iframe width='100%' height='100%' frameBorder="0" src='https://tmunz.github.io/musicbox-gui' />,
+    highlight: true,
+  },
+  {
     name: 'Magic Anagram',
     id: 'magic',
     iconPath: require('./assets/magic-anagram.png'),
