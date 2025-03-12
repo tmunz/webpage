@@ -154,7 +154,6 @@ const updateVertices = (gl: WebGLRenderingContext, program: WebGLProgram, textur
 	if (!gl || !program) return;
 
 	const scale = getScale(texture, gl.canvas, objectFit);
-	console.log('scale', scale.x, scale.y, 'texture', texture.width, texture.height, 'container', gl.canvas.width, gl.canvas.height, objectFit);
 
 	// 2 triangles for the full scene
 	const x = texture.width / gl.canvas.width * scale.x;
