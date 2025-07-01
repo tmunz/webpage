@@ -20,19 +20,27 @@ export const useDragBoardState = (
     setItemStates((prevStates) => {
       const states = new Map<string, DragBoardItemState>(prevStates);
       const childrenIds = mapChildrenToIds(children);
-      for (const key of itemStates.keys()) {
+      let maxZ = 0;
+      for (const item of states.values()) {
+        if (item.z > maxZ) {
+          maxZ = item.z;
+        }
+      }
+      for (const key of states.keys()) {
         if (!childrenIds.includes(key)) {
           states.delete(key);
         }
       }
-
       childrenIds.forEach((key, i) => {
-        if (states.has(key)) return
+        if (states.has(key)) return;
         const placement = placementPattern[i % placementPattern.length];
         states.set(key, {
-          id: key, ...placement, z: [...prevStates.values()].reduce((maxZ, itemState) => Math.max(maxZ, itemState.z), 0) + 1,
+          id: key,
+          ...placement,
+          z: maxZ++,
         });
       });
+    
       return states;
     });
   }, [children, placementPattern]);
@@ -111,7 +119,6 @@ export const useDragBoardState = (
   };
 
   useEffect(() => {
-
     const calculatedUpdates = (current: DragBoardItemState, target?: DragBoardItemState): DragBoardItemState | null => {
       if (!target) return null;
       const x = current.x + (target.x !== undefined ? (target.x - current.x) / smoothness : 0);

@@ -6,6 +6,7 @@ import React, { createContext, ReactNode } from 'react';
 export interface DragBoardItemConsuming extends DragBoardItemState {
   isDragging: boolean;
   onPointerDown: (id: string, dragBoardItemRect: DOMRect | null, e: { clientX: number, clientY: number }) => void;
+  opacity: number;
 }
 
 export interface DragBoardItemState {
@@ -44,6 +45,7 @@ export const DragBoardItem = (props: DragBoardItemProps) => {
             top: `calc(50% + ${y}px)`,
             transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
             zIndex: z,
+            opacity: value.opacity ?? 1,
           }}
         >
           <DragBoardHandleContext.Provider value={{

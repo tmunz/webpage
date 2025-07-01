@@ -1,5 +1,5 @@
 import './DragBoard.styl';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DragBoardItemContext } from './DragBoardItem';
 import { handlePointerEvents } from './handlePointerEvents';
 import { useDragBoardState } from './useDragBoardState';
@@ -15,6 +15,8 @@ export interface DragBoardProps {
   className?: string;
   placementPattern?: { x: number, y: number, rotation: number }[];
   indicator?: boolean;
+  decayStart?: number;
+  decayEnd?: number;
 }
 
 const SMOOTHNESS = 5;
@@ -24,7 +26,7 @@ const mapChildrenToIds = (children: React.ReactNode): string[] => {
   return React.Children.map(children, (child, i) => (`${(child as React.ReactElement).key ?? i}`)) ?? [];
 }
 
-export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PATTERN, indicator = false }: DragBoardProps) => {
+export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PATTERN, indicator = false, decayStart = 100, decayEnd = 100 }: DragBoardProps) => {
 
   const boardRef = useRef<HTMLDivElement>(null);
 
@@ -44,9 +46,13 @@ export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PA
         const itemState = itemStates.get(`${((child as React.ReactElement).key ?? i)}`) ?? null;
         if (!itemState) return null;
 
+        const size = React.Children.count(children);
+        const opacity = Math.max(0, Math.min(1, (itemState.z - (size - decayEnd)) / (decayEnd - decayStart)));
+
         return (
           <DragBoardItemContext.Provider value={{
             ...itemState,
+            opacity,
             isDragging: (selectedItem?.id === itemState?.id && selectedItem?.isDragging) ?? false,
             onPointerDown: setSelectedItem,
           }}>
@@ -56,7 +62,7 @@ export const DragBoard = ({ children, className, placementPattern = PLACEMENT_PA
       })}
       {dragSwipeProgress && <DragSwipeIndicator overflow={dragSwipeProgress} position={lastSelectedItemPosition} />}
       {indicator && <DragBoardIndicator
-        sortedItems={mapChildrenToIds(children).map(id => ({ id, zIndex: itemStates.get(id)?.z ?? 0 }))}
+        sortedItems={mapChildrenToIds(children).map(id => ({ id, zIndex: itemStates.get(id)?.z ?? 0 })).reverse()}
         onSelect={(id) => bringToFront(id)}
       />}
     </div>

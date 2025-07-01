@@ -18,11 +18,12 @@ export function Art() {
   const dimension = useDimension(elementRef, 40);
 
   return <div className='art' ref={elementRef}>
-    <DelaySuspense fallback={<div>Loading...</div>} renderDelay={500} visibilityDelay={2000}>
+    <DelaySuspense fallback={<div>Loading...</div>} renderDelay={500}>
       <DragBoard
         placementPattern={[{ x: -10, y: 0, rotation: 0.5 }, { x: 50, y: 5, rotation: -1.5 }, { x: -60, y: 10, rotation: -2 }]}
         indicator
       >
+        <DrawBoardItem key={'draw'} width={dimension?.width ?? 600} height={dimension?.height ?? 400} />
         {[RoomDivider, ChristmasTree, CitroenDsLamp].map((Component, i) => (
           <DragBoardItem key={i}>
             <DragBoardHandle>
@@ -30,8 +31,7 @@ export function Art() {
             </DragBoardHandle>
           </DragBoardItem>
         ))}
-        <DrawBoardItem width={dimension?.width ?? 600} height={dimension?.height ?? 400} />
-        <DragBoardItem><DragBoardHandle><Mb300slPainting width={Math.max(420, (dimension?.width ?? 420) * 0.4)} /></DragBoardHandle></DragBoardItem>
+        <DragBoardItem key={'300sl'}><DragBoardHandle><Mb300slPainting width={Math.max(420, (dimension?.width ?? 420) * 0.4)} /></DragBoardHandle></DragBoardItem>
       </DragBoard>
     </DelaySuspense>
   </div>;
