@@ -1,4 +1,4 @@
-import './Mb300slPainting.styl';
+import './Mb300slPainting.css';
 import React from 'react';
 import { Taped } from '../../../effects/Taped';
 import { PaintingCanvas } from '../../../effects/PaintingCanvas';

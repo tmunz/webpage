@@ -1,0 +1,25 @@
+.art-frame {
+  .background-image {
+    transition: filter 0.8s ease;
+
+    &.parallax {
+      transition: transform 0.2s ease, filter 0.8s ease;
+    }
+  }
+
+  &.active .background-image {
+    filter: blur(50px);
+  }
+}
+
+.art {
+  width: calc(100% + var(--frame-title-size));
+  height: calc(100% + var(--frame-close-button-size));
+
+  margin-left: calc(-1 * var(--frame-title-size));
+  margin-top: calc(-1 * var(--frame-close-button-size));
+  
+  /* --actionColor: #444;
+  --activeColor: #222; */
+  --projectDocumentColor: #f9f9f9;
+}

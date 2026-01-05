@@ -1,4 +1,4 @@
-import './MuxProgramWindowBar.styl';
+import './MuxProgramWindowBar.css';
 import { MuxOs } from '../../MuxOs';
 import { MuxProgram } from '../../MuxProgram';
 import React, { useState } from 'react';

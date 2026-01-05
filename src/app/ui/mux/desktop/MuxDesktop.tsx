@@ -1,4 +1,4 @@
-import './MuxDesktop.styl';
+import './MuxDesktop.css';
 import React, { useEffect, useState } from "react";
 import { MuxTaskbar } from "./taskbar/MuxTaskbar";
 import { MuxProgram, MuxProgramState } from '../MuxProgram';

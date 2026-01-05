@@ -1,4 +1,4 @@
-import './Loading.styl';
+import './Loading.css';
 import React, { Suspense } from 'react';
 
 export function Loading({ children }: { children: React.ReactNode }) {

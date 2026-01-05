@@ -1,4 +1,4 @@
-import './Mux.styl';
+import './Mux.css';
 import { useEffect, useState } from 'react';
 import { MuxDesktop } from './desktop/MuxDesktop';
 import { MuxProgram } from './MuxProgram';

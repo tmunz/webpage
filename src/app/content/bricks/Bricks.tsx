@@ -1,4 +1,4 @@
-import './Bricks.styl';
+import './Bricks.css';
 import React, { useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment, View, Preload, PerspectiveCamera } from '@react-three/drei';
@@ -67,7 +67,7 @@ export const Bricks = () => {
   };
 
   return <div className='bricks'>
-    <DelaySuspense fallback={<LoadingBrick />} renderDelay={1000} minVisibilityDelay={2500}>
+    <DelaySuspense fallback={<LoadingBrick />} renderDelay={0} minVisibilityDelay={2500}>
       <div
         ref={elementRef}
         style={{ overflow: 'auto', height: '100%' }}
@@ -88,9 +88,13 @@ export const Bricks = () => {
 
       <Canvas
         style={{ position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, overflow: 'hidden', zIndex: -1 }}
-        eventSource={document.getElementById('poc')!}>
+        eventSource={document.getElementById('poc')!}
+        dpr={[1, 2]}
+        flat
+        linear
+        gl={{ antialias: true, alpha: true }}>
         <View.Port />
-        <Preload />
+        <Preload all />
       </Canvas>
     </DelaySuspense >
   </div >;

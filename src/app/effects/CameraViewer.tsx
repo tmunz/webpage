@@ -1,4 +1,4 @@
-import './CameraViewer.styl';
+import './CameraViewer.css';
 import React, { ReactNode } from "react";
 
 export const CameraViewer = ({ children, className }: { children?: ReactNode, className?: string }) => {

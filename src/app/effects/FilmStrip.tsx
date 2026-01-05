@@ -1,4 +1,4 @@
-import './FilmStrip.styl';
+import './FilmStrip.css';
 import React, { ReactNode } from 'react';
 
 export const FilmStrip = ({ children, label }: { children?: ReactNode, label?: string }) => {

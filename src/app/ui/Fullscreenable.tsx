@@ -1,4 +1,4 @@
-import './Fullscreenable.styl';
+import './Fullscreenable.css';
 import React, { useState, useRef, useEffect } from 'react';
 
 export const Fullscreenable = ({ children, fullscreen = false }: { children: React.ReactNode, fullscreen?: boolean }) => {

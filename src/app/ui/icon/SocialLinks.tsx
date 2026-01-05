@@ -1,4 +1,4 @@
-import './SocialLinks.styl';
+import './SocialLinks.css';
 
 import React from 'react';
 import { Icon } from './Icon';

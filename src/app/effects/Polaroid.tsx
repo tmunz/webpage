@@ -1,4 +1,4 @@
-import './Polaroid.styl';
+import './Polaroid.css';
 import React from 'react';
 import { FlipCard, FlipCardProps } from './FlipCard';
 

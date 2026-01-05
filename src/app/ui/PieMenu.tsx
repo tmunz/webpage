@@ -1,4 +1,4 @@
-import './PieMenu.styl';
+import './PieMenu.css';
 import { arc } from '../utils/SvgPathUtils';
 import React, { Fragment } from 'react';
 

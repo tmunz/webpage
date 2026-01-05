@@ -1,4 +1,4 @@
-import './MuxProgramSelection.styl';
+import './MuxProgramSelection.css';
 import React from 'react';
 import { MuxProgram } from '../MuxProgram';
 

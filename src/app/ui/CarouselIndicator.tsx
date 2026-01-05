@@ -1,4 +1,4 @@
-import './CarouselIndicator.styl';
+import './CarouselIndicator.css';
 import React from 'react';
 
 interface CarouselIndicatorProps {

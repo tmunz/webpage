@@ -1,0 +1,17 @@
+.kitchen {
+
+  .kitchen-content {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .kitchen-content img {
+    width: 50%;
+    height: auto;
+    object-fit: contain;
+  }
+
+}

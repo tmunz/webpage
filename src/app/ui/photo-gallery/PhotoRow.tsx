@@ -1,4 +1,4 @@
-import './PhotoRow.styl';
+import './PhotoRow.css';
 import { PhotoEntry } from './PhotoEntry';
 import React from 'react';
 

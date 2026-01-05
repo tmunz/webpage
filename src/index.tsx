@@ -1,7 +1,7 @@
 
 
-import './variables.styl';
-import './index.styl';
+import './variables.css';
+import './index.css';
 
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

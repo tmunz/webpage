@@ -1,4 +1,4 @@
-import './Photo.styl';
+import './Photo.css';
 import React, { useRef, useEffect, useState } from 'react';
 import { CameraViewer } from '../../effects/CameraViewer';
 import { CameraViewerFocusing } from '../../effects/CameraViewerFocusing';

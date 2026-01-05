@@ -1,4 +1,4 @@
-import './IconButton.styl';
+import './IconButton.css';
 import React, { HTMLAttributes } from 'react';
 import { IconName } from './IconName';
 import { Icon } from './Icon';

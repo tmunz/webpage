@@ -1,4 +1,4 @@
-import './CitroenDsLamp.styl';
+import './CitroenDsLamp.css';
 import React from 'react';
 import { ProjectDocument } from '../../../effects/ProjectDocument';
 import { FlipCard } from '../../../effects/FlipCard';

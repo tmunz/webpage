@@ -1,4 +1,4 @@
-import './Art.styl';
+import './Art.css';
 import React, { Suspense, useRef } from 'react';
 import { DragBoard } from '../../ui/drag-board/DragBoard';
 import { DrawBoardItem } from './draw/DrawBoardItem';
@@ -9,6 +9,8 @@ import { Mb300slPainting } from './mb300sl/Mb300slPainting';
 import { DragBoardHandle } from '../../ui/drag-board/DragBoardHandle';
 import { RoomDivider } from './room-divider/RoomDivider';
 import { ChristmasTree } from './christmas-tree/ChristmasTree';
+import { KidsBookshelf } from './kids-bookshelf/KidsBookshelf';
+import { Kitchen } from './kitchen/Kitchen';
 import { DelaySuspense } from '../../utils/DelaySuspense';
 
 
@@ -24,7 +26,7 @@ export function Art() {
         indicator
       >
         <DrawBoardItem key={'draw'} width={dimension?.width ?? 600} height={dimension?.height ?? 400} />
-        {[RoomDivider, ChristmasTree, CitroenDsLamp].map((Component, i) => (
+        {[KidsBookshelf, RoomDivider, ChristmasTree, Kitchen, CitroenDsLamp].map((Component, i) => (
           <DragBoardItem key={i}>
             <DragBoardHandle>
               <Component width={(dimension?.width ?? 600) * 0.6} height={(dimension?.height ?? 400) * 0.6} />

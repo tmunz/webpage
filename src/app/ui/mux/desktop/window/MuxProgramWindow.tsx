@@ -1,4 +1,4 @@
-import './MuxProgramWindow.styl';
+import './MuxProgramWindow.css';
 import React from 'react';
 import { MuxProgram } from '../../MuxProgram';
 import { useMuxOs } from '../../MuxOs';

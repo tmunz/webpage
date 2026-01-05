@@ -10,7 +10,7 @@ module.exports = (env) => ({
     app: path.resolve(__dirname, '..', './src/index.tsx'),
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.json', '.styl'],
+    extensions: ['.tsx', '.ts', '.js', '.json', '.css'],
   },
   module: {
     rules: [{
@@ -56,7 +56,7 @@ module.exports = (env) => ({
       ],
       type: 'javascript/auto',
     }, {
-      test: /\.css$|\.styl$/,
+      test: /\.css$/,
       use: [
         'style-loader',
         'css-loader',
@@ -74,8 +74,7 @@ module.exports = (env) => ({
               ],
             },
           },
-        },
-        'stylus-loader'
+        }
       ],
     }
     ]

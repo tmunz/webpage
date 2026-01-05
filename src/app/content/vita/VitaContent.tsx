@@ -1,4 +1,4 @@
-import './VitaContent.styl';
+import './VitaContent.css';
 
 import React from 'react';
 import { SocialLinks } from '../../ui/icon/SocialLinks';

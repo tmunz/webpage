@@ -1,6 +1,6 @@
 import { IconButton } from '../../../ui/icon/IconButton';
 import { IconName } from '../../../ui/icon/IconName';
-import './Mb300slContent.styl';
+import './Mb300slContent.css';
 import React, { ReactNode } from 'react';
 
 export function Mb300slContent() {

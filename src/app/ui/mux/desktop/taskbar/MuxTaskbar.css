@@ -1,0 +1,86 @@
+.mux-taskbar {
+  --gap: 10px;
+  --imgSize: 32px;
+  --padding: 10px;
+
+  z-index: 999999;
+  left: 50%;
+  transform: translate(-50%, 0);
+  position: absolute;
+  bottom: 8px;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  background-color: var(--muxBarColor);
+  border-radius: calc(4 * var(--muxBorderRadius));
+  gap: var(--gap);
+  list-style: none;
+  padding-inline-start: 0;
+  padding: 0 var(--muxGapSize);
+  height: 52px;
+  transition: bottom 0.3s ease;
+
+  &.mux-taskbar-hidden {
+    bottom: -100px;
+  }
+
+  li {
+    padding: calc(var(--gap) - var(--padding)) 0;
+    scroll-snap-align: center;
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
+
+    &#divider {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        border-left: 1px solid white;
+        aspect-ratio: 1 / 30;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+      }
+    }
+
+    img {
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .program-indicator {
+      width: 10px;
+      height: 100%;
+      background-color: var(--muxBackgroundColor);
+      border-radius: var(--muxBorderRadius);
+
+      &.program-indicator-active {
+        background-color: var(--muxActiveColor);
+      }
+    }
+  }
+
+  /* &>*:first-child .mux-dock-item-button-container button {
+        border-right: 4px solid white;
+      } */
+  /* 
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      */
+}
+
+.mux-launcher {
+  bottom: 0;
+  transition: bottom 0.3s ease;
+
+  &.mux-launcher-hidden {
+    bottom: -100%;
+  }
+}

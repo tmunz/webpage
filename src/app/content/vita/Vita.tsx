@@ -1,4 +1,4 @@
-import './Vita.styl';
+import './Vita.css';
 
 import React from 'react';
 import { Knowledge } from './Knowledge';

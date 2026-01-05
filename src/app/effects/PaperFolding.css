@@ -1,0 +1,293 @@
+.paper-folding {
+  position: relative;
+
+  --foldedCornerSize: 100px;
+
+  .paper-folding-infold {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: var(--foldedCornerSize);
+    height: var(--foldedCornerSize);
+    clip-path: polygon(110% 110%, 100% 0%, 0% 100%);
+    border-radius: 0 0 2px 0;
+    font-size: 20px;
+    color: rgb(104, 70, 26);
+    font-weight: 500;
+    padding: calc(var(--foldedCornerSize) / 2) 5px 5px calc(var(--foldedCornerSize) / 2);
+    transform: rotate3d(1, -1, 0, 45deg);
+  }
+
+  .paper-folding-content,
+  .paper-folding-paper {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &.paper-folding-paper {
+      clip-path: xywh(0 0 50% 50%);
+    }
+  }
+
+  &.open {
+    .paper-folding-paper {
+      animation: fold-paper-open 2s ease forwards;
+    }
+
+    .paper-folding-content {
+      animation: fold-content-open 2s ease forwards;
+    }
+
+    .paper-part-tr {
+      animation: fold-tr-open 2s ease forwards;
+
+      .paper-folding-unfold {
+        visibility: hidden;
+      }
+    }
+
+    .paper-part-bl {
+      animation: fold-bl-open 2s ease forwards;
+    }
+
+    .paper-part-br {
+      animation: fold-br-open 2s ease forwards;
+    }
+
+  }
+
+  &.closed {
+    .paper-folding-paper {
+      animation: fold-paper-close 2s ease forwards;
+    }
+
+    .paper-folding-content {
+      animation: fold-content-close 2s ease forwards;
+    }
+
+    .paper-part-tr {
+      animation: fold-tr-close 2s ease forwards;
+
+      .paper-folding-unfold {
+        visibility: visible;
+        transition: visibility 0s linear 1s;
+      }
+    }
+
+    .paper-part-bl {
+      animation: fold-bl-close 2s ease forwards;
+    }
+
+    .paper-part-br {
+      animation: fold-br-close 2s ease forwards;
+    }
+  }
+
+  &.closed.initial {
+    .paper-folding-paper {
+      animation: fold-paper-close 0s forwards;
+    }
+
+    .paper-folding-content {
+      animation: fold-content-close 0s forwards;
+    }
+
+    .paper-part-tr {
+      animation: fold-tr-close 0s forwards;
+    }
+
+    .paper-part-bl {
+      animation: fold-bl-close 0s forwards;
+    }
+
+    .paper-part-br {
+      animation: fold-br-close 0s forwards;
+    }
+  }
+
+  .paper-part {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+    &.paper-part-tr {
+      left: calc(50% - 1px);
+      transform-origin: 0 0;
+
+      .paper-folding-unfold {
+        width: 100%;
+        height: 100%;
+        transform: rotateY(180deg);
+      }
+    }
+
+    &.paper-part-bl {
+      top: calc(50% - 1px);
+      left: 0%;
+      transform-origin: 0 0;
+    }
+
+    &.paper-part-br {
+      top: calc(50% - 1px);
+      left: calc(50% - 1px);
+      transform-origin: 0 0;
+      border-bottom-right-radius: var(--foldedCornerSize);
+    }
+  }
+}
+
+@keyframes fold-paper-open {
+  0% {
+    clip-path: polygon(0 0, 50% 0, 50% 50%, 0 50%);
+  }
+
+  40% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes fold-paper-close {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  50% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  75% {
+    clip-path: polygon(0 0, 50% 0, 50% 50%, 0 50%);
+  }
+
+  100% {
+    clip-path: polygon(0 0, 50% 0, 50% 50%, 0 50%);
+  }
+}
+
+@keyframes fold-content-open {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, calc(100% - var(--foldedCornerSize)) 0, 0 0);
+  }
+
+  50% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, calc(100% - var(--foldedCornerSize)) 0, 0 0);
+  }
+
+  90% {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--foldedCornerSize)), calc(100% - var(--foldedCornerSize)) 100%, 0 100%);
+  }
+
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--foldedCornerSize)), calc(100% - var(--foldedCornerSize)) 100%, 0 100%);
+  }
+}
+
+@keyframes fold-content-close {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 50px), calc(100% - 50px) 100%, 0 100%);
+  }
+
+  40% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, calc(100% - 50px) 0, 0 0);
+  }
+
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, calc(100% - 50px) 0, 0 0);
+  }
+}
+
+@keyframes fold-tr-open {
+  0% {
+    z-index: 1;
+    transform: rotateY(180deg);
+  }
+
+  50% {
+    z-index: 0;
+    transform: rotateY(360deg);
+  }
+
+  100% {
+    z-index: 0;
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes fold-tr-close {
+  0% {
+    z-index: 0;
+    transform: rotateY(360deg);
+  }
+
+  50% {
+    z-index: 0;
+    transform: rotateY(360deg);
+  }
+
+  100% {
+    z-index: 1;
+    transform: rotateY(180deg);
+  }
+}
+
+@keyframes fold-bl-open {
+  0% {
+    transform: rotateX(180deg);
+  }
+
+  50% {
+    transform: rotateX(180deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+@keyframes fold-bl-close {
+  0% {
+    transform: rotateX(0deg);
+  }
+
+  50% {
+    transform: rotateX(180deg);
+  }
+
+  100% {
+
+    transform: rotateX(180deg);
+  }
+}
+
+@keyframes fold-br-open {
+  0% {
+    transform: rotateX(180deg) rotateY(-180deg);
+  }
+
+  50% {
+    transform: rotateX(180deg) rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+}
+
+@keyframes fold-br-close {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateX(180deg) rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateX(180deg) rotateY(-180deg);
+  }
+}

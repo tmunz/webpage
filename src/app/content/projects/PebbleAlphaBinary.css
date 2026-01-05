@@ -1,0 +1,50 @@
+.pebble-alpha-binary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  &>svg {
+    margin-bottom: 20px;
+  }
+
+  .configurations {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    color: #333;
+  }
+
+  input[type="number"],
+  input[type="color"],
+  input[type="checkbox"] {
+    margin-top: 5px;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    min-width: none;
+  }
+
+  input[type="color"] {
+    padding: 0;
+    height: 36px;
+  }
+
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+  }
+
+}

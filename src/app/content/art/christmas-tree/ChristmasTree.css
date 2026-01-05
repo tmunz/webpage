@@ -1,0 +1,29 @@
+.christmas-tree {
+
+  .christmas-tree-content {
+    display: relative;
+
+    img {
+      position: absolute;
+      object-fit: contain;
+    }
+
+    &>:nth-child(1) {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 70%;
+      max-height: calc(100% - 200px);
+      object-position: 100% 0%;
+    }
+
+    &>:nth-child(2) {
+      top: 0;
+      left: 2%;
+      width: 65%;
+      height: 65%;
+      object-position: 10% 10%;
+    }
+  }
+}

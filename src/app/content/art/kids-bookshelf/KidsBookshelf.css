@@ -1,0 +1,45 @@
+.kids-bookshelf {
+
+  .kids-bookshelf-content {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .kids-bookshelf-content img {
+    width: 50%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .kids-bookshelf-backside {
+    height: 100%;
+    background-color: var(--projectDocumentColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .detail-image {
+      box-sizing: border-box;
+      width: 40%;
+      height: auto;
+
+      &:nth-child(1) {
+        transform: translate(-10px, -20px) rotate(-2deg);
+      }
+
+      &:nth-child(2) {
+        transform: translate(14px, 16px) rotate(3deg);
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+
+}

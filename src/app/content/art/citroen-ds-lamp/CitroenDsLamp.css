@@ -1,0 +1,101 @@
+.citroen-ds-lamp {
+
+  .citroen-ds-lamp-content {
+    display: relative;
+
+    img {
+      position: absolute;
+      object-fit: contain;
+    }
+
+
+    &>:nth-child(1) {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 70%;
+      max-height: calc(100% - 200px);
+      object-position: 100% 0%;
+    }
+
+    &>:nth-child(2) {
+      top: 0;
+      left: 2%;
+      width: 25%;
+      height: 25%;
+      object-position: 10% 10%;
+    }
+
+    &>:nth-child(3) {
+      top: 0;
+      left: 18%;
+      width: 48%;
+      height: 48%;
+      object-position: 0% 0%;
+    }
+
+    &>:nth-child(4) {
+      bottom: 0;
+      left: 0;
+      width: 40%;
+      height: 20%;
+    }
+
+    &>:nth-child(5) {
+      bottom: 25%;
+      left: 0;
+      width: 50%;
+      height: 50%;
+    }
+  }
+
+  .citroen-ds-lamp-backside {
+    height: 100%;
+    background-color: var(--projectDocumentColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .detail-image {
+      box-sizing: border-box;
+      width: 40%;
+      height: auto;
+
+      &:nth-child(1) {
+        transform: translate(-10px, -20px) rotate(-2deg);
+      }
+
+      &:nth-child(2) {
+        transform: translate(14px, 16px) rotate(3deg);
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+
+  &.citroen-ds-lamp-portrait {
+
+    .citroen-ds-lamp-content {
+      &>:nth-child(4) {
+        bottom: 45%;
+      }
+
+      &>:nth-child(5) {
+        top: 2%;
+      }
+    }
+
+    .citroen-ds-lamp-backside {
+      flex-direction: column;
+
+      .detail-image {
+        width: 80%;
+      }
+    }
+  }
+}

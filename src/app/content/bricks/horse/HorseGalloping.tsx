@@ -1,4 +1,4 @@
-import './HorseGalloping.styl';
+import './HorseGalloping.css';
 import { View } from '@react-three/drei';
 import { usePointer } from '../../../utils/usePointer';
 import React, { useRef } from 'react';

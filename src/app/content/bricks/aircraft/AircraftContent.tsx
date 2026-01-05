@@ -1,4 +1,4 @@
-import './AircraftContent.styl';
+import './AircraftContent.css';
 import React, { useEffect, useRef, useState } from 'react';
 import { BehaviorSubject } from 'rxjs';
 import { Icon } from '../../../ui/icon/Icon';

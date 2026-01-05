@@ -1,0 +1,25 @@
+.icon-button {
+  padding: 10px;
+  background-color: var(--actionColor);
+  background-blend-mode: multiply;
+  transition: background-color 0.3s ease;
+  width: 240px;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: var(--activeColor);
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
+  }
+
+  a {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .icon {
+      width: 80px;
+    }
+  }
+}

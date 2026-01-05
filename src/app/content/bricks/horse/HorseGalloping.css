@@ -1,0 +1,11 @@
+.horse-galloping {
+  --textColor: #fff;
+  color: var(--textColor);
+  padding-top: var(--frame-close-button-size);
+  box-sizing: border-box;
+  height: 100%;
+
+  .description {
+    width: clamp(150px, 100%, 400px);
+  }
+}

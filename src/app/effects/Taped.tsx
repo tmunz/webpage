@@ -1,5 +1,5 @@
 import React from 'react';
-import './Taped.styl';
+import './Taped.css';
 
 export const CORNER = 0;
 export const EDGE = 4;

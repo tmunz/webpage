@@ -1,4 +1,4 @@
-import './ProjectDocument.styl';
+import './ProjectDocument.css';
 import React from 'react';
 
 interface ProjectDocumentProps {

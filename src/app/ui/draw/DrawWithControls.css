@@ -1,0 +1,62 @@
+.draw-with-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+
+  .controls {
+    position: absolute;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+
+    .pie-menu {
+      label {
+        span {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -20%);
+          font-size: 62px;
+          color: var(--textColorLight);
+          opacity: 0.3;
+          z-index: -1;
+          text-align: center;
+        }
+
+        input {
+          all: unset;
+          font-size: 1.5rem;
+          width: 48px;
+        }
+      }
+
+      input[type="color"] {
+        width: 50%;
+        height: 50%;
+        transform: translateY(2%);
+      }
+
+      button {
+        font-size: 40px;
+      }
+    }
+
+    .close-controls {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: none;
+      border: none;
+      font-size: 32px;
+      font-weight: 500;
+      color: #ff0000;
+    }
+  }
+
+  .draw {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+}

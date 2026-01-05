@@ -1,4 +1,4 @@
-import './FlipCard.styl';
+import './FlipCard.css';
 import React, { useEffect, useState } from 'react';
 
 

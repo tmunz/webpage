@@ -1,4 +1,4 @@
-import './FlipList.styl';
+import './FlipList.css';
 
 import React, { ReactNode, useEffect, useRef } from 'react';
 

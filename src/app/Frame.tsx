@@ -1,4 +1,4 @@
-import './Frame.styl';
+import './Frame.css';
 import React, { MouseEvent, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import FrameCloseButton from './ui/FrameCloseButton';
 import { PerspectiveImage } from './effects/PerspectiveImage';

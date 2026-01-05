@@ -1,4 +1,4 @@
-import './DragBoard.styl';
+import './DragBoard.css';
 import React, { useEffect, useRef, useState } from 'react';
 import { DragBoardItemContext } from './DragBoardItem';
 import { handlePointerEvents } from './handlePointerEvents';

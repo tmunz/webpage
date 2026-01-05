@@ -1,4 +1,4 @@
-import './MuxDockItem.styl';
+import './MuxDockItem.css';
 import React, { useRef } from 'react';
 import { BehaviorSubject } from 'rxjs';
 import { Pointer } from '../../../../utils/usePointer';

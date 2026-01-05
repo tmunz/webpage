@@ -35,7 +35,7 @@ export const CarShow = forwardRef(({ animate, debug, Model, controls = true, onL
   return (
     <>
       <ambientLight intensity={0.01} />
-      <pointLight intensity={2} decay={0.3} position={[5, 30, 3]} />
+      <pointLight intensity={10} decay={0.3} position={[5, 30, 3]} />
       <PerspectiveCamera ref={cameraRef} makeDefault />
       <ContactShadows resolution={1024} frames={1} position={[0, -1.16, 0]} scale={15} blur={0.5} opacity={1} far={20} />
       <fog attach="fog" args={['#000000', 1, 25]} />

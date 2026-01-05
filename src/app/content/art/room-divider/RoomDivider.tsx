@@ -1,4 +1,4 @@
-import './RoomDivider.styl';
+import './RoomDivider.css';
 import React from 'react';
 import { ProjectDocument } from '../../../effects/ProjectDocument';
 import { WebpImage } from '../../../ui/WebpImage';

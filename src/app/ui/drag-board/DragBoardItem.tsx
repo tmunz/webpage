@@ -1,4 +1,4 @@
-import './DragBoardItem.styl';
+import './DragBoardItem.css';
 import { DragBoardHandleContext } from './DragBoardHandle';
 import React, { createContext, ReactNode } from 'react';
 

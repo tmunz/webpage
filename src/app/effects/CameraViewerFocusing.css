@@ -1,0 +1,44 @@
+.camera-viewer-focusing {
+  --cameraFocusingColor: rgba(255, 255, 255, 0.5);
+  position: relative;
+  align-self: center;
+  width: 10vw;
+  height: 10vw;
+  border-radius: 50%;
+  border: 1.5px solid var(--cameraFocusingColor);
+  background: radial-gradient(transparent 30%, rgba(200, 200, 200, 0.2) 20%);
+  backdrop-filter: blur(2px);
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40%;
+    height: 40%;
+    transform: translate(-50%, -50%);
+    border-radius: 999999px;
+    opacity: 0.5;
+    border: 1.5px solid var(--cameraFocusingColor);
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    opacity: 0.5;
+    top: 40%;
+    left: 50%;
+    width: 40%;
+    height: 20%;
+    transform: translate(-50%, -50%);
+    border-top-left-radius: 999999px;
+    border-top-right-radius: 999999px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background-image:
+      repeating-linear-gradient(45deg, var(--cameraFocusingColor), var(--cameraFocusingColor) 0px, transparent 2px, transparent 2px),
+      repeating-linear-gradient(-45deg, var(--cameraFocusingColor), var(--cameraFocusingColor) 0px, transparent 2px, transparent 2px);
+  }
+}

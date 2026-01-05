@@ -1,4 +1,4 @@
-import './FrameCloseButton.styl';
+import './FrameCloseButton.css';
 
 import React from 'react';
 

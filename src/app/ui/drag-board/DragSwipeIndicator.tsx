@@ -1,4 +1,4 @@
-import './DragSwipeIndicator.styl';
+import './DragSwipeIndicator.css';
 import React from 'react';
 import { Icon } from '../icon/Icon';
 import { IconName } from '../icon/IconName';

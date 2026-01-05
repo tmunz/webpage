@@ -1,4 +1,4 @@
-import './PaintingCanvas.styl';
+import './PaintingCanvas.css';
 import React from 'react';
 import { FlipCard, FlipCardProps } from './FlipCard';
 

@@ -1,0 +1,112 @@
+.flip-list {
+  overflow: auto;
+  height: 100%;
+  /* scroll-snap-type: y mandatory; */
+
+  .item-wrapper {
+    perspective: 1000px;
+    scroll-snap-align: center;
+
+    .item {
+      perspective: 1000px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      transform: rotateX(-90deg);
+
+      &>* {
+        width: 50%;
+        aspect-ratio: 1 / 1;
+        backface-visibility: hidden;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    &:nth-child(2n) {
+      .item {
+        flex-direction: row-reverse;
+
+        .text-container {
+          transform: rotateY(-90deg);
+        }
+      }
+
+      &.entering-top .item .text-container {
+        transform-origin: bottom right;
+        animation: rotateItemContentRight 0.6s ease forwards 0.2s;
+      }
+
+      &.entering-bottom .item .text-container {
+        transform-origin: top right;
+        animation: rotateItemContentRight 0.6s ease forwards 0.2s;
+      }
+    }
+
+    &.entering-top {
+      .item {
+        transform-origin: bottom left;
+        animation: rotateItemEnterTop 0.6s ease forwards;
+
+        .text-container {
+          transform-origin: bottom left;
+          animation: rotateItemContentLeft 0.6s ease forwards 0.2s;
+        }
+      }
+    }
+
+    &.entering-bottom {
+      .item {
+        transform-origin: top left;
+        animation: rotateItemEnterBottom 0.6s ease forwards;
+
+        .text-container {
+          transform-origin: top left;
+          animation: rotateItemContentLeft 0.6s ease forwards 0.2s;
+        }
+      }
+    }
+  }
+}
+
+@keyframes rotateItemEnterTop {
+  0% {
+    transform: rotateX(90deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+@keyframes rotateItemEnterBottom {
+  0% {
+    transform: rotateX(-90deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+@keyframes rotateItemContentLeft {
+  0% {
+    transform: rotateY(90deg);
+  }
+
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+@keyframes rotateItemContentRight {
+  0% {
+    transform: rotateY(-90deg);
+  }
+
+  100% {
+    transform: rotateY(0deg);
+  }
+}

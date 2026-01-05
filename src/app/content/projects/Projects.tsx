@@ -1,4 +1,4 @@
-import './Projects.styl';
+import './Projects.css';
 
 import React, { useRef } from 'react';
 import { Icon } from '../../ui/icon/Icon';

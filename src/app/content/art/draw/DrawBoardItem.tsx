@@ -1,4 +1,4 @@
-import './DrawBoardItem.styl';
+import './DrawBoardItem.css';
 import React, { useState } from 'react';
 import { PaperFolding } from '../../../effects/PaperFolding';
 import { DrawWithControls } from '../../../ui/draw/DrawWithControls';

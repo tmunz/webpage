@@ -1,4 +1,4 @@
-import './Cli.styl';
+import './Cli.css';
 
 import React, { useState, useEffect } from 'react';
 import figlet from 'figlet';

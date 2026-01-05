@@ -1,4 +1,4 @@
-import './PhotoEntry.styl';
+import './PhotoEntry.css';
 import React from "react";
 import { FilmStrip } from '../../effects/FilmStrip';
 import { RgbaFilter } from '../../effects/RgbaFilter';

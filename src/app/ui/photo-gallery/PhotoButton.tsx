@@ -1,4 +1,4 @@
-import './PhotoButton.styl';
+import './PhotoButton.css';
 import React from "react";
 import { IconName } from "../icon/IconName";
 import { Icon } from "../icon/Icon";

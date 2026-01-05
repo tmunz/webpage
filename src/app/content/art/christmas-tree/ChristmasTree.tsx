@@ -1,4 +1,4 @@
-import './ChristmasTree.styl';
+import './ChristmasTree.css';
 import React from 'react';
 import { ProjectDocument } from '../../../effects/ProjectDocument';
 import { WebpImage } from '../../../ui/WebpImage';

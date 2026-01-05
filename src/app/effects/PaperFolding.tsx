@@ -1,4 +1,4 @@
-import './PaperFolding.styl';
+import './PaperFolding.css';
 
 import React, { useRef, useState } from 'react';
 import { PaperEffect } from './PaperEffect';

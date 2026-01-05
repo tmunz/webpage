@@ -1,0 +1,15 @@
+:root {
+  --accentColor: #93dafe;
+  --backgroundColor:#f7e9ce;
+  --actionColor: #ff7403;
+  --activeColor: #ff9e4f;
+  --textColor: #222222;
+  --textColorLight: #666666;
+  --borderColor: #192c76;
+  --errorColor: #dd614b;
+  --gapSize: 20px;
+
+  --scrollbarColor: rgba(0, 0, 0, 0);
+  --scrollbarThumb: rgba(96, 96, 96, 0.8);
+  --scrollbarThumbHover: rgba(128, 128, 128, 0.8);
+}

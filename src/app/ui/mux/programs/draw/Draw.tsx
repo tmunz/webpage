@@ -1,4 +1,4 @@
-import './Draw.styl';
+import './Draw.css';
 import React from 'react';
 import { MuxProgram } from '../../MuxProgram';
 import { DrawWithControls } from '../../../draw/DrawWithControls';

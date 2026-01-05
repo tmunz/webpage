@@ -1,4 +1,4 @@
-import './DrawWithControls.styl';
+import './DrawWithControls.css';
 import React, { useRef, useState, MouseEvent } from 'react';
 import { Draw } from './Draw';
 import { PieMenu } from '../PieMenu';

@@ -1,4 +1,4 @@
-import './PebbleAlphaBinary.styl';
+import './PebbleAlphaBinary.css';
 
 import React, { useEffect, useState } from 'react';
 import { AlphaBinaryClock, AlphaBinaryClockConfig } from '../../visualization/AlphaBinaryClock';
