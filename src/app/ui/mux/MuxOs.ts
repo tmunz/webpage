@@ -18,6 +18,14 @@ export interface MuxOsState {
   programs: Map<string, MuxProgram>;
 }
 
+export interface MuxSettings {
+  clockProgramId: string;
+}
+
+const DEFAULT_SETTINGS: MuxSettings = {
+  clockProgramId: 'standard-clock',
+};
+
 export const useMuxOs = () => {
   	return MuxOs.get();
 }
@@ -39,6 +47,7 @@ export class MuxOs {
   programs$ = new BehaviorSubject<Map<string, MuxProgram>>(new Map<string, MuxProgram>());
   programStates$ = new BehaviorSubject<Map<string, MuxProgramState>>(new Map<string, MuxProgramState>());
   dateTime$ = new BehaviorSubject<Date>(new Date());
+  settings$ = new BehaviorSubject<MuxSettings>(this.loadSettings());
 
   private constructor() {
     this.bootProcess$.subscribe((bootProcess) => {
@@ -141,5 +150,39 @@ export class MuxOs {
     const programStates = new Map(this.programStates$.getValue());
     programStates.delete(programId);
     this.programStates$.next(programStates);
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  private loadSettings(): MuxSettings {
+    const stored = localStorage.getItem('mux-settings');
+    if (stored) {
+      try {
+        return { ...DEFAULT_SETTINGS, ...JSON.parse(stored) };
+      } catch (e) {
+        this.logWarn('Failed to load settings from localStorage');
+      }
+    }
+    return DEFAULT_SETTINGS;
+  }
+
+  private saveSettings(settings: MuxSettings) {
+    try {
+      localStorage.setItem('mux-settings', JSON.stringify(settings));
+    } catch (e) {
+      this.logError('Failed to save settings to localStorage');
+    }
+  }
+
+  updateSettings(updates: Partial<MuxSettings>) {
+    const currentSettings = this.settings$.getValue();
+    const newSettings = { ...currentSettings, ...updates };
+    this.settings$.next(newSettings);
+    this.saveSettings(newSettings);
+    this.logInfo(`Settings updated`);
+  }
+
+  getSettings(): MuxSettings {
+    return this.settings$.getValue();
   }
 }

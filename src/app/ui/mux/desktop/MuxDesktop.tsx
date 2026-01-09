@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { MuxTaskbar } from "./taskbar/MuxTaskbar";
 import { MuxProgram, MuxProgramState } from '../MuxProgram';
 import { DefaultTheme } from '../themes/default/DefaultTheme';
-import { useMuxOs } from '../MuxOs';
+import { useMuxOs, MuxSettings } from '../MuxOs';
 import { MuxProgramWindow } from './window/MuxProgramWindow';
 import { DragBoard } from '../../drag-board/DragBoard';
 import { DragBoardItem } from '../../drag-board/DragBoardItem';
@@ -16,6 +16,7 @@ export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) 
   const elementRef = React.useRef<HTMLDivElement>(null);
   const muxOs = useMuxOs();
   const [programStates, setProgramStates] = useState<Map<string, MuxProgramState>>(muxOs.programStates$.getValue());
+  const [settings, setSettings] = useState<MuxSettings>(muxOs.getSettings());
   const dimensions = useDimension(elementRef);
   const pointer$ = usePointer(elementRef);
 
@@ -25,12 +26,16 @@ export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) 
   useEffect(() => {
     const subscriptions = [
       muxOs.programStates$.subscribe(setProgramStates),
+      muxOs.settings$.subscribe(setSettings),
     ];
 
     return () => {
       subscriptions.forEach(subscription => subscription.unsubscribe());
     };
   }, []);
+
+  const selectedClock = programs.get(settings.clockProgramId);
+  const clockPrograms = [...programs.values()].filter(p => p.slots?.includes('clock'));
 
   return (
     <div className='mux-desktop' ref={elementRef}>
@@ -51,6 +56,8 @@ export const MuxDesktop = ({ programs }: { programs: Map<string, MuxProgram> }) 
         programStates={programStates}
         programs={programs}
         onOpen={(programId) => muxOs.startProgram(programId)}
+        clockProgram={selectedClock}
+        clockPrograms={clockPrograms}
         pointer$={pointer$}
       />
     </div >

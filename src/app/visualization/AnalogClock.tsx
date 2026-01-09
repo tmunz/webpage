@@ -159,12 +159,13 @@ export function AnalogClock({
   );
 
   return (
-    <div ref={elementRef} style={{ width: '100%', height: '100%' }}>
+    <div ref={elementRef} style={{ maxWidth: '100%', maxHeight: '100%'}}>
       <svg
         width={windowWidth}
         height={windowHeight}
         viewBox='0 0 100 100'
         preserveAspectRatio='xMidYMid meet'
+        style={{ display: 'block' }}
       >
         {renderClockFace()}
         {renderMarks()}

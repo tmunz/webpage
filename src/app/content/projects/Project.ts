@@ -1,4 +1,6 @@
 import React from 'react';
+import { MuxProgramConfig } from '../../ui/mux/MuxProgram';
+import { MuxOs } from '../../ui/mux/MuxOs';
 
 export interface Project {
   name: string;
@@ -8,7 +10,8 @@ export interface Project {
   pinned?: boolean;
   description: string;
   githubLink?: string;
-  component: React.ReactNode,
+  component: ((muxOs: MuxOs) => React.ReactNode) | React.ReactNode,
+  settings?: MuxProgramConfig,
   highlight?: boolean;
   slots?: string[];
 }

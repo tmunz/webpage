@@ -1,86 +1,62 @@
-import './PebbleAlphaBinary.css';
-
 import React, { useEffect, useState } from 'react';
-import { AlphaBinaryClock, AlphaBinaryClockConfig } from '../../visualization/AlphaBinaryClock';
+import { AlphaBinaryClock, AlphaBinaryClockConfig, DEFAULT_CONFIG } from '../../visualization/AlphaBinaryClock';
+import { MuxProgramConfig, MuxProgramConfigInputType } from '../../ui/mux/MuxProgram';
+import { MuxOs } from '../../ui/mux/MuxOs';
 
+let config = DEFAULT_CONFIG;
+const configListeners: Array<(config: AlphaBinaryClockConfig) => void> = [];
 
-export function PebbleAlphaBinary() {
-  const [config, setConfig] = useState<AlphaBinaryClockConfig>({
-    windowWidth: 144,
-    windowHeight: 168,
-    windowPadding: 2,
-    backgroundColor: '#000000',
-    fillColor: '#ff7403',
-    borderColor: '#d3d3d3',
-    relativeCornerRadius: 0.5,
-    borderWidth: 2,
-    borderPadding: 1,
-    verticalSpace: 3,
-    horizontalSpace: 10,
-    hasBorder: true,
-    isBorderDate: true,
-    is24hStyle: true,
-  });
+const updateSharedConfig = (newConfig: AlphaBinaryClockConfig) => {
+  config = newConfig;
+  configListeners.forEach(listener => listener(config));
+};
 
-  const [dateTime, setDateTime] = useState(new Date());
+const subscribeToConfig = (listener: (config: AlphaBinaryClockConfig) => void) => {
+  configListeners.push(listener);
+  return () => {
+    const index = configListeners.indexOf(listener);
+    if (index > -1) configListeners.splice(index, 1);
+  };
+};
+
+export function PebbleAlphaBinaryContent(muxOs: MuxOs) {
+  const [dateTime, setDateTime] = useState<Date>(new Date());
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setDateTime(new Date());
-    }, 1000);
+    const dateSubscription = muxOs.dateTime$.subscribe((newDateTime) => {
+      setDateTime(newDateTime);
+    });
 
     return () => {
-      clearInterval(interval);
+      dateSubscription.unsubscribe();
     };
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setConfig({
-      ...config,
-      [name]: type === 'checkbox' ? checked : type === 'number' ? parseFloat(value) : value,
-    });
-  };
-
-  enum InputType { NUMBER = 'number', BOOLEAN = 'checkbox', COLOR = 'color' };
-
-  const inputConfig = [
-    { label: 'window width', type: InputType.NUMBER, name: 'windowWidth', value: config.windowWidth },
-    { label: 'window height', type: InputType.NUMBER, name: 'windowHeight', value: config.windowHeight },
-    { label: 'window padding', type: InputType.NUMBER, name: 'windowPadding', value: config.windowPadding },
-    { label: 'corner radius', type: InputType.NUMBER, name: 'relativeCornerRadius', value: config.relativeCornerRadius },
-    { label: 'border width', type: InputType.NUMBER, name: 'borderWidth', value: config.borderWidth },
-    { label: 'border padding', type: InputType.NUMBER, name: 'borderPadding', value: config.borderPadding },
-    { label: 'vertical space', type: InputType.NUMBER, name: 'verticalSpace', value: config.verticalSpace },
-    { label: 'horizontal space', type: InputType.NUMBER, name: 'horizontalSpace', value: config.horizontalSpace },
-    { label: 'fill color', type: InputType.COLOR, name: 'fillColor', value: config.fillColor },
-    { label: 'border color', type: InputType.COLOR, name: 'borderColor', value: config.borderColor },
-    { label: 'background color', type: InputType.COLOR, name: 'backgroundColor', value: config.backgroundColor },
-    { label: 'has border', type: InputType.BOOLEAN, name: 'hasBorder', value: config.hasBorder },
-    { label: 'is border date', type: InputType.BOOLEAN, name: 'isBorderDate', value: config.isBorderDate },
-    { label: 'is 24h style', type: InputType.BOOLEAN, name: 'is24hStyle', value: config.is24hStyle }
-  ];
-
-
-  return (
-    <div className='pebble-alpha-binary'>
-      <AlphaBinaryClock {...config} dateTime={dateTime} />
-      <div className='configurations'>
-        {inputConfig.map((input, index) => (
-          <div key={index}>
-            <label>
-              {input.label}:
-              <input
-                type={input.type}
-                name={input.name}
-                value={input.value === InputType.BOOLEAN ? undefined : input.value as string | number}
-                checked={input.type === InputType.BOOLEAN ? input.value as boolean : undefined}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  return <AlphaBinaryClock {...config} dateTime={dateTime} />;
 }
+
+export const PebbleAlphaBinarySettings: MuxProgramConfig<AlphaBinaryClockConfig> = {
+  get values() {
+    return config;
+  },
+  onChange: (newValues) => {
+    updateSharedConfig(newValues);
+  },
+  subscribe: (listener) => subscribeToConfig(listener),
+  fields: [
+    { label: 'window width', type: MuxProgramConfigInputType.NUMBER, name: 'windowWidth' },
+    { label: 'window height', type: MuxProgramConfigInputType.NUMBER, name: 'windowHeight' },
+    { label: 'window padding', type: MuxProgramConfigInputType.NUMBER, name: 'windowPadding'},
+    { label: 'corner radius', type: MuxProgramConfigInputType.NUMBER, name: 'relativeCornerRadius', min: 0, max: 1, step: 0.1 },
+    { label: 'border width', type: MuxProgramConfigInputType.NUMBER, name: 'borderWidth' },
+    { label: 'border padding', type: MuxProgramConfigInputType.NUMBER, name: 'borderPadding' },
+    { label: 'vertical space', type: MuxProgramConfigInputType.NUMBER, name: 'verticalSpace' },
+    { label: 'horizontal space', type: MuxProgramConfigInputType.NUMBER, name: 'horizontalSpace' },
+    { label: 'fill color', type: MuxProgramConfigInputType.COLOR, name: 'fillColor' },
+    { label: 'border color', type: MuxProgramConfigInputType.COLOR, name: 'borderColor' },
+    { label: 'background color', type: MuxProgramConfigInputType.COLOR, name: 'backgroundColor' },
+    { label: 'has border', type: MuxProgramConfigInputType.BOOLEAN, name: 'hasBorder'},
+    { label: 'is border date', type: MuxProgramConfigInputType.BOOLEAN, name: 'isBorderDate' },
+    { label: 'is 24h style', type: MuxProgramConfigInputType.BOOLEAN, name: 'is24hStyle' }
+  ]
+};

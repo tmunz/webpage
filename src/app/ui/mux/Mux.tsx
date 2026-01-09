@@ -8,6 +8,7 @@ import { MuxBootScreen } from './MuxBootScreen';
 import { StandardClock } from './programs/standard-clock/StandardClock';
 import { Terminal } from './programs/terminal/Terminal';
 import { Draw } from './programs/draw/Draw';
+import { AnalogClockProgram } from './programs/analog-clock/AnalogClockProgram';
 
 export interface MuxProps {
   programs: MuxProgram[];
@@ -17,6 +18,7 @@ export interface MuxProps {
 
 const DEFAULT_PROGRAMS: MuxProgram[] = [
   StandardClock,
+  AnalogClockProgram,
   Terminal,
   Draw,
 ];

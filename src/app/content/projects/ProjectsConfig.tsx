@@ -1,5 +1,5 @@
 import React from "react";
-import { PebbleAlphaBinary } from "./PebbleAlphaBinary";
+import { PebbleAlphaBinaryContent, PebbleAlphaBinarySettings } from "./PebbleAlphaBinary";
 import { Project } from "./Project";
 
 export const projects: Project[] = [
@@ -46,7 +46,8 @@ export const projects: Project[] = [
     iconPath: require('./assets/pebble-alpha-binary.png'),
     description: 'Binary Watchface for Pebble.',
     githubLink: 'https://github.com/tmunz/PebbleAlphaBinary',
-    component: <PebbleAlphaBinary />,
+    component: PebbleAlphaBinaryContent,
+    settings: PebbleAlphaBinarySettings,
     slots: ['clock'],
   },
   {

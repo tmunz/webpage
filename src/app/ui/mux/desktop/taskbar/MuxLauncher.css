@@ -76,4 +76,46 @@
       filter: brightness(1.2);
     }
   }
+
+  .mux-clock-display {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    .clock-selector {
+      width: 100%;
+      padding: 8px 12px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 20px;
+      opacity: 0;
+      pointer-events: none;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      &:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+      }
+
+      option {
+        background-color: #1a1a1a;
+        color: #fff;
+        padding: 8px;
+      }
+    }
+
+    &:hover .clock-selector {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
 }

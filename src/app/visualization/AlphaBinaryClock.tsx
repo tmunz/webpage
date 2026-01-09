@@ -18,6 +18,24 @@ export interface AlphaBinaryClockConfig {
   is24hStyle?: boolean;
 }
 
+export const DEFAULT_CONFIG: AlphaBinaryClockConfig = {
+  windowWidth: 144,
+  windowHeight: 168,
+  windowPadding: 2,
+  backgroundColor: '#000000',
+  fillColor: '#ff7403',
+  borderColor: '#d3d3d3',
+  relativeCornerRadius: 0.5,
+  borderWidth: 2,
+  borderPadding: 1,
+  verticalSpace: 3,
+  horizontalSpace: 10,
+  hasBorder: true,
+  isBorderDate: true,
+  is24hStyle: true,
+};
+
+
 export interface AlphaBinaryClockProps extends AlphaBinaryClockConfig {
   dateTime: Date,
 }
@@ -27,28 +45,33 @@ enum DatePart {
   TIME,
 }
 
-export function AlphaBinaryClock({
-  dateTime,
-  windowWidth,
-  windowHeight,
-  windowPadding = 2,
-  backgroundColor = '#000000',
-  fillColor = '#ff7403',
-  borderColor = '#d3d3d3',
-  relativeCornerRadius = 0.5,
-  borderWidth = 2,
-  borderPadding = 2,
-  verticalSpace = 4,
-  horizontalSpace = 12,
-  hasBorder = true,
-  isBorderDate = true,
-  is24hStyle = true,
-}: AlphaBinaryClockProps) {
+export function AlphaBinaryClock(props: AlphaBinaryClockProps) {
+  const {
+    dateTime,
+    ...configProps
+  } = props;
+
+  const {
+    windowWidth: propWindowWidth,
+    windowHeight: propWindowHeight,
+    windowPadding,
+    backgroundColor,
+    fillColor,
+    borderColor,
+    relativeCornerRadius,
+    borderWidth,
+    borderPadding,
+    verticalSpace,
+    horizontalSpace,
+    hasBorder,
+    isBorderDate,
+    is24hStyle
+  } = { ...DEFAULT_CONFIG, ...configProps } as Required<AlphaBinaryClockConfig>;
 
   const elementRef = React.useRef<HTMLDivElement>(null);
   const size = useDimension(elementRef);
-  windowWidth = windowWidth || size?.width || 144;
-  windowHeight = windowHeight || size?.height || 168;
+  const windowWidth = propWindowWidth || size?.width || 144;
+  const windowHeight = propWindowHeight || size?.height || 168;
   const windowSize = Math.min(windowWidth, windowHeight);
 
   const MAX_ROWS = [6, 4, 6, is24hStyle ? 5 : 4, 6, 6];
@@ -151,8 +174,12 @@ export function AlphaBinaryClock({
   };
 
   return (
-    <div ref={elementRef} style={{ width: '100%', height: '100%' }}>
-      <svg width={windowWidth} height={windowHeight} style={{ backgroundColor }}>
+    <div ref={elementRef} style={{ maxWidth: '100%', maxHeight: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
+      <svg
+        width={windowWidth}
+        height={windowHeight}
+        style={{ backgroundColor, display: 'block' }}
+      >
         {drawCol(dateTime.getFullYear() % 100, DatePart.DATE, YEAR_COL)}
         {drawCol(dateTime.getMonth() + 1, DatePart.DATE, MONTH_COL)}
         {drawCol(dateTime.getDate(), DatePart.DATE, DAY_COL)}

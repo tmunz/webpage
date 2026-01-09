@@ -11,9 +11,33 @@ interface MuxLauncherProps {
   className?: string;
 }
 
+const ClockComponentWrapper = ({ clockProgram }: { clockProgram?: MuxProgram }) => {
+  const muxOs = useMuxOs();
+
+  if (!clockProgram) {
+    return null;
+  }
+
+  return <>{clockProgram.component(muxOs)}</>;
+};
+
 export const MuxLauncher = ({ programs, onOpen, onCloseLauncher, className }: MuxLauncherProps) => {
   const muxOs = useMuxOs();
-  const clock = muxOs.getProgramsBySlot('clock')[0];
+  const [clockProgramId, setClockProgramId] = React.useState(muxOs.settings$.getValue().clockProgramId);
+
+  const clockPrograms = [...programs.values()].filter(p => p.slots?.includes('clock'));
+  const clockProgram = clockPrograms.find(p => p.id === clockProgramId);
+
+  React.useEffect(() => {
+    const subscription = muxOs.settings$.subscribe(settings => {
+      setClockProgramId(settings.clockProgramId);
+    });
+    return () => subscription.unsubscribe();
+  }, [muxOs.settings$]);
+
+  const selectClock = (programId: string) => {
+    muxOs.updateSettings({ clockProgramId: programId });
+  };
 
   return (
     <div className={`mux-launcher ${className ? className : ''}`} onClick={() => onCloseLauncher()}>
@@ -33,7 +57,25 @@ export const MuxLauncher = ({ programs, onOpen, onCloseLauncher, className }: Mu
       </ul>
       <hr />
       <div className='system-container'>
-        {clock && clock.component(muxOs)}
+        <div className='mux-clock-display'>
+          <ClockComponentWrapper clockProgram={clockProgram} />
+          <select
+            className='clock-selector'
+            onClick={(e) => e.stopPropagation()}
+            onChange={(e) => selectClock(e.target.value)}
+            value={clockProgram?.id || ''}
+          >
+            {clockPrograms.map(program => (
+              <option
+                key={program.id}
+                value={program.id}
+              >
+                {program.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <ul className='controls'>
           <li><button onClick={() => muxOs.pause()}>pause</button></li>
           <li><button onClick={() => muxOs.sleep()}>sleep</button></li>

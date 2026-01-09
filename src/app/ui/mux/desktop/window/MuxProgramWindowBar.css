@@ -23,6 +23,7 @@
   }
 
   .info-button,
+  .settings-button,
   .close-button {
     background-color: transparent;
     color: white;
@@ -57,11 +58,22 @@
     }
   }
 
-  .window-about {
+  .settings-button {
+    color: #bbb;
+    font-size: 20px;
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  .window-about,
+  .window-settings {
     position: absolute;
     top: 100%;
     right: 0;
     width: clamp(200px, 100%);
+    max-height: 400px;
     margin-top: 5px;
     padding: 10px;
     background-color: #222;
@@ -69,5 +81,6 @@
     border: 1px solid #444;
     font-size: 14px;
     z-index: 1;
+    overflow-y: auto;
   }
 }
