@@ -1,5 +1,5 @@
 import './Frame.css';
-import React, { MouseEvent, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import FrameCloseButton from './ui/FrameCloseButton';
 import { PerspectiveImage } from './effects/PerspectiveImage';
 
@@ -19,6 +19,8 @@ export interface FrameProps {
 
 export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, activeId, animate, effectValue = 1, color }: FrameProps) => {
   const imgRef = useRef<HTMLImageElement>(null);
+  const rafRef = useRef<number | null>(null);
+  const pendingPositionRef = useRef<{ x: number, y: number } | null>(null);
 
   const [parallaxPosition, setParallaxPosition] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
   const [showPerspectiveImage, setShowPerspectiveImage] = useState(false);
@@ -37,17 +39,28 @@ export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, active
     }
   }, [depthImgSrc, parallax]);
 
+  useEffect(() => {
+    return () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
   const setParallaxPositionFromEvent = useCallback((event: MouseEvent<unknown>): void => {
     if (parallax && imgRef.current) {
       const rect = imgRef.current.getBoundingClientRect();
-      setParallaxPosition({
-        x: ((event.clientX - rect.left) / rect.width - 0.5),
-        y: ((event.clientY - rect.top) / rect.height - 0.5),
+      pendingPositionRef.current = {
+        x: (event.clientX - rect.left) / rect.width - 0.5,
+        y: (event.clientY - rect.top) / rect.height - 0.5,
+      };
+      if (rafRef.current !== null) return;
+      rafRef.current = requestAnimationFrame(() => {
+        setParallaxPosition(pendingPositionRef.current!);
+        rafRef.current = null;
       });
     }
   }, [parallax, imgRef]);
 
-  const getBackgroundImage = useCallback(() => {
+  const backgroundImage = useMemo(() => {
     const isBackgroundImageSvg = imgSrc.toLowerCase().endsWith('.svg');
     if (isBackgroundImageSvg) {
       const svg = require(`${imgSrc}`);
@@ -67,14 +80,17 @@ export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, active
         color={color}
       />
     }
-  }, [imgSrc, depthImgSrc, parallaxPosition, effectValue, parallax, showPerspectiveImage]);
+  }, [imgSrc, depthImgSrc, parallaxPosition, effectValue, showPerspectiveImage, color]);
 
   return (
     <div
       key={id}
       className={`frame ${id}-frame ${active ? 'active' : ''} ${animate ? 'animate' : ''}`}
       onMouseMove={setParallaxPositionFromEvent}
-      onMouseLeave={() => { setParallaxPosition({ x: 0, y: 0 }) }}
+      onMouseLeave={() => {
+        if (rafRef.current !== null) { cancelAnimationFrame(rafRef.current); rafRef.current = null; }
+        setParallaxPosition({ x: 0, y: 0 });
+      }}
     >
       <div className="title-container">
         <div
@@ -82,7 +98,7 @@ export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, active
           ref={imgRef}
           style={{ transform: `translate(${(effectValue * 0.1 * (parallaxPosition.x)) * -100}%, ${(effectValue * 0.1 * (parallaxPosition.y)) * -100}%)` }}
         >
-          {getBackgroundImage()}
+          {backgroundImage}
         </div>
         <h1 className="title parallax">
           {title}

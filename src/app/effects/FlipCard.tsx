@@ -33,15 +33,23 @@ export function FlipCard(props: FlipCardProps) {
       <div className='flip-card-inner'>
         <div className='flip-card-front'>
           {childrenArray[0]}
-          {hasBackside && <button className='flip-button' onClick={flip} />}
+          {hasBackside && <FlipButton onClick={flip}/>}
         </div>
         {hasBackside && (
           <div className='flip-card-back'>
             {childrenArray[1]}
-            <button className='flip-button' onClick={flip} />
+            <FlipButton backside onClick={flip}/>
           </div>
         )}
       </div>
     </div>
   );
 }
+
+const FlipButton = ({ backside, onClick }: { backside?: boolean; onClick: () => void }) => (
+  <button className='flip-button' type='button' aria-label={`Show ${backside ? 'front' : 'back'} side`} onClick={onClick}>
+    <span className='flip-indicator' aria-hidden='true'>
+      <span className='flip-indicator-icon'>{backside ? '↻' : '↺'}</span>
+    </span>
+  </button>
+);

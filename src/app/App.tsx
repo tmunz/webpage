@@ -19,7 +19,7 @@ export function App() {
 
   useEffect(() => {
     setAnimationEnabled(true);
-  });
+  }, []);
 
   const frames: FrameProps[] = [
     { id: 'vita', title: 'Vita / About', content: <Vita />, color: '#a3dbfc', imgSrc: './content/vita/vita_title.jpg', depthImgSrc: './content/vita/vita_title_depth.jpg' },

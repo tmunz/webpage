@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { LoadingBrickSvg } from './LoadingBrickSvg';
 import { useDimension } from '../../../utils/useDimension';
 
 export const LoadingBrick = ({ studs = [2, 4], duration = 300 }: { studs?: [number, number], duration?: number }) => {
   const [time, setTime] = useState(0);
-  const elementRef = React.createRef<HTMLDivElement>();
+  const elementRef = useRef<HTMLDivElement>(null);
   const dimension = useDimension(elementRef) ?? { width: 300, height: 300 };
   const size = Math.min(dimension.width * 0.8, dimension.height * 0.8, 500);
 

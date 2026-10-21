@@ -23,7 +23,8 @@
   }
 
   &.animate {
-    transition: all 0.6s ease;
+    transition: flex-grow 0.6s ease, min-width 0.25s ease;
+    will-change: flex-grow, min-width;
   }
 
   .title-container {

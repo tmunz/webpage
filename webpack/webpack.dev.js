@@ -3,9 +3,14 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 
 module.exports = {
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'eval-cheap-module-source-map',
   output: {
     path: path.resolve(__dirname, '..', './dist'),
+  },
+  watchOptions: {
+    aggregateTimeout: 200,
+    ignored: /node_modules/,
+    poll: 1000,
   },
   devServer: {
     static: {

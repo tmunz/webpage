@@ -6,6 +6,18 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const package = require('../package.json');
 
 module.exports = (env) => ({
+  cache: {
+    type: 'filesystem',
+    name: `webpack-${env}`,
+    buildDependencies: {
+      config: [
+        __filename,
+        path.resolve(__dirname, './webpack.config.js'),
+        path.resolve(__dirname, env === 'production' ? './webpack.prod.js' : './webpack.dev.js'),
+        path.resolve(__dirname, '..', './.babelrc'),
+      ],
+    },
+  },
   entry: {
     app: path.resolve(__dirname, '..', './src/index.tsx'),
   },
@@ -15,7 +27,15 @@ module.exports = (env) => ({
   module: {
     rules: [{
       test: /\.((j|t)sx?)$/,
-      loader: 'babel-loader',
+      include: path.resolve(__dirname, '..', './src'),
+      use: {
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true,
+          cacheCompression: false,
+          plugins: env === 'development' ? [require.resolve('react-refresh/babel')] : [],
+        },
+      },
     }, {
       test: /\.svg$/,
       use: [{
@@ -50,7 +70,11 @@ module.exports = (env) => ({
         {
           loader: 'responsive-loader',
           options: {
-            // Set options for all transforms
+            disable: env === 'development',
+            cacheDirectory: env === 'production'
+              ? path.resolve(__dirname, '..', './node_modules/.cache/responsive-loader')
+              : false,
+            cacheCompression: false,
           },
         },
       ],
@@ -80,7 +104,7 @@ module.exports = (env) => ({
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    ...(env === 'production' ? [new CleanWebpackPlugin()] : []),
     new CopyWebpackPlugin({
       patterns: [
         { from: path.resolve(__dirname, '..', './public/') }
