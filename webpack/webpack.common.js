@@ -71,9 +71,7 @@ module.exports = (env) => ({
           loader: 'responsive-loader',
           options: {
             disable: env === 'development',
-            cacheDirectory: env === 'production'
-              ? path.resolve(__dirname, '..', './node_modules/.cache/responsive-loader')
-              : false,
+            cacheDirectory: false,
             cacheCompression: false,
           },
         },
