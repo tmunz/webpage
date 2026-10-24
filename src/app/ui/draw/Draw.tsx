@@ -64,7 +64,7 @@ export const Draw = forwardRef(
 
     const useBrush = (context: CanvasRenderingContext2D, from: { x: number, y: number }, to: { x: number, y: number }, params: { color: string, width: number }) => {
       context.lineCap = "round";
-      context.lineJoin = "round"; ''
+      context.lineJoin = "round";
       context.strokeStyle = params.color;
       context.lineWidth = params.width;
       context.moveTo(from.x, from.y);
@@ -90,22 +90,21 @@ export const Draw = forwardRef(
         useBrush(context, prevPosition, currPosition, { color: `rgba(${color.r}, ${color.g}, ${color.b}, 0.9)`, width: Math.max(1, strokeWidth / Math.max(1, avgCalculator.avg())) });
         context.closePath();
 
-        for (let i = 0; i < (avgDistance / 5) ** 2; i += 1) {
+        for (let i = 0; maxSprankle > 0 && i < (avgDistance / 5) ** 2; i += 1) {
           const randomSprankleDistributionVector = [0, 1].map(() =>
             (distribution ?? 1) * avgDistance * (Math.random() - 0.5)
           );
           context.beginPath();
-          context.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${Math.random() / 2 + 0.3})`;
-          context.lineWidth = Math.min(maxSprankle, Math.random() * maxSprankle / avgDistance);
-          context.moveTo(
+          context.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${Math.random() / 2 + 0.3})`;
+          const diameter = Math.min(maxSprankle, Math.random() * maxSprankle / avgDistance);
+          context.arc(
             currPosition.x + randomSprankleDistributionVector[0],
-            currPosition.y + randomSprankleDistributionVector[1]
+            currPosition.y + randomSprankleDistributionVector[1],
+            diameter / 2,
+            0,
+            Math.PI * 2
           );
-          context.lineTo(
-            currPosition.x + randomSprankleDistributionVector[0],
-            currPosition.y + randomSprankleDistributionVector[1]
-          );
-          context.stroke();
+          context.fill();
           context.closePath();
         }
       }
