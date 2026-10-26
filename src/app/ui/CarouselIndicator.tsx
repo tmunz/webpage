@@ -1,5 +1,5 @@
 import './CarouselIndicator.css';
-import React from 'react';
+import React, { useId } from 'react';
 
 interface CarouselIndicatorProps {
   total: number;
@@ -7,30 +7,37 @@ interface CarouselIndicatorProps {
   onSelect: (index: number) => void;
   radius?: number;
   gap?: number;
+  label?: string;
+  labels?: string[];
 }
 
-export const CarouselIndicator = ({ total, activeIndex, onSelect, radius = 10, gap = 4 }: CarouselIndicatorProps) => {
+export const CarouselIndicator = ({ total, activeIndex, onSelect, radius = 10, gap = 4, label = 'Choose slide', labels = [] }: CarouselIndicatorProps) => {
+  const filterId = `carousel-blob-${useId().replace(/:/g, '')}`;
 
   return (
-    <div className='carousel-indicator'>
+    <div className='carousel-indicator' role="group" aria-label={label}>
       <div className='carousel-dots'
-        style={{ gap }}
+        style={{ gap, filter: `url("#${filterId}")` }}
       >
         {Array.from({ length: total }).map((_, index) => (
-          <div
+          <button
             key={index}
+            type="button"
             className='dot'
+            aria-label={labels[index] ?? `Show slide ${index + 1}`}
+            aria-pressed={index === activeIndex}
             style={{ width: radius * 2, height: radius * 2 }}
             onClick={() => onSelect(index)}
           />
         ))}
         {total > 0 && <div
           className='dot active-dot'
+          aria-hidden="true"
           style={{ left: -gap / 2 + activeIndex * (radius * 2 + gap), top: -gap / 2, width: radius * 2 + gap, height: radius * 2 + gap }}
         />}
         <svg xmlns='http://www.w3.org/2000/svg' version='1.1' style={{ display: 'none' }}>
           <defs>
-            <filter id='blob'>
+            <filter id={filterId}>
               <feGaussianBlur in='SourceGraphic' result='blur' stdDeviation='5' />
               <feColorMatrix in='blur' mode='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 25 -8' result='blob' />
               <feGaussianBlur in='blob' stdDeviation='3' result='shadow' />

@@ -9,9 +9,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    filter: url('#blob');
 
     .dot {
+      display: block;
+      flex: 0 0 auto;
+      padding: 0;
+      border: none;
       border-radius: 50%;
       background-color: rgba(249, 201, 149, 0.5);
       cursor: pointer;
@@ -21,15 +24,27 @@
       &:hover {
         background-color: var(--actionColor);
       }
+
+      &:focus-visible {
+        outline: 2px solid var(--actionColor);
+        outline-offset: 3px;
+      }
     }
 
     .active-dot {
+      pointer-events: none;
       position: absolute;
       top: 0;
       left: 0;
-      transition: all 0.6s ease;
+      transition: left 0.6s ease, background-color 0.6s ease;
       background-color: var(--activeColor);
       z-index: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dot, .active-dot {
+      transition: none;
     }
   }
 }

@@ -1,11 +1,12 @@
-import React, { useRef, useMemo, useEffect, useState } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import React, { useRef, useMemo, useEffect, useLayoutEffect, useState } from 'react';
+import { Canvas, useThree } from '@react-three/fiber';
 import { OrthographicCamera } from '@react-three/drei';
 import { IUniform, Mesh, ShaderMaterial, Texture, TextureLoader } from 'three';
 import { DEFAULT_FRAGMENT_SHADER, DEFAULT_IMAGE, getScale, ShaderImageProps } from './ShaderImageUtils';
 
 interface Props extends ShaderImageProps {
 	uniforms?: { [uniform: string]: IUniform }
+	shaderDisabled?: boolean;
 }
 
 const DEFAULT_VERTEX_SHADER = `
@@ -26,9 +27,8 @@ export const ShaderImageThreePlane = ({
 }: Props) => {
 
 	const ref = useRef<Mesh>(null);
-	const materialRef = useRef<ShaderMaterial>(null);
 	const [textures, setTextures] = useState<Record<string, { loaded: boolean, url: string, data?: Texture }>>({});
-	const { size } = useThree();
+	const { size, invalidate, frameloop } = useThree();
 
 	useEffect(() => {
 		Object.entries(imageUrls).forEach(([id, url]) => {
@@ -48,25 +48,37 @@ export const ShaderImageThreePlane = ({
 		});
 	}, [imageUrls]);
 
-	const getUniforms = () => {
-		const imageUniforms = Object.keys(imageUrls).reduce((agg, id) => {
+	const materialUniforms = useMemo<Record<string, IUniform>>(() => {
+		const imageUniforms = Object.keys(imageUrls).reduce<Record<string, IUniform>>((agg, id) => {
 			const texture = textures[id];
-			if (texture?.loaded) {
-				return { ...agg, [id]: { value: texture.data } };
-			} else {
-				return agg;
-			}
+			// Register samplers before loading so the compiled uniform list already
+			// includes them when their textures arrive.
+			return { ...agg, [id]: { value: texture?.loaded ? texture.data : null } };
 		}, {});
-		return { ...uniforms, ...imageUniforms, };
-	}
+		return { ...uniforms, ...imageUniforms };
+	}, [uniforms, imageUrls, textures]);
 
+	const uniformLayout = Object.keys(materialUniforms).sort().join('\0');
 	const shaderMaterial = useMemo(() => {
 		return new ShaderMaterial({
-			uniforms: getUniforms(),
 			vertexShader,
 			fragmentShader,
 		});
-	}, [vertexShader, fragmentShader, uniforms, textures]);
+	}, [vertexShader, fragmentShader, uniformLayout]);
+
+	useLayoutEffect(() => {
+		// Three caches the uniforms object. Update its entries rather than
+		// replacing the object. A changed set of keys creates a new material so
+		// Three also rebuilds its cached uniform list.
+		for (const [name, uniform] of Object.entries(materialUniforms)) {
+			shaderMaterial.uniforms[name] = uniform;
+		}
+		shaderMaterial.uniformsNeedUpdate = true;
+		if (frameloop !== 'never') invalidate();
+	}, [shaderMaterial, materialUniforms, invalidate, frameloop]);
+
+	// Fiber does not dispose objects supplied through <primitive>.
+	useEffect(() => () => shaderMaterial.dispose(), [shaderMaterial]);
 
   useEffect(() => {
     const mainTexture = textures[DEFAULT_IMAGE]
@@ -74,26 +86,21 @@ export const ShaderImageThreePlane = ({
       const texture = mainTexture.data?.image;
       const scale = getScale(texture, size, objectFit);
       ref.current.scale.set(texture.width * scale.x, texture.height * scale.y, 1);
+      if (frameloop !== 'never') invalidate();
     }
-  }, [size, textures, ref.current, objectFit]);
-
-	useFrame(() => {
-		if (materialRef.current) {
-			materialRef.current.uniforms = getUniforms();
-		}
-	});
+  }, [size, textures, ref.current, objectFit, invalidate, frameloop]);
 
 	return (
 		<mesh ref={ref}>
 			<planeGeometry args={[1, 1]} />
-			<primitive ref={materialRef} object={shaderMaterial} attach="material" />
+			<primitive object={shaderMaterial} attach="material" />
 		</mesh>
 	);
 };
 
 export const ShaderImageThree = (props: Props) => {
 	return (
-		<Canvas orthographic style={{ width: '100%', height: '100%' }}>
+		<Canvas orthographic frameloop={props.shaderDisabled ? 'never' : 'demand'} style={{ width: '100%', height: '100%' }}>
 			<OrthographicCamera
 				makeDefault
 				near={0}

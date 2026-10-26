@@ -1,7 +1,7 @@
 import './SocialLinks.css';
 
 import React from 'react';
-import { Icon } from './Icon';
+import { IconButton } from './IconButton';
 import { IconName } from './IconName';
 
 export function SocialLinks() {
@@ -22,10 +22,7 @@ export function SocialLinks() {
     <ul className="social-links">
       {data.map((d) => (
         <li key={d.name}>
-          <a href={d.link} target="_blank" rel="noopener noreferrer">
-            <Icon name={d.name} />
-            <label className="tooltip">{d.title}</label>
-          </a>
+          <IconButton name={d.name} href={d.link} tooltip={d.title} />
         </li>
       ))}
     </ul>

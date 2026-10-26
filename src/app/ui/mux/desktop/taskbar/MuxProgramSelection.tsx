@@ -1,6 +1,6 @@
 import './MuxProgramSelection.css';
 import React from 'react';
-import { MuxProgram } from '../MuxProgram';
+import { MuxProgram } from '../../MuxProgram';
 
 interface MuxProgramSelectionProps {
   programs: Map<string, MuxProgram>;

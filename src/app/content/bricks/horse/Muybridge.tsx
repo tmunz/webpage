@@ -61,7 +61,7 @@ const Emitter = forwardRef((props, forwardRef) => {
 })
 
 function Screen(props: any) {
-  const [material, set] = useState()
+  const [, set] = useState()
   return (
     <>
       <Emitter ref={set} {...props} />

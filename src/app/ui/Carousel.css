@@ -1,0 +1,45 @@
+.carousel {
+  min-width: 0;
+
+  a, button, [tabindex] {
+    pointer-events: auto;
+  }
+
+  .carousel-viewport {
+    overflow: hidden;
+    touch-action: pan-y;
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .carousel-slide {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  button:focus-visible, .carousel-viewport:focus-visible {
+    outline: 2px solid #444;
+    outline-offset: -2px;
+  }
+
+  @media (max-width: 700px) {
+    .carousel-controls {
+      gap: 6px;
+
+      > span {
+        max-width: 100px;
+        margin-right: 0;
+        font-size: 9px;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-track {
+      transition: none;
+    }
+  }
+}

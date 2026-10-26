@@ -65,7 +65,7 @@ input[type="button"],
   text-decoration: none;
   transition: text-shadow 0.3s ease, color 0.3s ease;
 
-  &:hover {
+  &:hover:not(button):not(input):not(.button):not(.icon-button) {
     color: var(--activeColor);
     text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
   }
@@ -75,9 +75,8 @@ button, a.button, input[type="button"] {
   transition: all 0.4s ease-in-out;
   fill: var(--actionColor);
 
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    fill: var(--activeColor);
+  &:hover:not(:disabled):not(.icon-button) {
+    filter: brightness(1.1);
   }
 
   &.active {

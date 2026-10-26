@@ -1,8 +1,110 @@
 .app {
+  --main-header-height: 48px;
+  --main-background: #eee;
+  position: relative;
   height: 100svh;
+  overflow: hidden;
+  background: var(--main-background);
+  & .category-frames > .frame {
+    transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--frame-delay, 0ms),
+    flex-grow 0.6s ease, min-width 0.25s ease;
+  }
+}
+
+.category-frames {
+  position: absolute;
+  inset: var(--main-header-height) 0 0;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  pointer-events: none;
+  & > .frame {
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+
+.app--waiting .category-frames > .frame {
+  transform: translateY(calc(100svh - var(--main-header-height) - var(--frame-peek)));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .app--waiting .category-frames > .frame:is(:hover, :focus-within) {
+    transform: translateY(calc(100svh - var(--main-header-height) - var(--frame-peek) - 5svh));
+  }
+}
+
+.category-guide {
+  display: flex;
+  position: absolute;
+  bottom: calc(100% + 32px);
+  left: 50%;
+  width: max-content;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  padding: 0 clamp(4px, 1vw, 16px);
+  flex-direction: column;
+  align-items: center;
+  color: #55554f;
+  font-family: inherit;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 400ms ease, visibility 0s;
+  /* Bridge the gap to the frame so hovering stays stable as it rises. */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 -32px;
+  }
+
+  &::after {
+    content: '';
+    width: 24px;
+    height: 1px;
+    margin-top: 12px;
+    background: #b8b8b2;
+  }
+
+  &:is(:hover, :focus-within) {
+    .icon-button-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  @media (max-width: 500px) {
+    font-size: 8px;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    bottom: calc(100% + 48px);
+    &::before {
+      bottom: -48px;
+    }
+    &::after {
+      width: 16px;
+      margin-top: 8px;
+    }
+  }
+}
+
+.app--revealed .category-guide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 400ms ease, visibility 0s 400ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app .category-frames > .frame,
+  .app .category-guide {
+    transition: none;
+  }
 }

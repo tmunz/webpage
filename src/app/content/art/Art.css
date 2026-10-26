@@ -1,4 +1,7 @@
 .art-frame {
+  background-color: #d53b12;
+  background-image: linear-gradient(to bottom, #d53b12, #f3a651);
+
   .background-image {
     transition: filter 0.8s ease;
 

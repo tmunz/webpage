@@ -7,6 +7,11 @@ export enum IconName {
   LIST = 'list',
   GRID = 'grid',
   BRING_TO_BACK = 'bring-to-back',
+  USER = 'user',
+  CAMERA = 'camera',
+  PALETTE = 'palette',
+  CODE = 'code',
+  BRICK = 'brick',
   
   FLICKR = 'flickr',
   GITHUB = 'github',

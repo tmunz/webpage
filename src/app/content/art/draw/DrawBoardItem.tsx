@@ -4,6 +4,7 @@ import { PaperFolding } from '../../../effects/PaperFolding';
 import { DrawWithControls } from '../../../ui/draw/DrawWithControls';
 import { DragBoardItem } from '../../../ui/drag-board/DragBoardItem';
 import { DragBoardHandle } from '../../../ui/drag-board/DragBoardHandle';
+import { DelaySuspense } from '../../../utils/DelaySuspense';
 
 export function DrawBoardItem({ width, height, gap = 40 }: { width: number, height: number, gap?: number }) {
 
@@ -16,9 +17,11 @@ export function DrawBoardItem({ width, height, gap = 40 }: { width: number, heig
     className={`draw-board-item ${active ? 'draw-board-item-active' : ''}`}
   >
     <DragBoardHandle disableDrag={active}>
-      <PaperFolding onUnfold={() => setActive(true)} onInfold={() => setActive(false)} title='Paint your own Masterpiece'>
-        <DrawWithControls width={width - 2 * gap} height={height - 2 * gap} />
-      </PaperFolding>
+      <DelaySuspense renderDelay={1000}> {/* allow to init closed */}
+        <PaperFolding onUnfold={() => setActive(true)} onInfold={() => setActive(false)} title='Paint your own Masterpiece'>
+          <DrawWithControls width={width - 2 * gap} height={height - 2 * gap} />
+        </PaperFolding>
+      </DelaySuspense>
     </DragBoardHandle>
   </DragBoardItem >;
 }

@@ -2,12 +2,15 @@ import './Frame.css';
 import React, { MouseEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import FrameCloseButton from './ui/FrameCloseButton';
 import { PerspectiveImage } from './effects/PerspectiveImage';
+import { IconName } from './ui/icon/IconName';
 
 
 export interface FrameProps {
   id: string;
   title: string;
+  icon: IconName;
   content: ReactNode;
+  hint?: ReactNode;
   imgSrc: string;
   depthImgSrc?: string;
   color?: string;
@@ -15,9 +18,10 @@ export interface FrameProps {
   activeId?: string | null;
   animate?: boolean;
   effectValue?: number;
+  style?: React.CSSProperties;
 }
 
-export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, activeId, animate, effectValue = 1, color }: FrameProps) => {
+export const Frame = ({ id, title, content, hint, imgSrc, depthImgSrc, onClick, activeId, animate, effectValue = 1, color, style }: FrameProps) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const rafRef = useRef<number | null>(null);
   const pendingPositionRef = useRef<{ x: number, y: number } | null>(null);
@@ -29,13 +33,10 @@ export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, active
   const parallax = !activeId;
 
   useEffect(() => {
-    if (depthImgSrc) {
-      if (parallax) {
-        // delay showing perspective image to prevent flickering and misalignment on animation
-        setTimeout(() => setShowPerspectiveImage(true), 800);
-      } else {
-        setShowPerspectiveImage(false);
-      }
+    setShowPerspectiveImage(false);
+    if (depthImgSrc && parallax) {
+      const timeoutId = setTimeout(() => setShowPerspectiveImage(true), 800);
+      return () => clearTimeout(timeoutId);
     }
   }, [depthImgSrc, parallax]);
 
@@ -46,7 +47,7 @@ export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, active
   }, []);
 
   const setParallaxPositionFromEvent = useCallback((event: MouseEvent<unknown>): void => {
-    if (parallax && imgRef.current) {
+    if (parallax && (!depthImgSrc || showPerspectiveImage) && imgRef.current) {
       const rect = imgRef.current.getBoundingClientRect();
       pendingPositionRef.current = {
         x: (event.clientX - rect.left) / rect.width - 0.5,
@@ -58,7 +59,7 @@ export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, active
         rafRef.current = null;
       });
     }
-  }, [parallax, imgRef]);
+  }, [parallax, depthImgSrc, showPerspectiveImage, imgRef]);
 
   const backgroundImage = useMemo(() => {
     const isBackgroundImageSvg = imgSrc.toLowerCase().endsWith('.svg');
@@ -85,6 +86,7 @@ export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, active
   return (
     <div
       key={id}
+      style={style}
       className={`frame ${id}-frame ${active ? 'active' : ''} ${animate ? 'animate' : ''}`}
       onMouseMove={setParallaxPositionFromEvent}
       onMouseLeave={() => {
@@ -92,6 +94,7 @@ export const Frame = ({ id, title, content, imgSrc, depthImgSrc, onClick, active
         setParallaxPosition({ x: 0, y: 0 });
       }}
     >
+      {hint}
       <div className="title-container">
         <div
           className="background-image parallax"

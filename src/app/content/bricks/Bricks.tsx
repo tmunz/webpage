@@ -14,6 +14,14 @@ import { DelaySuspense } from '../../utils/DelaySuspense';
 import { HorseGalloping } from './horse/HorseGalloping';
 
 export const Bricks = () => {
+  return <div className='bricks'>
+    <DelaySuspense fallback={<LoadingBrick />} renderDelay={0} minVisibilityDelay={2500}>
+      <BricksContent />
+    </DelaySuspense>
+  </div>;
+};
+
+const BricksContent = () => {
 
   const elementRef = useRef<HTMLDivElement>(null);
   const dimension = useDimension(elementRef);
@@ -66,36 +74,34 @@ export const Bricks = () => {
     ]),
   };
 
-  return <div className='bricks'>
-    <DelaySuspense fallback={<LoadingBrick />} renderDelay={0} minVisibilityDelay={2500}>
-      <div
-        ref={elementRef}
-        style={{ overflow: 'auto', height: '100%' }}
-      >
-        {sections.map((section, i) => {
-          return <section key={i} style={{ height: `${section.height * 100}vh`, top: 0, position: 'relative' }}>
-            {section.content}
-          </section>
-        })}
+  return <>
+    <div
+      ref={elementRef}
+      style={{ overflow: 'auto', height: '100%' }}
+    >
+      {sections.map((section, i) => {
+        return <section key={i} style={{ height: `${section.height * 100}vh`, top: 0, position: 'relative' }}>
+          {section.content}
+        </section>
+      })}
 
-        {/**************************************** brick overlay *******************************************/}
-        <View style={{ width: dimension?.width ?? 600, height: dimension?.height ?? 800, position: 'absolute', top: 0, left: 0, zIndex: -1 }}>
-          <PerspectiveCamera makeDefault fov={12} position={[0, 0, 5]} />
-          <BrickScroll transformations={scrollStates.brick} progress$={scrollNormalized$} />
-          <Environment preset='lobby' />
-        </View>
-      </div>
+      {/**************************************** brick overlay *******************************************/}
+      <View style={{ width: dimension?.width ?? 600, height: dimension?.height ?? 800, position: 'absolute', top: 0, left: 0, zIndex: -1 }}>
+        <PerspectiveCamera makeDefault fov={12} position={[0, 0, 5]} />
+        <BrickScroll transformations={scrollStates.brick} progress$={scrollNormalized$} />
+        <Environment preset='lobby' />
+      </View>
+    </div>
 
-      <Canvas
-        style={{ position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, overflow: 'hidden', zIndex: -1 }}
-        eventSource={document.getElementById('poc')!}
-        dpr={[1, 2]}
-        flat
-        linear
-        gl={{ antialias: true, alpha: true }}>
-        <View.Port />
-        <Preload all />
-      </Canvas>
-    </DelaySuspense >
-  </div >;
+    <Canvas
+      style={{ position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, overflow: 'hidden', zIndex: -1 }}
+      eventSource={document.getElementById('poc')!}
+      dpr={[1, 2]}
+      flat
+      linear
+      gl={{ antialias: true, alpha: true }}>
+      <View.Port />
+      <Preload all />
+    </Canvas>
+  </>;
 };

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 600 600" fill="none" stroke="currentColor" stroke-width="40" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <mask id="brick-stud-cutouts" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="600">
+      <rect width="600" height="600" fill="white" stroke="none" />
+      <path fill="black" stroke="black" stroke-width="24" d="M235 150a55 30 0 0 1 110 0v35a55 30 0 0 1-110 0Z" />
+      <path fill="black" stroke="black" stroke-width="24" d="M110 240a55 30 0 0 1 110 0v35a55 30 0 0 1-110 0Z" />
+      <path fill="black" stroke="black" stroke-width="24" d="M380 230a55 30 0 0 1 110 0v35a55 30 0 0 1-110 0Z" />
+      <path fill="black" stroke="black" stroke-width="24" d="M255 320a55 30 0 0 1 110 0v35a55 30 0 0 1-110 0Z" />
+    </mask>
+  </defs>
+  <g mask="url(#brick-stud-cutouts)">
+    <path fill="none" d="M30 280 280 100 570 260 320 440Z" />
+    <path fill="none" d="M30 280v70l290 160 250-180V260M320 440v70" />
+  </g>
+  <g fill="none" stroke-width="24">
+    <path d="M235 150v35a55 30 0 0 0 110 0v-35" />
+    <ellipse cx="290" cy="150" rx="55" ry="30" />
+    <path d="M110 240v35a55 30 0 0 0 110 0v-35" />
+    <ellipse cx="165" cy="240" rx="55" ry="30" />
+    <path d="M380 230v35a55 30 0 0 0 110 0v-35" />
+    <ellipse cx="435" cy="230" rx="55" ry="30" />
+    <path d="M255 320v35a55 30 0 0 0 110 0v-35" />
+    <ellipse cx="310" cy="320" rx="55" ry="30" />
+  </g>
+</svg>

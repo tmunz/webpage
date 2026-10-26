@@ -22,7 +22,7 @@ export const NetworkGraphControls = forwardRef(
     const { camera, gl, events } = useThree();
     const explDomElement = domElement || events.connected || gl.domElement;
 
-    const [spring, api] = useSpring(() => ({ scale: 1, rotation, config }));
+    const [spring] = useSpring(() => ({ scale: 1, rotation, config }));
     // TODO spring
 
 
@@ -53,7 +53,7 @@ export const NetworkGraphControls = forwardRef(
 
     const zoomHandler = (event: Omit<FullGestureState<"pinch">, "event"> | Omit<FullGestureState<"scroll">, "event">) => {
       if (!enabled || !ref.current) { return; }
-      const { delta: [deltaX, deltaY] } = event;
+      const { delta: [, deltaY] } = event;
       const cameraDirection = camera.getWorldDirection(new Vector3());
       ref.current.position.add(cameraDirection.multiplyScalar(deltaY * speed / 10));
     }

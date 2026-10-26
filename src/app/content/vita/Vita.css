@@ -1,4 +1,8 @@
 .vita-frame {
+  --vita-background-blur: 100px;
+  background-color: #a3dbfc;
+  background-image: linear-gradient(to bottom, #a3dbfc, #f7e9ce);
+
   .background-image {
     transition: filter 0.8s ease;
 
@@ -8,7 +12,7 @@
   }
 
   &.active .background-image {
-    filter: blur(100px); /* brightness(0) contrast(1.0) brightness(1.0) saturate(1.0)*/
+    filter: blur(var(--vita-background-blur)); /* brightness(0) contrast(1.0) brightness(1.0) saturate(1.0)*/
   }
 }
 

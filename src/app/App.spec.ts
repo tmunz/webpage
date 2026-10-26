@@ -5,3 +5,5 @@ describe('app', () => {
   });
 });
 
+export {};
+
